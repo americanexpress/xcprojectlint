@@ -44,7 +44,7 @@ List of validations to perform:
                        Validates files on disk are arranged like the project
                        file
 
-                     empty_groups:
+                     empty-groups:
                        Reports groups that have no children
 
                      files-exist-on-disk:
