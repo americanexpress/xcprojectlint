@@ -12,7 +12,6 @@
  * the License.
  */
 
-import Darwin
 import Foundation
 
 private func recurseForMissingFiles(_ groups: [String], hierarchy: [String], project: Project, errors: Set<String>, errorReporter: ErrorReporter) -> Set<String> {

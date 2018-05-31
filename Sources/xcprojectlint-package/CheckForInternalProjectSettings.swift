@@ -12,7 +12,6 @@
  * the License.
  */
 
-import Darwin
 import Foundation
 
 public func checkForInternalProjectSettings(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
