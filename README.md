@@ -129,8 +129,8 @@ inside.
 - Disk Layout Matches Project
 
     This test grabs the `MainGroup` out of the project, then recursively
-    traverses the children. If the child node is a file, we retreive the
-    `FileReference` by id, then check for a `name` value. The presense of a name
+    traverses the children. If the child node is a file, we retrieve the
+    `FileReference` by id, then check for a `name` value. The presence of a name
     indicates this file reference does not have a matching file on disk.
 
 - Files Exist on Disk
@@ -139,7 +139,7 @@ inside.
     investigating the `name` value, it builds a URL to where the file should
     appear on disk. This is done by assembling the path that led to the file,
     then appending that to a path derived from the project’s path on disk, then
-    finally testing for the presense of a file at that location.
+    finally testing for the presence of a file at that location.
 
 - Empty Groups
 
