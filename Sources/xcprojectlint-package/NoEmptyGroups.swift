@@ -12,7 +12,6 @@
  * the License.
  */
 
-import Darwin
 import Foundation
 
 private func validateThisGroup(_ id: String, title: String, project: Project, errorReporter: ErrorReporter) -> Bool {

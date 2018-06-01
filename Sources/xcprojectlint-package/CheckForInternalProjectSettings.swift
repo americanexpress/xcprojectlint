@@ -12,7 +12,6 @@
  * the License.
  */
 
-import Darwin
 import Foundation
 
 public func checkForInternalProjectSettings(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
@@ -37,7 +36,7 @@ public func checkForInternalProjectSettings(_ project: Project, errorReporter: E
     // see if we can find the buildSettings node closest to this build configuration
     var currentLine = 0
     var foundKey = false
-    project.projectText.enumerateLines(invoking: { (line, stop) in
+    for line in project.projectText.components(separatedBy: CharacterSet.newlines) {
       currentLine += 1
       if !foundKey {
         if line.contains(buildConfiguration.id) {
@@ -45,10 +44,10 @@ public func checkForInternalProjectSettings(_ project: Project, errorReporter: E
         }
       } else {
         if line.contains("buildSettings") {
-          stop = true
+          break
         }
       }
-    })
+    }
     
     let errStr: String!
     // NOTE: The spaces around the error: portion of the string are required with Xcode 8.3. Without them, no output gets reported in the Issue Navigator.

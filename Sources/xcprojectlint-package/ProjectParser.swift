@@ -375,33 +375,32 @@ struct VariantGroup: CustomDebugStringConvertible {
 func extractBuildConfigurationTitles(_ projectText: String) -> Dictionary<String, String> {
   var titleMap = Dictionary<String, String>()
   var inBuildConfigsSection = false
-  projectText.enumerateLines(invoking: { (line, stop) in
+  for line in projectText.components(separatedBy: CharacterSet.newlines) {
     if !inBuildConfigsSection {
       if line.contains("XCBuildConfiguration section") {
         inBuildConfigsSection = true
       }
-      return
+      continue
     }
     
     // see if we're done
     if line.contains("XCBuildConfiguration section") {
-      stop = true
-      return
+      break
     }
     // we're in the build section, and not done, so pull apart the line
     var line = line.trimmingCharacters(in: .whitespaces)
     
     var splits = line.components(separatedBy: " /* ")
     if splits.count != 2 {
-      return
+      continue
     }
     let key = splits[0]
     line = splits[1]
     splits = line.components(separatedBy: " */")
-    if splits.count != 2 { return }
+    if splits.count != 2 { continue }
     let title = splits[0]
     titleMap[key] = title
-  })
+  }
   
   return titleMap
 }
@@ -411,33 +410,32 @@ func extractBuildConfigurationTitles(_ projectText: String) -> Dictionary<String
 func extractBuildConfigurationListTitles(_ projectText: String) -> Dictionary<String, String> {
   var titleMap = Dictionary<String, String>()
   var inBuildConfigsSection = false
-  projectText.enumerateLines(invoking: { (line, stop) in
+  for line in projectText.components(separatedBy: CharacterSet.newlines) {
     if !inBuildConfigsSection {
       if line.contains("XCConfigurationList section") {
         inBuildConfigsSection = true
       }
-      return
+      continue
     }
     
     // see if we're done
     if line.contains("XCConfigurationList section") {
-      stop = true
-      return
+      break
     }
     // we're in the build section, and not done, so pull apart the line
     var line = line.trimmingCharacters(in: .whitespaces)
     
     var splits = line.components(separatedBy: " /* ")
     if splits.count != 2 {
-      return
+      continue
     }
     let key = splits[0]
     line = splits[1]
     splits = line.components(separatedBy: " */")
-    if splits.count != 2 { return }
+    if splits.count != 2 { continue }
     let title = splits[0]
     titleMap[key] = title
-  })
+  }
   
   return titleMap
 }
@@ -447,33 +445,32 @@ func extractBuildConfigurationListTitles(_ projectText: String) -> Dictionary<St
 func extractGroupTitles(_ projectText: String) -> Dictionary<String, String> {
   var titleMap = Dictionary<String, String>()
   var inGroupSection = false
-  projectText.enumerateLines(invoking: { (line, stop) in
+  for line in projectText.components(separatedBy: CharacterSet.newlines) {
     if !inGroupSection {
       if line.contains("PBXGroup section") {
         inGroupSection = true
       }
-      return
+      continue
     }
     
     // see if we're done
     if line.contains("PBXGroup section") {
-      stop = true
-      return
+      break
     }
     // we're in the build section, and not done, so pull apart the line
     var line = line.trimmingCharacters(in: .whitespaces)
     
     var splits = line.components(separatedBy: " /* ")
     if splits.count != 2 {
-      return
+      continue
     }
     let key = splits[0]
     line = splits[1]
     splits = line.components(separatedBy: " */")
-    if splits.count != 2 { return }
+    if splits.count != 2 { continue }
     let title = splits[0]
     titleMap[key] = title
-  })
+  }
   
   return titleMap
 }
@@ -483,33 +480,32 @@ func extractGroupTitles(_ projectText: String) -> Dictionary<String, String> {
 func extractFileTitles(_ projectText: String) -> Dictionary<String, String> {
   var titleMap = Dictionary<String, String>()
   var inFileSection = false
-  projectText.enumerateLines(invoking: { (line, stop) in
+  for line in projectText.components(separatedBy: CharacterSet.newlines) {
     if !inFileSection {
       if line.contains("PBXFileReference section") {
         inFileSection = true
       }
-      return
+      continue
     }
     
     // see if we're done
     if line.contains("PBXFileReference section") {
-      stop = true
-      return
+      break
     }
     // we're in the build section, and not done, so pull apart the line
     var line = line.trimmingCharacters(in: .whitespaces)
     var splits = line.components(separatedBy: " */")
-    if splits.count != 2 { return }
+    if splits.count != 2 { continue }
     line = splits[0]
     splits = line.components(separatedBy: " /* ")
-    if splits.count != 2 { return }
+    if splits.count != 2 { continue }
     line = splits[0]
     let title = splits[1]
     splits = line.components(separatedBy: " = ")
-    if splits.count != 1 { return }
+    if splits.count != 1 { continue }
     let key = splits[0]
     titleMap[key] = title
-  })
+  }
   
   return titleMap
 }

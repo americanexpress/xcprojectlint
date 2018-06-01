@@ -12,7 +12,6 @@
  * the License.
  */
 
-import Darwin
 import Foundation
 
 private func recurseForMisplacedFiles(_ groups: [String], project: Project, errors: Set<String>, errorReporter: ErrorReporter) -> Set<String> {
