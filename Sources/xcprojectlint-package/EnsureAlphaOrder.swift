@@ -41,7 +41,7 @@ private func validateThisGroup(_ id: String, title: String, project: Project, er
   
   let matches = allNames == sortedArray
   if !matches {
-    let errStr = "\(errorReporter.reportKind.logEntry) Xcode folder “\(pathToParent)/\(title)” has out-of-order children.\nExpected: \(sortedArray)\nActual:\(allNames)"
+    let errStr = "\(errorReporter.reportKind.logEntry) Xcode folder “\(pathToParent)/\(title)” has out-of-order children.\nExpected: \(sortedArray)\nActual:   \(allNames)"
     print(errStr)
   }
   
