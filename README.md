@@ -129,7 +129,7 @@ inside.
 - Disk Layout Matches Project
 
     This test grabs the `MainGroup` out of the project, then recursively
-    traverses the children. If the child node is a file, we retreive the
+    traverses the children. If the child node is a file, we retrieve the
     `FileReference` by id, then check for a `name` value. The presence of a name
     indicates this file reference does not have a matching file on disk.
 
