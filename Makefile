@@ -23,7 +23,7 @@ EXECUTABLE_DIRECTORY = ./.build/x86_64-apple-macosx10.10/debug
 TEST_RESOURCES_DIRECTORY = ./.build/x86_64-apple-macosx10.10/debug/xcprojectlintPackageTests.xctest/Contents/Resources/
 
 error:
-	@echo "Please choose one of the following targets: test, xcode, clean"
+	@echo "Please choose one of the following targets: build, clean, test, xcode"
 	exit 2
 
 build:
