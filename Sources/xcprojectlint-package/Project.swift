@@ -15,27 +15,27 @@
 import Foundation
 
 public struct Project {
-  let projectName: String
-  let url: URL
-  let projectText: String
+  public let projectName: String
+  public let url: URL
+  public let projectText: String
   
-  let buildConfigurationLists: Dictionary<String, BuildConfigurationList>
-  let buildConfigurations: [BuildConfiguration]
-  let buildFiles: Dictionary<String, BuildFile>
-  let containerItemProxies: [ContainerItemProxy]
-  let copyFilesPhases: [CopyFilesBuildPhase]
-  let fileReferences: Dictionary<String, FileReference>
-  let frameworksBuildPhases: [FrameworksBuildPhase]
-  let groups: Dictionary<String, Group>
-  let legacyTargets: [LegacyTarget]
-  let nativeTargets: [NativeTarget]
-  let projectNodes: [ProjectNode]
-  let resourceBuildPhases: [ResourcesBuildPhase]
-  let shellScriptBuildPhases: [ShellScriptBuildPhase]
-  let sourcesBuildPhases: [SourcesBuildPhase]
-  let targetDependencies: [TargetDependency]
-  let titles: Dictionary<String, String>
-  let variantGroups: [VariantGroup]
+  public let buildConfigurationLists: Dictionary<String, BuildConfigurationList>
+  public let buildConfigurations: [BuildConfiguration]
+  public let buildFiles: Dictionary<String, BuildFile>
+  public let containerItemProxies: [ContainerItemProxy]
+  public let copyFilesPhases: [CopyFilesBuildPhase]
+  public let fileReferences: Dictionary<String, FileReference>
+  public let frameworksBuildPhases: [FrameworksBuildPhase]
+  public let groups: Dictionary<String, Group>
+  public let legacyTargets: [LegacyTarget]
+  public let nativeTargets: [NativeTarget]
+  public let projectNodes: [ProjectNode]
+  public let resourceBuildPhases: [ResourcesBuildPhase]
+  public let shellScriptBuildPhases: [ShellScriptBuildPhase]
+  public let sourcesBuildPhases: [SourcesBuildPhase]
+  public let targetDependencies: [TargetDependency]
+  public let titles: Dictionary<String, String>
+  public let variantGroups: [VariantGroup]
   
   public init(_ projectPath: String, errorReporter: ErrorReporter) throws {
     let filename = "project.pbxproj"

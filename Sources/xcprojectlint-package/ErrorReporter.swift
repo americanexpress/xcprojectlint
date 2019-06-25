@@ -23,13 +23,13 @@ public struct ErrorReporter {
     self.reportKind = reportKind
   }
   
-  func report(_ error: Error) {
+  public func report(_ error: Error) {
     // NOTE: The spaces around the error: portion of the screen are required with Xcode 8.3. Without them, no output gets reported in the Issue Navigator.
     let errStr = "\(pbxprojPath):0: \(reportKind.logEntry) \(error.localizedDescription)\n"
     ErrorReporter.report(errStr)
   }
   
-  static func report(_ errorString: String) {
+  public static func report(_ errorString: String) {
     let handle = FileHandle.standardError
     if let data = errorString.data(using: .utf8) {
       handle.write(data)
