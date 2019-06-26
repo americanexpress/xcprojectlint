@@ -14,12 +14,21 @@
 
 import Foundation
 
+public protocol Identifiable {
+  var id: String { get }
+}
+
 /// Many things are represented by an `id`, but they have a user-
 /// friendly name. This protocol describes the two pieces of data
 /// we need to describe errors in a meaningful way.
-protocol TitledNode: CustomDebugStringConvertible {
-  var id: String { get }
+public protocol TitledNode: Identifiable, CustomDebugStringConvertible {
   var title: String { get }
+}
+
+//Many nodes contain lists of files. 
+//This protocol generilizes them.
+public protocol FileContainer {
+  var files: [String] { get }
 }
 
 /// There are fields we expect to always be present, but we've just
@@ -39,14 +48,14 @@ extension Dictionary where Key == String {
   }
 }
 
-struct BuildConfiguration: TitledNode {
-  var title: String
-  var id: String
+public struct BuildConfiguration: TitledNode {
+  public let title: String
+  public let id: String
+  public let debugDescription: String
 
-  let name: String
-  let baseConfigurationReference: String?
-  let buildSettings: Dictionary<String, Any>
-  var debugDescription: String
+  public let name: String
+  public let baseConfigurationReference: String?
+  public let buildSettings: Dictionary<String, Any>
   
   init(key: String, value: Dictionary<String, Any>, title: String) {
     identifyUnparsedKeys(value, knownKeys: ["name", "baseConfigurationReference", "buildSettings"])
@@ -60,14 +69,14 @@ struct BuildConfiguration: TitledNode {
   }
 }
 
-struct BuildConfigurationList: TitledNode {
-  var title: String
-  var id: String
-  let buildConfigurations: [String]
-  let defaultConfigurationName: String?
-  let defaultConfigurationIsVisible: Bool
-  var debugDescription: String
-  
+public struct BuildConfigurationList: TitledNode {
+  public let title: String
+  public let id: String
+  public let debugDescription: String
+  public let buildConfigurations: [String]
+  public let defaultConfigurationName: String?
+  public let defaultConfigurationIsVisible: Bool
+    
   init(key: String, value: Dictionary<String, Any>, title: String) {
     identifyUnparsedKeys(value, knownKeys: ["buildConfigurations", "defaultConfigurationName", "defaultConfigurationIsVisible"])
     self.id = key
@@ -80,14 +89,15 @@ struct BuildConfigurationList: TitledNode {
   }
 }
 
-struct BuildFile: CustomDebugStringConvertible {
-  let key: String
-  let fileRef: String
-  
-  var debugDescription: String
+public struct BuildFile: Identifiable, CustomDebugStringConvertible {
+  public let id: String
+  public let key: String
+  public let fileRef: String
+  public let debugDescription: String
   
   init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["fileRef", "settings"])
+    self.id = key
     self.key = key
     self.fileRef = value.string(forKey: "fileRef", container: "(type(of: self))")
     
@@ -95,15 +105,17 @@ struct BuildFile: CustomDebugStringConvertible {
   }
 }
 
-struct ContainerItemProxy: CustomDebugStringConvertible {
-  let remoteInfo: String
-  let proxyType: String
-  let containerPortal: String
-  let remoteGlobalIDString: String
-  var debugDescription: String
+public struct ContainerItemProxy: Identifiable, CustomDebugStringConvertible {
+  public let id: String
+  public let debugDescription: String
+  public let remoteInfo: String
+  public let proxyType: String
+  public let containerPortal: String
+  public let remoteGlobalIDString: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["remoteInfo", "proxyType", "containerPortal", "remoteGlobalIDString"])
+    self.id = key
     self.remoteInfo = value.string(forKey: "remoteInfo", container: "(type(of: self))")
     self.proxyType = value.string(forKey: "proxyType", container: "(type(of: self))")
     self.containerPortal = value.string(forKey: "containerPortal", container: "(type(of: self))")
@@ -113,18 +125,20 @@ struct ContainerItemProxy: CustomDebugStringConvertible {
   }
 }
 
-struct CopyFilesBuildPhase: CustomDebugStringConvertible {
-  let dstSubfolderSpec: String
-  let files: [String]
-  let name: String
-  let dstPath: String
-  let runOnlyForDeploymentPostprocessing: Bool
-  let buildActionMask: String
-  var debugDescription: String
+public struct CopyFilesBuildPhase: Identifiable, FileContainer, CustomDebugStringConvertible {
+  public let id: String
+  public let files: [String]
+  public let name: String
+  public let debugDescription: String
+  public let dstSubfolderSpec: String
+  public let dstPath: String
+  public let runOnlyForDeploymentPostprocessing: Bool
+  public let buildActionMask: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["dstSubfolderSpec", "files", "name", "dstPath", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
     self.dstSubfolderSpec = value.string(forKey: "dstSubfolderSpec", container: "(type(of: self))")
+    self.id = key
     self.files = value["files"] as! [String]
     self.name = value["name"] as? String ?? "Untitled"
     self.dstPath = value.string(forKey: "dstPath", container: "(type(of: self))")
@@ -135,19 +149,19 @@ struct CopyFilesBuildPhase: CustomDebugStringConvertible {
   }
 }
 
-struct FileReference: TitledNode {
-  let title: String
-  let id: String
-  let name: String? // presence of a "name" indicates a path that doesn't match the filesystem
-  let path: String
-  let explicitFileType: String?
-  let lastKnownFileType: String?
-  let sourceTree: String
-  let fileEncoding: String?
-  let lineEnding: String?
-  let xcLanguageSpecificationIdentifier: String?
-  let includeInIndex: Bool?
-  var debugDescription: String
+public struct FileReference: TitledNode {
+  public let title: String
+  public let id: String
+  public let name: String? // presence of a "name" indicates a path that doesn't match the filesystem
+  public let path: String
+  public let explicitFileType: String?
+  public let lastKnownFileType: String?
+  public let sourceTree: String
+  public let fileEncoding: String?
+  public let lineEnding: String?
+  public let xcLanguageSpecificationIdentifier: String?
+  public let includeInIndex: Bool?
+  public let debugDescription: String
   
   init(key: String, value: Dictionary<String, Any>, title: String, projectPath: String) {
     identifyUnparsedKeys(value, knownKeys: ["path", "name", "explicitFileType", "lastKnownFileType", "sourceTree", "fileEncoding", "lineEnding", "xcLanguageSpecificationIdentifier", "includeInIndex"])
@@ -167,14 +181,16 @@ struct FileReference: TitledNode {
   }
 }
 
-struct FrameworksBuildPhase: CustomDebugStringConvertible {
-  let files: [String]
-  let runOnlyForDeploymentPostprocessing: Bool
-  let buildActionMask: String
-  var debugDescription: String
+public struct FrameworksBuildPhase: Identifiable, FileContainer, CustomDebugStringConvertible {
+  public let id: String
+  public let files: [String]
+  public let debugDescription: String
+  public let runOnlyForDeploymentPostprocessing: Bool
+  public let buildActionMask: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["files", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
+    self.id = key
     self.files = value["files"] as! [String]
     self.runOnlyForDeploymentPostprocessing = (value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "(type(of: self))")) == "1"
     self.buildActionMask = value.string(forKey: "buildActionMask", container: "(type(of: self))")
@@ -183,16 +199,16 @@ struct FrameworksBuildPhase: CustomDebugStringConvertible {
   }
 }
 
-struct Group: TitledNode {
-  let title: String // extracted from comments
-  let id: String
-  let name: String?
-  let path: String?
-  let sourceTree: String
-  let children: [String]
-  let indentWidth: String?
-  let tabWidth: String?
-  var debugDescription: String
+public struct Group: TitledNode {
+  public let title: String // extracted from comments
+  public let id: String
+  public let debugDescription: String
+  public let name: String?
+  public let path: String?
+  public let sourceTree: String
+  public let children: [String]
+  public let indentWidth: String?
+  public let tabWidth: String?
   
   init(key: String, value: Dictionary<String, Any>, title: String) {
     identifyUnparsedKeys(value, knownKeys: ["name", "path", "sourceTree", "children", "indentWidth", "tabWidth"])
@@ -209,20 +225,22 @@ struct Group: TitledNode {
   }
 }
 
-struct LegacyTarget: CustomDebugStringConvertible {
-  let name: String
-  let productName: String
-  let dependencies: [String]
-  let buildArgumentsString: String
-  let buildConfigurationList: String
-  let buildWorkingDirectory: String
-  let passBuildSettingsInEnvironment: Bool
-  let buildPhases: [String]
-  let buildToolPath: String
-  var debugDescription: String
+public struct LegacyTarget: Identifiable, CustomDebugStringConvertible {
+  public let id: String
+  public let debugDescription: String
+  public let name: String
+  public let productName: String
+  public let dependencies: [String]
+  public let buildArgumentsString: String
+  public let buildConfigurationList: String
+  public let buildWorkingDirectory: String
+  public let passBuildSettingsInEnvironment: Bool
+  public let buildPhases: [String]
+  public let buildToolPath: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["name", "productName", "dependencies", "buildArgumentsString", "buildConfigurationList", "buildWorkingDirectory", "passBuildSettingsInEnvironment", "buildPhases", "buildToolPath"])
+    self.id = key
     self.name = value.string(forKey: "name", container: "(type(of: self))")
     self.productName = value.string(forKey: "productName", container: "(type(of: self))")
     self.dependencies = value["dependencies"] as! [String]
@@ -237,19 +255,21 @@ struct LegacyTarget: CustomDebugStringConvertible {
   }
 }
 
-struct NativeTarget: CustomDebugStringConvertible {
-  let name: String
-  let productName: String
-  let productType: String
-  let buildRules: [String]
-  let productReference: String
-  let dependencies: [String]
-  let buildConfigurationList: String
-  let buildPhases: [String]
-  var debugDescription: String
+public struct NativeTarget: Identifiable, CustomDebugStringConvertible {
+  public let id: String
+  public let name: String
+  public let buildPhases: [String]
+  public let debugDescription: String
+  public let productName: String
+  public let productType: String
+  public let buildRules: [String]
+  public let productReference: String
+  public let dependencies: [String]
+  public let buildConfigurationList: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["name", "productName", "productType", "buildRules", "productReference", "dependencies", "buildConfigurationList", "buildPhases"])
+    self.id = key
     self.name = value.string(forKey: "name", container: "(type(of: self))")
     self.productName = value.string(forKey: "productName", container: "(type(of: self))")
     self.productType = value.string(forKey: "productType", container: "(type(of: self))")
@@ -263,22 +283,24 @@ struct NativeTarget: CustomDebugStringConvertible {
   }
 }
 
-struct ProjectNode: CustomDebugStringConvertible {
-  let mainGroup: String
-  let developmentRegion: String
-  let projectDirPath: String
-  let productRefGroup: String
-  let targets: [String]
-  let buildConfigurationList: String
-  let knownRegions: [String]
-  let compatibilityVersion: String
-  let hasScannedForEncodings: Bool
-  let projectRoot: String
+public struct ProjectNode: Identifiable, CustomDebugStringConvertible {
+  public let id: String
+  public let debugDescription: String
+  public let mainGroup: String
+  public let developmentRegion: String
+  public let projectDirPath: String
+  public let productRefGroup: String
+  public let targets: [String]
+  public let buildConfigurationList: String
+  public let knownRegions: [String]
+  public let compatibilityVersion: String
+  public let hasScannedForEncodings: Bool
+  public let projectRoot: String
   
-  var debugDescription: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["mainGroup", "attributes", "developmentRegion", "projectDirPath", "productRefGroup", "targets", "buildConfigurationList", "knownRegions", "compatibilityVersion", "hasScannedForEncodings", "projectRoot"])
+    self.id = key
     self.mainGroup = value.string(forKey: "mainGroup", container: "(type(of: self))")
     self.developmentRegion = value.string(forKey: "developmentRegion", container: "(type(of: self))")
     self.projectDirPath = value.string(forKey: "projectDirPath", container: "(type(of: self))")
@@ -294,14 +316,16 @@ struct ProjectNode: CustomDebugStringConvertible {
   }
 }
 
-struct ResourcesBuildPhase: CustomDebugStringConvertible {
-  let files: [String]
-  let runOnlyForDeploymentPostprocessing: Bool
-  let buildActionMask: String
-  var debugDescription: String
+public struct ResourcesBuildPhase: Identifiable, FileContainer, CustomDebugStringConvertible {
+  public let id: String
+  public let files: [String]
+  public let debugDescription: String
+  public let runOnlyForDeploymentPostprocessing: Bool
+  public let buildActionMask: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["files", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
+    self.id = key
     self.files = value["files"] as! [String]
     self.runOnlyForDeploymentPostprocessing = (value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "(type(of: self))")) == "1"
     self.buildActionMask = value.string(forKey: "buildActionMask", container: "(type(of: self))")
@@ -310,20 +334,22 @@ struct ResourcesBuildPhase: CustomDebugStringConvertible {
   }
 }
 
-struct ShellScriptBuildPhase: CustomDebugStringConvertible {
-  let showEnvVarsInLog: Bool
-  let files: [String]
-  let name: String
-  let runOnlyForDeploymentPostprocessing: Bool
-  let shellPath: String
-  let inputPaths: [String]
-  let outputPaths: [String]
-  let shellScript: String
-  let buildActionMask: String
-  var debugDescription: String
+public struct ShellScriptBuildPhase: Identifiable, FileContainer, CustomDebugStringConvertible {
+  public let id: String
+  public let files: [String]
+  public let debugDescription: String
+  public let showEnvVarsInLog: Bool
+  public let name: String
+  public let runOnlyForDeploymentPostprocessing: Bool
+  public let shellPath: String
+  public let inputPaths: [String]
+  public let outputPaths: [String]
+  public let shellScript: String
+  public let buildActionMask: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["showEnvVarsInLog", "files", "name", "runOnlyForDeploymentPostprocessing", "shellPath", "inputPaths", "outputPaths", "shellScript", "buildActionMask"])
+    self.id = key
     self.showEnvVarsInLog = (value["showEnvVarsInLog"] as? String) == "1"
     self.files = value["files"] as! [String]
     self.name = value["name"] as? String ?? "Untitled"
@@ -338,14 +364,16 @@ struct ShellScriptBuildPhase: CustomDebugStringConvertible {
   }
 }
 
-struct SourcesBuildPhase: CustomDebugStringConvertible {
-  let files: [String]
-  let runOnlyForDeploymentPostprocessing: Bool
-  let buildActionMask: String
-  var debugDescription: String
+public struct SourcesBuildPhase: Identifiable, FileContainer, CustomDebugStringConvertible {
+  public let id: String
+  public let files: [String]
+  public let runOnlyForDeploymentPostprocessing: Bool
+  public let buildActionMask: String
+  public let debugDescription: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["files", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
+    self.id = key
     self.files = value["files"] as! [String]
     self.runOnlyForDeploymentPostprocessing = (value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "(type(of: self))")) == "1"
     self.buildActionMask = value.string(forKey: "buildActionMask", container: "(type(of: self))")
@@ -354,13 +382,15 @@ struct SourcesBuildPhase: CustomDebugStringConvertible {
   }
 }
 
-struct TargetDependency: CustomDebugStringConvertible {
-  let target: String
-  let targetProxy: String
-  var debugDescription: String
+public struct TargetDependency: Identifiable, CustomDebugStringConvertible {
+  public let id: String
+  public let debugDescription: String
+  public let target: String
+  public let targetProxy: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["target", "targetProxy"])
+    self.id = key
     self.target = value.string(forKey: "target", container: "(type(of: self))")
     self.targetProxy = value.string(forKey: "targetProxy", container: "(type(of: self))")
     
@@ -368,16 +398,18 @@ struct TargetDependency: CustomDebugStringConvertible {
   }
 }
 
-struct VariantGroup: CustomDebugStringConvertible {
-  let name: String?
-  let path: String?
-  let sourceTree: String
-  let children: [String]
+public struct VariantGroup: Identifiable, CustomDebugStringConvertible {
+  public let id: String
+  public let debugDescription: String
+  public let name: String?
+  public let path: String?
+  public let sourceTree: String
+  public let children: [String]
   
-  var debugDescription: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["name", "path", "sourceTree", "children"])
+    self.id = key
     self.name = value["name"] as? String
     self.path = value["path"] as? String
     self.sourceTree = value.string(forKey: "sourceTree", container: "(type(of: self))")
@@ -566,7 +598,7 @@ func identifyUnparsedKeys(_ values: Dictionary<String, Any>, knownKeys: [String]
 /// We start this mess off by grabbing the `objects` node out of the top
 /// level dictiopnary. It contains pretty much everything interesting.
 ///
-class ProjectParser {
+public class ProjectParser {
   private let objects: [String: Any]
   private let rootObject: String
   private let projectPath: String
@@ -629,13 +661,13 @@ init(project: Dictionary<String, Any>, projectText: String, projectPath: String)
           let file = FileReference(key: key, value: node, title: title(key, titles: titles), projectPath: projectPath)
           fileReferences[key] = file
         case "PBXLegacyTarget":
-          let target = LegacyTarget(value: node)
+          let target = LegacyTarget(key: key,value: node)
           legacyTargets.append(target)
         case "PBXNativeTarget":
-          let target = NativeTarget(value: node)
+          let target = NativeTarget(key: key,value: node)
           nativeTargets.append(target)
         case "PBXResourcesBuildPhase":
-          let phase = ResourcesBuildPhase(value: node)
+          let phase = ResourcesBuildPhase(key: key, value: node)
           resourceBuildPhases.append(phase)
         case "XCConfigurationList":
           let configurationList = BuildConfigurationList(key: key, value: node, title: title(key, titles: titles))
@@ -647,28 +679,28 @@ init(project: Dictionary<String, Any>, projectText: String, projectPath: String)
           let group = Group(key: key, value: node, title: title(key, titles: titles))
           groups[key] = group
         case "PBXContainerItemProxy":
-          let containerItemProxy = ContainerItemProxy(value: node)
+          let containerItemProxy = ContainerItemProxy(key: key,value: node)
           containerItemProxies.append(containerItemProxy)
         case "PBXProject":
-          let project = ProjectNode(value: node)
+          let project = ProjectNode(key: key,value: node)
           projectNodes.append(project)
         case "PBXFrameworksBuildPhase":
-          let buildPhase = FrameworksBuildPhase(value: node)
+          let buildPhase = FrameworksBuildPhase(key: key, value: node)
           frameworksBuildPhases.append(buildPhase)
         case "PBXShellScriptBuildPhase":
-          let buildPhase = ShellScriptBuildPhase(value: node)
+          let buildPhase = ShellScriptBuildPhase(key: key,value: node)
           shellScriptBuildPhases.append(buildPhase)
         case "PBXSourcesBuildPhase":
-          let buildPhase = SourcesBuildPhase(value: node)
+          let buildPhase = SourcesBuildPhase(key: key, value: node)
           sourcesBuildPhases.append(buildPhase)
         case "PBXTargetDependency":
-          let targetDependency = TargetDependency(value: node)
+          let targetDependency = TargetDependency(key: key,value: node)
           targetDependencies.append(targetDependency)
         case "PBXVariantGroup":
-          let variantGroup = VariantGroup(value: node)
+          let variantGroup = VariantGroup(key: key,value: node)
           variantGroups.append(variantGroup)
         case "PBXCopyFilesBuildPhase":
-          let buildPhase = CopyFilesBuildPhase(value: node)
+          let buildPhase = CopyFilesBuildPhase(key: key, value: node)
           copyFilesPhases.append(buildPhase)
         case "PBXAggregateTarget":
           break
