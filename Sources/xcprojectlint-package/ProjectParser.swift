@@ -89,13 +89,15 @@ public struct BuildConfigurationList: TitledNode {
   }
 }
 
-public struct BuildFile: CustomDebugStringConvertible {
+public struct BuildFile: Identifiable, CustomDebugStringConvertible {
+  public let id: String
   public let key: String
   public let fileRef: String
   public var debugDescription: String
   
   init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["fileRef", "settings"])
+    self.id = key
     self.key = key
     self.fileRef = value.string(forKey: "fileRef", container: "(type(of: self))")
     
@@ -103,15 +105,17 @@ public struct BuildFile: CustomDebugStringConvertible {
   }
 }
 
-public struct ContainerItemProxy: CustomDebugStringConvertible {
-  public var debugDescription: String
+public struct ContainerItemProxy: Identifiable, CustomDebugStringConvertible {
+  public let id: String
+  public let debugDescription: String
   public let remoteInfo: String
   public let proxyType: String
   public let containerPortal: String
   public let remoteGlobalIDString: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["remoteInfo", "proxyType", "containerPortal", "remoteGlobalIDString"])
+    self.id = key
     self.remoteInfo = value.string(forKey: "remoteInfo", container: "(type(of: self))")
     self.proxyType = value.string(forKey: "proxyType", container: "(type(of: self))")
     self.containerPortal = value.string(forKey: "containerPortal", container: "(type(of: self))")
@@ -221,8 +225,9 @@ public struct Group: TitledNode {
   }
 }
 
-public struct LegacyTarget: CustomDebugStringConvertible {
-  public var debugDescription: String
+public struct LegacyTarget: Identifiable, CustomDebugStringConvertible {
+  public let id: String
+  public let debugDescription: String
   public let name: String
   public let productName: String
   public let dependencies: [String]
@@ -233,8 +238,9 @@ public struct LegacyTarget: CustomDebugStringConvertible {
   public let buildPhases: [String]
   public let buildToolPath: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["name", "productName", "dependencies", "buildArgumentsString", "buildConfigurationList", "buildWorkingDirectory", "passBuildSettingsInEnvironment", "buildPhases", "buildToolPath"])
+    self.id = key
     self.name = value.string(forKey: "name", container: "(type(of: self))")
     self.productName = value.string(forKey: "productName", container: "(type(of: self))")
     self.dependencies = value["dependencies"] as! [String]
@@ -249,7 +255,8 @@ public struct LegacyTarget: CustomDebugStringConvertible {
   }
 }
 
-public struct NativeTarget: CustomDebugStringConvertible {
+public struct NativeTarget: Identifiable, CustomDebugStringConvertible {
+  public let id: String
   public let name: String
   public let buildPhases: [String]
   public var debugDescription: String
@@ -260,8 +267,9 @@ public struct NativeTarget: CustomDebugStringConvertible {
   public let dependencies: [String]
   public let buildConfigurationList: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["name", "productName", "productType", "buildRules", "productReference", "dependencies", "buildConfigurationList", "buildPhases"])
+    self.id = key
     self.name = value.string(forKey: "name", container: "(type(of: self))")
     self.productName = value.string(forKey: "productName", container: "(type(of: self))")
     self.productType = value.string(forKey: "productType", container: "(type(of: self))")
@@ -275,7 +283,8 @@ public struct NativeTarget: CustomDebugStringConvertible {
   }
 }
 
-public struct ProjectNode: CustomDebugStringConvertible {
+public struct ProjectNode: Identifiable, CustomDebugStringConvertible {
+  public let id: String
   public var debugDescription: String
   public let mainGroup: String
   public let developmentRegion: String
@@ -289,8 +298,9 @@ public struct ProjectNode: CustomDebugStringConvertible {
   public let projectRoot: String
   
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["mainGroup", "attributes", "developmentRegion", "projectDirPath", "productRefGroup", "targets", "buildConfigurationList", "knownRegions", "compatibilityVersion", "hasScannedForEncodings", "projectRoot"])
+    self.id = key
     self.mainGroup = value.string(forKey: "mainGroup", container: "(type(of: self))")
     self.developmentRegion = value.string(forKey: "developmentRegion", container: "(type(of: self))")
     self.projectDirPath = value.string(forKey: "projectDirPath", container: "(type(of: self))")
@@ -324,7 +334,8 @@ public struct ResourcesBuildPhase: Identifiable, FileContainer, CustomDebugStrin
   }
 }
 
-public struct ShellScriptBuildPhase: FileContainer, CustomDebugStringConvertible {
+public struct ShellScriptBuildPhase: Identifiable, FileContainer, CustomDebugStringConvertible {
+  public let id: String
   public let files: [String]
   public var debugDescription: String
   public let showEnvVarsInLog: Bool
@@ -336,8 +347,9 @@ public struct ShellScriptBuildPhase: FileContainer, CustomDebugStringConvertible
   public let shellScript: String
   public let buildActionMask: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String,value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["showEnvVarsInLog", "files", "name", "runOnlyForDeploymentPostprocessing", "shellPath", "inputPaths", "outputPaths", "shellScript", "buildActionMask"])
+    self.id = key
     self.showEnvVarsInLog = (value["showEnvVarsInLog"] as? String) == "1"
     self.files = value["files"] as! [String]
     self.name = value["name"] as? String ?? "Untitled"
@@ -370,13 +382,15 @@ public struct SourcesBuildPhase: Identifiable, FileContainer, CustomDebugStringC
   }
 }
 
-public struct TargetDependency: CustomDebugStringConvertible {
+public struct TargetDependency: Identifiable, CustomDebugStringConvertible {
+  public let id: String
   public var debugDescription: String
   public let target: String
   public let targetProxy: String
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["target", "targetProxy"])
+    self.id = key
     self.target = value.string(forKey: "target", container: "(type(of: self))")
     self.targetProxy = value.string(forKey: "targetProxy", container: "(type(of: self))")
     
@@ -384,7 +398,8 @@ public struct TargetDependency: CustomDebugStringConvertible {
   }
 }
 
-public struct VariantGroup: CustomDebugStringConvertible {
+public struct VariantGroup: Identifiable, CustomDebugStringConvertible {
+  public let id: String
   public var debugDescription: String
   public let name: String?
   public let path: String?
@@ -392,8 +407,9 @@ public struct VariantGroup: CustomDebugStringConvertible {
   public let children: [String]
   
   
-  init(value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["name", "path", "sourceTree", "children"])
+    self.id = key
     self.name = value["name"] as? String
     self.path = value["path"] as? String
     self.sourceTree = value.string(forKey: "sourceTree", container: "(type(of: self))")
@@ -645,10 +661,10 @@ init(project: Dictionary<String, Any>, projectText: String, projectPath: String)
           let file = FileReference(key: key, value: node, title: title(key, titles: titles), projectPath: projectPath)
           fileReferences[key] = file
         case "PBXLegacyTarget":
-          let target = LegacyTarget(value: node)
+          let target = LegacyTarget(key: key,value: node)
           legacyTargets.append(target)
         case "PBXNativeTarget":
-          let target = NativeTarget(value: node)
+          let target = NativeTarget(key: key,value: node)
           nativeTargets.append(target)
         case "PBXResourcesBuildPhase":
           let phase = ResourcesBuildPhase(key: key, value: node)
@@ -663,25 +679,25 @@ init(project: Dictionary<String, Any>, projectText: String, projectPath: String)
           let group = Group(key: key, value: node, title: title(key, titles: titles))
           groups[key] = group
         case "PBXContainerItemProxy":
-          let containerItemProxy = ContainerItemProxy(value: node)
+          let containerItemProxy = ContainerItemProxy(key: key,value: node)
           containerItemProxies.append(containerItemProxy)
         case "PBXProject":
-          let project = ProjectNode(value: node)
+          let project = ProjectNode(key: key,value: node)
           projectNodes.append(project)
         case "PBXFrameworksBuildPhase":
           let buildPhase = FrameworksBuildPhase(key: key, value: node)
           frameworksBuildPhases.append(buildPhase)
         case "PBXShellScriptBuildPhase":
-          let buildPhase = ShellScriptBuildPhase(value: node)
+          let buildPhase = ShellScriptBuildPhase(key: key,value: node)
           shellScriptBuildPhases.append(buildPhase)
         case "PBXSourcesBuildPhase":
           let buildPhase = SourcesBuildPhase(key: key, value: node)
           sourcesBuildPhases.append(buildPhase)
         case "PBXTargetDependency":
-          let targetDependency = TargetDependency(value: node)
+          let targetDependency = TargetDependency(key: key,value: node)
           targetDependencies.append(targetDependency)
         case "PBXVariantGroup":
-          let variantGroup = VariantGroup(value: node)
+          let variantGroup = VariantGroup(key: key,value: node)
           variantGroups.append(variantGroup)
         case "PBXCopyFilesBuildPhase":
           let buildPhase = CopyFilesBuildPhase(key: key, value: node)
