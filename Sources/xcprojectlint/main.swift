@@ -14,7 +14,7 @@
 
 import Basic
 import Foundation
-import Utility
+import SPMUtility
 import xcprojectlint_package
 
 func noteSuccess() {
