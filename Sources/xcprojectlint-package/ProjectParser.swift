@@ -93,7 +93,7 @@ public struct BuildFile: Identifiable, CustomDebugStringConvertible {
   public let id: String
   public let key: String
   public let fileRef: String
-  public var debugDescription: String
+  public let debugDescription: String
   
   init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["fileRef", "settings"])
@@ -129,7 +129,7 @@ public struct CopyFilesBuildPhase: Identifiable, FileContainer, CustomDebugStrin
   public let id: String
   public let files: [String]
   public let name: String
-  public var debugDescription: String
+  public let debugDescription: String
   public let dstSubfolderSpec: String
   public let dstPath: String
   public let runOnlyForDeploymentPostprocessing: Bool
@@ -161,7 +161,7 @@ public struct FileReference: TitledNode {
   public let lineEnding: String?
   public let xcLanguageSpecificationIdentifier: String?
   public let includeInIndex: Bool?
-  public var debugDescription: String
+  public let debugDescription: String
   
   init(key: String, value: Dictionary<String, Any>, title: String, projectPath: String) {
     identifyUnparsedKeys(value, knownKeys: ["path", "name", "explicitFileType", "lastKnownFileType", "sourceTree", "fileEncoding", "lineEnding", "xcLanguageSpecificationIdentifier", "includeInIndex"])
@@ -184,7 +184,7 @@ public struct FileReference: TitledNode {
 public struct FrameworksBuildPhase: Identifiable, FileContainer, CustomDebugStringConvertible {
   public let id: String
   public let files: [String]
-  public var debugDescription: String
+  public let debugDescription: String
   public let runOnlyForDeploymentPostprocessing: Bool
   public let buildActionMask: String
   
@@ -202,7 +202,7 @@ public struct FrameworksBuildPhase: Identifiable, FileContainer, CustomDebugStri
 public struct Group: TitledNode {
   public let title: String // extracted from comments
   public let id: String
-  public var debugDescription: String
+  public let debugDescription: String
   public let name: String?
   public let path: String?
   public let sourceTree: String
@@ -259,7 +259,7 @@ public struct NativeTarget: Identifiable, CustomDebugStringConvertible {
   public let id: String
   public let name: String
   public let buildPhases: [String]
-  public var debugDescription: String
+  public let debugDescription: String
   public let productName: String
   public let productType: String
   public let buildRules: [String]
@@ -285,7 +285,7 @@ public struct NativeTarget: Identifiable, CustomDebugStringConvertible {
 
 public struct ProjectNode: Identifiable, CustomDebugStringConvertible {
   public let id: String
-  public var debugDescription: String
+  public let debugDescription: String
   public let mainGroup: String
   public let developmentRegion: String
   public let projectDirPath: String
@@ -319,7 +319,7 @@ public struct ProjectNode: Identifiable, CustomDebugStringConvertible {
 public struct ResourcesBuildPhase: Identifiable, FileContainer, CustomDebugStringConvertible {
   public let id: String
   public let files: [String]
-  public var debugDescription: String
+  public let debugDescription: String
   public let runOnlyForDeploymentPostprocessing: Bool
   public let buildActionMask: String
   
@@ -337,7 +337,7 @@ public struct ResourcesBuildPhase: Identifiable, FileContainer, CustomDebugStrin
 public struct ShellScriptBuildPhase: Identifiable, FileContainer, CustomDebugStringConvertible {
   public let id: String
   public let files: [String]
-  public var debugDescription: String
+  public let debugDescription: String
   public let showEnvVarsInLog: Bool
   public let name: String
   public let runOnlyForDeploymentPostprocessing: Bool
@@ -347,7 +347,7 @@ public struct ShellScriptBuildPhase: Identifiable, FileContainer, CustomDebugStr
   public let shellScript: String
   public let buildActionMask: String
   
-  init(key: String,value: Dictionary<String, Any>) {
+  init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["showEnvVarsInLog", "files", "name", "runOnlyForDeploymentPostprocessing", "shellPath", "inputPaths", "outputPaths", "shellScript", "buildActionMask"])
     self.id = key
     self.showEnvVarsInLog = (value["showEnvVarsInLog"] as? String) == "1"
@@ -369,7 +369,7 @@ public struct SourcesBuildPhase: Identifiable, FileContainer, CustomDebugStringC
   public let files: [String]
   public let runOnlyForDeploymentPostprocessing: Bool
   public let buildActionMask: String
-  public var debugDescription: String
+  public let debugDescription: String
   
   init(key: String, value: Dictionary<String, Any>) {
     identifyUnparsedKeys(value, knownKeys: ["files", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
@@ -384,7 +384,7 @@ public struct SourcesBuildPhase: Identifiable, FileContainer, CustomDebugStringC
 
 public struct TargetDependency: Identifiable, CustomDebugStringConvertible {
   public let id: String
-  public var debugDescription: String
+  public let debugDescription: String
   public let target: String
   public let targetProxy: String
   
@@ -400,7 +400,7 @@ public struct TargetDependency: Identifiable, CustomDebugStringConvertible {
 
 public struct VariantGroup: Identifiable, CustomDebugStringConvertible {
   public let id: String
-  public var debugDescription: String
+  public let debugDescription: String
   public let name: String?
   public let path: String?
   public let sourceTree: String
