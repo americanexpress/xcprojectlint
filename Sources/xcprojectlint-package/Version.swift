@@ -12,6 +12,6 @@
  * the License.
  */
 
-import Utility
+import SPMUtility
 
 public let currentVersion = Version(0, 0, 3)

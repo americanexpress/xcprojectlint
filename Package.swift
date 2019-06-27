@@ -36,7 +36,7 @@ let package = Package(
             dependencies: ["xcprojectlint-package"]),
         .target(
             name: "xcprojectlint-package",
-            dependencies: ["Utility"]),
+            dependencies: ["SPMUtility"]),
         .testTarget(
             name: "xcprojectlint-packageTests",
             dependencies: ["xcprojectlint-package"]),

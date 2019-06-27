@@ -13,7 +13,7 @@
  */
 
 import Foundation
-import Utility
+import SPMUtility
 
 public enum ReportKind: StringEnumArgument {
   case warning

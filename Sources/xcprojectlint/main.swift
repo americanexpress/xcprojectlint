@@ -14,7 +14,7 @@
 
 import Basic
 import Foundation
-import Utility
+import SPMUtility
 import xcprojectlint_package
 
 func noteSuccess() {
@@ -78,8 +78,8 @@ func main() -> Int32 {
       validations = Validation.allValidations()
     }
     
-    let errorReporter = ErrorReporter(pbxprojPath: proj.path.asString, reportKind: reportKind)
-    let project = try Project(proj.path.asString, errorReporter: errorReporter)
+    let errorReporter = ErrorReporter(pbxprojPath: proj.path.description, reportKind: reportKind)
+    let project = try Project(proj.path.description, errorReporter: errorReporter)
     var scriptResult: Int32 = EX_OK
     for test in validations {
       switch test {
