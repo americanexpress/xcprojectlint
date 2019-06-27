@@ -19,8 +19,8 @@
 # https://stackoverflow.com/a/47243701
 # which came with the above license
 
-EXECUTABLE_DIRECTORY = ./.build/x86_64-apple-macosx10.10/debug
-TEST_RESOURCES_DIRECTORY = ./.build/x86_64-apple-macosx10.10/debug/xcprojectlintPackageTests.xctest/Contents/Resources/
+EXECUTABLE_DIRECTORY = ./.build/x86_64-apple-macosx/debug
+TEST_RESOURCES_DIRECTORY = ./.build/x86_64-apple-macosx/debug/xcprojectlintPackageTests.xctest/Contents/Resources/
 
 error:
 	@echo "Please choose one of the following targets: build, clean, test, xcode"
