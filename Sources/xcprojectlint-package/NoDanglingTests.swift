@@ -29,12 +29,13 @@ public func noDanglingTests(_ project: Project, errorReporter: ErrorReporter) ->
                 !targetFiles.contains(key) else {return false}
             return true
     }
-    
+
     let results: [String] = actualFilesInProjectNavigator.map{
-        "‼️ \($0.value.title) is not added to any test target.\n"
+        "\(project.absolutePathToReference($1)):0: \(errorReporter.reportKind.logEntry) \($1.path) is not added to any test target.\n"
     }
 
     if results.count > 0 {
+
         result = errorReporter.reportKind.returnType
         for error in results {
             ErrorReporter.report(error)
