@@ -31,7 +31,7 @@ public func noDanglingTests(_ project: Project, errorReporter: ErrorReporter) ->
     }
     
     let results: [String] = actualFilesInProjectNavigator.map{
-        "‼️ \($0.value.title) is not added to any test target.\n"
+        "\(project.absolutePathToReference($1)):0: \(errorReporter.reportKind.logEntry) \($1.path) is not added to any test target.\n"
     }
 
     if results.count > 0 {
