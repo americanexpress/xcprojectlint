@@ -32,6 +32,10 @@ currently supports these checks:
 
     This mode ensures the project files and folders are in proper order.
 
+- `dangling-tests`
+
+    Ensures all test files ending with `Tests` are members of a test target.
+
 - `all`
 
     For convenience, this mode runs all of the above tests.

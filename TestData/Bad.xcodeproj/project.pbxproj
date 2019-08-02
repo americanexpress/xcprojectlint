@@ -27,6 +27,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7819B10A22F4819E008F36CB /* BadUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BadUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7819B10C22F4819E008F36CB /* BadUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadUnitTests.swift; sourceTree = "<group>"; };
 		D2A90D0F2032181600EBA6AA /* ThisFileIsMissing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThisFileIsMissing.swift; sourceTree = "<group>"; };
 		D2A90D132032190A00EBA6AA /* First.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = First.swift; sourceTree = "<group>"; };
 		D2A90D152032191600EBA6AA /* Second.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Second.swift; sourceTree = "<group>"; };
@@ -36,6 +38,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		7819B10722F4819E008F36CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D2CAE8702031EE5F00F76063 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -46,6 +55,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7819B10B22F4819E008F36CB /* BadUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				7819B10C22F4819E008F36CB /* BadUnitTests.swift */,
+			);
+			path = BadUnitTests;
+			sourceTree = "<group>";
+		};
 		D2A90D0E2032180800EBA6AA /* MissingFile */ = {
 			isa = PBXGroup;
 			children = (
@@ -74,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				D2CAE8752031EE5F00F76063 /* Bad */,
+				7819B10B22F4819E008F36CB /* BadUnitTests */,
 				D2CAE8742031EE5F00F76063 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -82,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				D2CAE8732031EE5F00F76063 /* Bad */,
+				7819B10A22F4819E008F36CB /* BadUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -109,6 +128,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		7819B10922F4819E008F36CB /* BadUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7819B11122F4819E008F36CB /* Build configuration list for PBXNativeTarget "BadUnitTests" */;
+			buildPhases = (
+				7819B10622F4819E008F36CB /* Sources */,
+				7819B10722F4819E008F36CB /* Frameworks */,
+				7819B10822F4819E008F36CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BadUnitTests;
+			productName = BadUnitTests;
+			productReference = 7819B10A22F4819E008F36CB /* BadUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D2CAE8722031EE5F00F76063 /* Bad */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D2CAE87A2031EE5F00F76063 /* Build configuration list for PBXNativeTarget "Bad" */;
@@ -132,10 +168,14 @@
 		D2CAE86B2031EE5F00F76063 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0910;
+				LastSwiftUpdateCheck = 1030;
 				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = Amex;
 				TargetAttributes = {
+					7819B10922F4819E008F36CB = {
+						CreatedOnToolsVersion = 10.3;
+						ProvisioningStyle = Automatic;
+					};
 					D2CAE8722031EE5F00F76063 = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
@@ -155,11 +195,29 @@
 			projectRoot = "";
 			targets = (
 				D2CAE8722031EE5F00F76063 /* Bad */,
+				7819B10922F4819E008F36CB /* BadUnitTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		7819B10822F4819E008F36CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		7819B10622F4819E008F36CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D2CAE86F2031EE5F00F76063 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -175,6 +233,45 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		7819B10F22F4819E008F36CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = BadUnitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.americanexpress.bad.unittests.BadUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		7819B11022F4819E008F36CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = BadUnitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.americanexpress.bad.unittests.BadUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		D2CAE8782031EE5F00F76063 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -304,6 +401,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7819B11122F4819E008F36CB /* Build configuration list for PBXNativeTarget "BadUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7819B10F22F4819E008F36CB /* Debug */,
+				7819B11022F4819E008F36CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D2CAE86E2031EE5F00F76063 /* Build configuration list for PBXProject "Bad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
