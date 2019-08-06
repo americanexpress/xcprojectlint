@@ -21,11 +21,11 @@ public func noDanglingTests(_ project: Project, errorReporter: ErrorReporter) ->
     let excludedExtensions = Set(["xctest", "h", "xcconfig", "xcfilelist"])
     let actualFilesInProjectNavigator = project.fileReferences
         .filter{ key, value in
-            let fileComponenets = value.title.components(separatedBy: ".")
-            guard fileComponenets.count > 1,
-                let fileName = fileComponenets.first?.hasSuffix("Tests"),
+            let fileComponents = value.title.components(separatedBy: ".")
+            guard fileComponents.count > 1,
+                let fileName = fileComponents.first?.hasSuffix("Tests"),
                 fileName == true,
-                !excludedExtensions.contains(fileComponenets[1]),
+                !excludedExtensions.contains(fileComponents[1]),
                 !targetFiles.contains(key) else {return false}
             return true
     }
