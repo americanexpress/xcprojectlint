@@ -68,7 +68,7 @@ List of validations to perform:
             Validation.diskLayoutMatchesProject,
             Validation.filesExistOnDisk,
             Validation.itemsInAlphaOrder,
-            Validation.noEmptyGroups,
-            Validation.noDanglingTests]
+            Validation.noDanglingTests,
+            Validation.noEmptyGroups]
   }
 }
