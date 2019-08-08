@@ -18,7 +18,7 @@ public func noDanglingFiles(_ project: Project, errorReporter: ErrorReporter) ->
     var result = EX_DATAERR
 
     let targetFiles = Set(project.buildFiles.map{$1.fileRef})
-    let extensionsWhiteList = Set(["m", "mm", "swift"])
+    let extensionsWhiteList = Set(["m", "mm", "swift", "cpp", "c"])
     let actualFilesInProjectNavigator = project.fileReferences
         .filter{ key, value in
             let fileComponents = value.title.components(separatedBy: ".")
