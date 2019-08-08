@@ -14,28 +14,25 @@
 
 import Foundation
 
-public func noDanglingTests(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
+public func noDanglingFiles(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
     var result = EX_DATAERR
 
     let targetFiles = Set(project.buildFiles.map{$1.fileRef})
-    let excludedExtensions = Set(["xctest", "h", "xcconfig", "xcfilelist"])
+    let extensionsWhiteList = Set(["m", "mm", "swift"])
     let actualFilesInProjectNavigator = project.fileReferences
         .filter{ key, value in
             let fileComponents = value.title.components(separatedBy: ".")
             guard fileComponents.count > 1,
-                let fileName = fileComponents.first?.hasSuffix("Tests"),
-                fileName == true,
-                !excludedExtensions.contains(fileComponents[1]),
+                extensionsWhiteList.contains(fileComponents[1]),
                 !targetFiles.contains(key) else {return false}
             return true
     }
 
     let results: [String] = actualFilesInProjectNavigator.map{
-        "\(project.absolutePathToReference($1)):0: \(errorReporter.reportKind.logEntry) \($1.path) is not added to any test target.\n"
+        "\(project.absolutePathToReference($1)):0: \(errorReporter.reportKind.logEntry) \($1.path) is not added to any target.\n"
     }
 
     if results.count > 0 {
-
         result = errorReporter.reportKind.returnType
         for error in results {
             ErrorReporter.report(error)

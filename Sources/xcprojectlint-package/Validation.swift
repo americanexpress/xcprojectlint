@@ -21,7 +21,7 @@ public enum Validation: String, StringEnumArgument {
   case filesExistOnDisk = "files-exist-on-disk"
   case itemsInAlphaOrder = "items-in-alpha-order"
   case noEmptyGroups = "empty-groups"
-  case noDanglingTests = "dangling-tests"
+  case noDanglingFiles = "dangling-files"
   
   case all = "all"
   
@@ -55,9 +55,8 @@ List of validations to perform:
                      items-in-alpha-order:
                        Ensure groups and files are sorted alphabetically
 
-                     dangling-tests:
-                       Ensures all test files ending with `Tests` are members
-                       of a test target
+                     dangling-files:
+                       Ensures all files ending with 'm', 'mm' and 'swift' are members of a target
 
                      all:
                        Runs all known validations
@@ -68,7 +67,7 @@ List of validations to perform:
             Validation.diskLayoutMatchesProject,
             Validation.filesExistOnDisk,
             Validation.itemsInAlphaOrder,
-            Validation.noDanglingTests,
+            Validation.noDanglingFiles,
             Validation.noEmptyGroups]
   }
 }

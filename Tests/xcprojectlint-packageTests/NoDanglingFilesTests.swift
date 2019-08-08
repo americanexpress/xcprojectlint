@@ -15,7 +15,7 @@
 import XCTest
 @testable import xcprojectlint_package
 
-class NoDanglingTestsTests: XCTestCase {
+class noDanglingFilesTests: XCTestCase {
 
     func testEmptyGroupReturnsError() {
         do {
@@ -23,7 +23,7 @@ class NoDanglingTestsTests: XCTestCase {
             let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
             let project = try Project(testData, errorReporter: errorReporter)
 
-            XCTAssertEqual(noDanglingTests(project, errorReporter: errorReporter), EX_SOFTWARE)
+            XCTAssertEqual(noDanglingFiles(project, errorReporter: errorReporter), EX_SOFTWARE)
         } catch {
             print(error.localizedDescription)
             XCTFail("Failed to initialize test")
