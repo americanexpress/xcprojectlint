@@ -93,8 +93,8 @@ func main() -> Int32 {
         scriptResult |= ensureAlphaOrder(project, errorReporter: errorReporter)
       case .noEmptyGroups:
         scriptResult |= noEmptyGroups(project, errorReporter: errorReporter)
-      case .noUserCustomisations:
-        scriptResult |= noUserCustomisations(project, errorReporter: errorReporter)
+      case .noWhitespaceSpecifications:
+        scriptResult |= noWhitespaceSpecifications(project, errorReporter: errorReporter)
       case .all:
         // we should never get here; the parser expanded `all` into the individual cases
         break
