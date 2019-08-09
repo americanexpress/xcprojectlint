@@ -16,30 +16,33 @@ import Foundation
 import SPMUtility
 
 public enum Validation: String, StringEnumArgument {
-  case buildSettingsExternalized = "build-settings-externalized"
-  case diskLayoutMatchesProject = "disk-layout-matches-project"
-  case filesExistOnDisk = "files-exist-on-disk"
-  case itemsInAlphaOrder = "items-in-alpha-order"
-  case noEmptyGroups = "empty-groups"
-  case noDanglingFiles = "dangling-files"
-  
-  case all = "all"
-  
-  public init(_ argument: String) throws {
-    guard let validation = Validation(rawValue: argument) else {
-      throw ArgumentConversionError.typeMismatch(value: argument, expectedType: Validation.self)
+    case buildSettingsExternalized = "build-settings-externalized"
+    case diskLayoutMatchesProject = "disk-layout-matches-project"
+    case filesExistOnDisk = "files-exist-on-disk"
+    case itemsInAlphaOrder = "items-in-alpha-order"
+    case noEmptyGroups = "empty-groups"
+    case noDanglingFiles = "dangling-files"
+
+    case all = "all"
+
+    public init(_ argument: String) throws {
+        guard let validation = Validation(rawValue: argument) else {
+            throw ArgumentConversionError.typeMismatch(value: argument, expectedType: Validation.self)
+        }
+
+        self = validation
     }
-    
-    self = validation
-  }
-  
-  public static let completion: ShellCompletion = .values([(value: "Test", description: "Test2")])
-  
-  public static let usage =
-  """
+
+    public static let completion: ShellCompletion = .values([(value: "Test", description: "Test2")])
+
+    public static let usage =
+    """
 List of validations to perform:
                      build-settings-externalized:
                        Looks for project settings defined in the project file
+
+                     dangling-files:
+                       Ensures all source code files are members of a target
 
                      disk-layout-matches-project:
                        Validates files on disk are arranged like the project
@@ -55,19 +58,16 @@ List of validations to perform:
                      items-in-alpha-order:
                        Ensure groups and files are sorted alphabetically
 
-                     dangling-files:
-                       Ensures all files ending with 'm', 'mm' and 'swift' are members of a target
-
                      all:
                        Runs all known validations
 """
-  
-  public static func allValidations() -> [Validation] {
-    return [Validation.buildSettingsExternalized,
-            Validation.diskLayoutMatchesProject,
-            Validation.filesExistOnDisk,
-            Validation.itemsInAlphaOrder,
-            Validation.noDanglingFiles,
-            Validation.noEmptyGroups]
-  }
+
+    public static func allValidations() -> [Validation] {
+        return [Validation.buildSettingsExternalized,
+                Validation.diskLayoutMatchesProject,
+                Validation.filesExistOnDisk,
+                Validation.itemsInAlphaOrder,
+                Validation.noDanglingFiles,
+                Validation.noEmptyGroups]
+    }
 }

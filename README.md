@@ -9,36 +9,36 @@ currently supports these checks:
 
 - `build-settings-externalized`
 
-    This mode ensures there are no settings configured at the project level,
-    instead encouraging the use of xcconfig files.
+This mode ensures there are no settings configured at the project level,
+instead encouraging the use of xcconfig files.
+
+- `dangling-files`
+
+Ensures all source code files are members of a target.
 
 - `disk-layout-matches-project`
 
-    This mode ensures the project references reflect actual file system
-    locations. There are some occasions where you may not be able to exactly map
-    a folder to disk (Frameworks and Products are common examples). For this,
-    there is an additional parameter you can pass: `--skip-folders`, followed by
-    a list of folders to ignore.
+This mode ensures the project references reflect actual file system
+locations. There are some occasions where you may not be able to exactly map
+a folder to disk (Frameworks and Products are common examples). For this,
+there is an additional parameter you can pass: `--skip-folders`, followed by
+a list of folders to ignore.
 
 - `files-exist-on-disk`
 
-    This mode finds file references in the project which are not backed by files.
+This mode finds file references in the project which are not backed by files.
 
 - `empty-groups`
 
-    This mode reports groups that contain no additional items.
+This mode reports groups that contain no additional items.
 
 - `items-in-alpha-order`
 
-    This mode ensures the project files and folders are in proper order.
-
-- `dangling-tests`
-
-    Ensures all test files ending with `Tests` are members of a test target.
+This mode ensures the project files and folders are in proper order.
 
 - `all`
 
-    For convenience, this mode runs all of the above tests.
+For convenience, this mode runs all of the above tests.
 
 When a failing condition is detected, as much useful context as possible is
 emitted to `STDOUT`, enabling Xcode to display the errors, in place. Further, it
@@ -126,37 +126,42 @@ inside.
 
 - Build Settings Externalized
 
-    We iterate all the `BuildConfiguration` blobs, and investigate their
-    `BuildSettings` entry. Empty settings are A-OK. Any found settings are in
-    error.
+We iterate all the `BuildConfiguration` blobs, and investigate their
+`BuildSettings` entry. Empty settings are A-OK. Any found settings are in
+error.
+
+- Dangling Files
+
+We iterate all files appearing in Project Navigator and check all are associated
+with a target. Best used with tests. Any found dangling file is in error.
 
 - Disk Layout Matches Project
 
-    This test grabs the `MainGroup` out of the project, then recursively
-    traverses the children. If the child node is a file, we retrieve the
-    `FileReference` by id, then check for a `name` value. The presence of a name
-    indicates this file reference does not have a matching file on disk.
+This test grabs the `MainGroup` out of the project, then recursively
+traverses the children. If the child node is a file, we retrieve the
+`FileReference` by id, then check for a `name` value. The presence of a name
+indicates this file reference does not have a matching file on disk.
 
 - Files Exist on Disk
 
-    This uses a similar recursion to the Layout test, but instead of
-    investigating the `name` value, it builds a URL to where the file should
-    appear on disk. This is done by assembling the path that led to the file,
-    then appending that to a path derived from the project’s path on disk, then
-    finally testing for the presence of a file at that location.
+This uses a similar recursion to the Layout test, but instead of
+investigating the `name` value, it builds a URL to where the file should
+appear on disk. This is done by assembling the path that led to the file,
+then appending that to a path derived from the project’s path on disk, then
+finally testing for the presence of a file at that location.
 
 - Empty Groups
 
-    One of the simpler tests. We again recurse the `MainGroup`, but this time
-    look for entries that have zero children.
+One of the simpler tests. We again recurse the `MainGroup`, but this time
+look for entries that have zero children.
 
 - Items in Alpha Order
 
-    We expect our project nodes to contain alphabetized Folders, followed by
-    alphabetized Files. We check on that by again recursing the groups, and at
-    each level sifting the entries into `groupNames`, `fileNames`, and
-    `allNames`. We sort the groups and files, contatenate them, then compare
-    that to the list of everything.
+We expect our project nodes to contain alphabetized Folders, followed by
+alphabetized Files. We check on that by again recursing the groups, and at
+each level sifting the entries into `groupNames`, `fileNames`, and
+`allNames`. We sort the groups and files, contatenate them, then compare
+that to the list of everything.
 
 ## Contributing
 
