@@ -94,7 +94,7 @@ func main() -> Int32 {
       case .noEmptyGroups:
         scriptResult |= noEmptyGroups(project, errorReporter: errorReporter)
       case .noDanglingFiles:
-        scriptResult |= noDanglingFiles(project, errorReporter: errorReporter)
+        scriptResult |= noDanglingSourceFiles(project, errorReporter: errorReporter)
       case .all:
         // we should never get here; the parser expanded `all` into the individual cases
         break

@@ -14,22 +14,21 @@
 
 import Foundation
 
-public func noDanglingFiles(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
+public func noDanglingSourceFiles(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
     var result = EX_DATAERR
 
     let targetFiles = Set(project.buildFiles.map{$1.fileRef})
     let extensionsWhiteList = Set(["m", "mm", "swift", "cpp", "c"])
-    let actualFilesInProjectNavigator = project.fileReferences
-        .filter{ key, value in
-            let fileComponents = value.title.components(separatedBy: ".")
-            guard fileComponents.count > 1,
-                extensionsWhiteList.contains(fileComponents[1]),
-                !targetFiles.contains(key) else {return false}
-            return true
-    }
 
-    let results: [String] = actualFilesInProjectNavigator.map{
-        "\(project.absolutePathToReference($1)):0: \(errorReporter.reportKind.logEntry) \($1.path) is not added to any target.\n"
+    let results = project.fileReferences.values
+        .compactMap{ fileRef -> String? in
+            let ext = fileRef.title.components(separatedBy: ".").last!
+            let shouldReport = extensionsWhiteList.contains(ext) && !targetFiles.contains(fileRef.id)
+            if shouldReport {
+                return "\(project.absolutePathToReference(fileRef)):0: \(errorReporter.reportKind.logEntry) \(fileRef.path) is not added to any target.\n"
+            } else {
+                return nil
+            }
     }
 
     if results.count > 0 {

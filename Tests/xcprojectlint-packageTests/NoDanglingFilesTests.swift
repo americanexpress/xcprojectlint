@@ -23,7 +23,7 @@ class noDanglingFilesTests: XCTestCase {
             let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
             let project = try Project(testData, errorReporter: errorReporter)
 
-            XCTAssertEqual(noDanglingFiles(project, errorReporter: errorReporter), EX_SOFTWARE)
+            XCTAssertEqual(noDanglingSourceFiles(project, errorReporter: errorReporter), EX_SOFTWARE)
         } catch {
             print(error.localizedDescription)
             XCTFail("Failed to initialize test")
