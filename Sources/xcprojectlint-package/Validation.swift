@@ -21,7 +21,7 @@ public enum Validation: String, StringEnumArgument {
   case filesExistOnDisk = "files-exist-on-disk"
   case itemsInAlphaOrder = "items-in-alpha-order"
   case noEmptyGroups = "empty-groups"
-  case noWhitespaceSpecifications = "whitespace-specifications"
+  case noWhitespaceSpecifications = "no-whitespace-specifications"
   
   case all = "all"
   
@@ -55,7 +55,7 @@ List of validations to perform:
                      items-in-alpha-order:
                        Ensure groups and files are sorted alphabetically
 
-                     whitespace-specifications:
+                     no-whitespace-specifications:
                        Ensure user specifications of tabs, tabWidth, and identWidth
                        are not carried through project file.
 
