@@ -21,7 +21,7 @@ public enum Validation: String, StringEnumArgument {
     case filesExistOnDisk = "files-exist-on-disk"
     case itemsInAlphaOrder = "items-in-alpha-order"
     case noEmptyGroups = "empty-groups"
-    case noDanglingFiles = "dangling-files"
+    case noDanglingSourceFiles = "dangling-source-files"
 
     case all = "all"
 
@@ -41,8 +41,8 @@ List of validations to perform:
                      build-settings-externalized:
                        Looks for project settings defined in the project file
 
-                     dangling-files:
-                       Ensures all source code files are members of a target
+                     dangling-source-files:
+                       Ensures each source code files is member of a target
 
                      disk-layout-matches-project:
                        Validates files on disk are arranged like the project
@@ -67,7 +67,7 @@ List of validations to perform:
                 Validation.diskLayoutMatchesProject,
                 Validation.filesExistOnDisk,
                 Validation.itemsInAlphaOrder,
-                Validation.noDanglingFiles,
+                Validation.noDanglingSourceFiles,
                 Validation.noEmptyGroups]
     }
 }
