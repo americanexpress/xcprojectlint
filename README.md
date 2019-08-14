@@ -32,6 +32,11 @@ currently supports these checks:
 
     This mode ensures the project files and folders are in proper order.
 
+- `no-white-space-specifications`
+
+    This mode ensures that no file or project contains whitespace specifications of:
+    indentWidth, tabWidth, usesTabs, or lineEnding
+
 - `all`
 
     For convenience, this mode runs all of the above tests.
@@ -154,6 +159,15 @@ inside.
     `allNames`. We sort the groups and files, contatenate them, then compare
     that to the list of everything.
 
+- No White Space Specifications
+
+    XCode has a way to, at the user-level, specify customisations for tabs, spaces,
+    indentation amount, and line endings within `Preferences -> Text Editing ->
+    Indentation`.  However, the user might change these preferences at a file or
+    project level, altering the experience for team-members.  As such, we want to
+    keep the file clean of these preferences and rely on `swiftformat` to shape
+    the code into a team-unified format before commits.
+
 ## Contributing
 
 We welcome Your interest in the American Express Open Source Community on Github.
@@ -164,8 +178,7 @@ and to recipients of software distributed by American Express, You reserve all
 right, title, and interest, if any, in and to Your Contributions. Please [fill
 out the Agreement](https://cla-assistant.io/americanexpress/xcprojectlint).
 
-Please feel free to open pull requests and see
-[CONTRIBUTING.md](./CONTRIBUTING.md) for commit formatting details.
+Please feel free to open pull requests.
 
 ## License
 
