@@ -12,25 +12,20 @@
  * the License.
  */
 
-import XCTest
 @testable import xcprojectlint_package
+import XCTest
 
-class WhiteSpaceSpecificationTests: XCTestCase
-{
-	func test_whiteSpaceSpecifiersArePresent_returnsError()
-	{
-		do
-		{
-			let testData = Bundle.test.testData
-			let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
-			let project = try Project(testData, errorReporter: errorReporter)
-			
-			XCTAssertEqual(checkForWhiteSpaceSpecifications(project, errorReporter: errorReporter), EX_SOFTWARE)
-		}
-		catch
-		{
-			print(error.localizedDescription)
-			XCTFail("Failed to initialize test")
-		}
-	}
+class WhiteSpaceSpecificationTests: XCTestCase {
+  func test_whiteSpaceSpecifiersArePresent_returnsError() {
+    do {
+      let testData = Bundle.test.testData
+      let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
+      let project = try Project(testData, errorReporter: errorReporter)
+
+      XCTAssertEqual(checkForWhiteSpaceSpecifications(project, errorReporter: errorReporter), EX_SOFTWARE)
+    } catch {
+      print(error.localizedDescription)
+      XCTFail("Failed to initialize test")
+    }
+  }
 }
