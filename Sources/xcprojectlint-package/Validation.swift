@@ -21,54 +21,56 @@ public enum Validation: String, StringEnumArgument {
   case filesExistOnDisk = "files-exist-on-disk"
   case itemsInAlphaOrder = "items-in-alpha-order"
   case noEmptyGroups = "empty-groups"
-  case noWhitespaceSpecifications = "no-whitespace-specifications"
-  
-  case all = "all"
-  
+  case noWhiteSpaceSpecifications = "no-white-space-specifications"
+
+  case all
+
   public init(_ argument: String) throws {
     guard let validation = Validation(rawValue: argument) else {
       throw ArgumentConversionError.typeMismatch(value: argument, expectedType: Validation.self)
     }
-    
+
     self = validation
   }
-  
+
   public static let completion: ShellCompletion = .values([(value: "Test", description: "Test2")])
-  
+
   public static let usage =
-  """
-List of validations to perform:
-                     build-settings-externalized:
-                       Looks for project settings defined in the project file
+    """
+    List of validations to perform:
+                         build-settings-externalized:
+                           Looks for project settings defined in the project file
 
-                     disk-layout-matches-project:
-                       Validates files on disk are arranged like the project
-                       file
+                         disk-layout-matches-project:
+                           Validates files on disk are arranged like the project
+                           file
 
-                     empty-groups:
-                       Reports groups that have no children
+                         empty-groups:
+                           Reports groups that have no children
 
-                     files-exist-on-disk:
-                       Look for files referenced by the project that are not
-                       found on disk
+                         files-exist-on-disk:
+                           Look for files referenced by the project that are not
+                           found on disk
 
-                     items-in-alpha-order:
-                       Ensure groups and files are sorted alphabetically
+                         items-in-alpha-order:
+                           Ensure groups and files are sorted alphabetically
 
-                     no-whitespace-specifications:
-                       Ensure user specifications of tabs, tabWidth, and identWidth
-                       are not carried through project file.
+                         no-white-space-specifications:
+                           Ensure user specifications of tabs, tabWidth, and identWidth
+                           are not carried through project file.
 
-                     all:
-                       Runs all known validations
-"""
-  
+                         all:
+                           Runs all known validations
+    """
+
   public static func allValidations() -> [Validation] {
-    return [Validation.buildSettingsExternalized,
-            Validation.diskLayoutMatchesProject,
-            Validation.filesExistOnDisk,
-            Validation.itemsInAlphaOrder,
-            Validation.noEmptyGroups,
-            Validation.noWhitespaceSpecifications]
+    return [
+      Validation.buildSettingsExternalized,
+      Validation.diskLayoutMatchesProject,
+      Validation.filesExistOnDisk,
+      Validation.itemsInAlphaOrder,
+      Validation.noEmptyGroups,
+      Validation.noWhiteSpaceSpecifications,
+    ]
   }
 }
