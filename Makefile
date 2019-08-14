@@ -35,7 +35,7 @@ release:
 # It doesn’t work. Xcode release notes say:
 # 	Creating static executables using the new option --static-swift-stdlib does not function correctly. (33861492)
 # so we’ll use their workaround:
-	swift build --configuration release  -Xswiftc -static-stdlib
+	swift build --configuration release
 
 copyTestResources: build
 	mkdir -p ${TEST_RESOURCES_DIRECTORY}
