@@ -23,7 +23,7 @@ public func checkForWhiteSpaceSpecifications(_ project: Project, errorReporter: 
     if group.tabWidth != nil || group.indentWidth != nil || group.usesTabs != nil {
       errors.append("\(errorReporter.reportKind.logEntry) Group item (\(group.id)) contains whitespace specification.\n")
 
-      scriptResult = EX_DATAERR
+      scriptResult = errorReporter.reportKind.returnType
     }
   }
 
@@ -32,7 +32,7 @@ public func checkForWhiteSpaceSpecifications(_ project: Project, errorReporter: 
     if fileReference.tabWidth != nil || fileReference.indentWidth != nil || fileReference.lineEnding != nil {
       errors.append("\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains whitespace specification.\n")
 
-      scriptResult = EX_DATAERR
+      scriptResult = errorReporter.reportKind.returnType
     }
   }
 

@@ -29,7 +29,7 @@
 /* Begin PBXFileReference section */
 		D2A90D0F2032181600EBA6AA /* ThisFileIsMissing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThisFileIsMissing.swift; sourceTree = "<group>"; };
 		D2A90D132032190A00EBA6AA /* First.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = First.swift; sourceTree = "<group>"; };
-		D2A90D152032191600EBA6AA /* Second.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Second.swift; sourceTree = "<group>"; };
+		D2A90D152032191600EBA6AA /* Second.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 5; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Second.swift; sourceTree = "<group>";  tabWidth = 5; };
 		D2CAE8732031EE5F00F76063 /* Bad */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Bad; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2CAE8762031EE5F00F76063 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D2CAE89C2032142D00F76063 /* ThisFileIsMisplaced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ThisFileIsMisplaced.swift; path = ../MisplacdFile/ThisFileIsMisplaced.swift; sourceTree = "<group>"; };
@@ -96,7 +96,10 @@
 				D2A90D18203219FC00EBA6AA /* ThisGroupIsEmpty */,
 			);
 			path = Bad;
+			indentWidth = 7;
 			sourceTree = "<group>";
+			tabWidth = 7;
+			usesTabs = 1;
 		};
 		D2CAE89E2032143900F76063 /* MisplacedFile */ = {
 			isa = PBXGroup;
