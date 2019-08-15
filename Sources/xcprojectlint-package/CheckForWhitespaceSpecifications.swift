@@ -30,7 +30,7 @@ public func checkForWhiteSpaceSpecifications(_ project: Project, errorReporter: 
   for namedFileReference in project.fileReferences.keys {
     guard let fileReference = project.fileReferences[namedFileReference] else { continue }
     if fileReference.tabWidth != nil || fileReference.indentWidth != nil || fileReference.lineEnding != nil {
-      errors.append("\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains whitespace specification.\n")
+      errors.append("\(project.absolutePathToReference(fileReference)):0:\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains whitespace specification.\n")
 
       scriptResult = errorReporter.reportKind.returnType
     }
