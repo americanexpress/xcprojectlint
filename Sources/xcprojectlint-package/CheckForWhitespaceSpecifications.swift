@@ -18,8 +18,7 @@ public func checkForWhiteSpaceSpecifications(_ project: Project, errorReporter: 
   var errors: [String] = []
   var scriptResult = EX_OK
 
-  for namedGroup in project.groups.keys {
-    guard let group = project.groups[namedGroup] else { continue }
+  for group in project.groups.values {
     if group.tabWidth != nil || group.indentWidth != nil || group.usesTabs != nil {
       errors.append("\(errorReporter.reportKind.logEntry) Group item (\(group.id)) contains whitespace specification.\n")
 
@@ -27,8 +26,7 @@ public func checkForWhiteSpaceSpecifications(_ project: Project, errorReporter: 
     }
   }
 
-  for namedFileReference in project.fileReferences.keys {
-    guard let fileReference = project.fileReferences[namedFileReference] else { continue }
+  for fileReference in project.fileReferences.values {
     if fileReference.tabWidth != nil || fileReference.indentWidth != nil || fileReference.lineEnding != nil {
       errors.append("\(project.absolutePathToReference(fileReference)):0:\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains whitespace specification.\n")
 
