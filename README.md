@@ -161,7 +161,7 @@ inside.
 
 - No White Space Specifications
 
-    XCode has a way to, at the user-level, specify customisations for tabs, spaces,
+    Xcode has a way to, at the user-level, specify custom settings for tabs, spaces,
     indentation amount, and line endings within `Preferences -> Text Editing ->
     Indentation`.  However, the user might change these preferences at a file or
     project level, altering the experience for team-members.  As such, we want to
