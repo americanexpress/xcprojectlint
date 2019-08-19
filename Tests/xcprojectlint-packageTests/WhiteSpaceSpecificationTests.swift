@@ -15,7 +15,7 @@
 @testable import xcprojectlint_package
 import XCTest
 
-class WhiteSpaceSpecificationTests: XCTestCase {
+final class WhiteSpaceSpecificationTests: XCTestCase {
   func test_whiteSpaceSpecifiersArePresent_returnsError() {
     do {
       let testData = Bundle.test.testData
