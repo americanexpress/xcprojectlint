@@ -35,7 +35,7 @@ currently supports these checks:
 - `no-white-space-specifications`
 
     This mode ensures that no file or project contains whitespace specifications of:
-    indentWidth, tabWidth, usesTabs, or lineEnding
+    indentWidth, tabWidth, usesTabs, or lineEnding.
 
 - `all`
 
@@ -163,10 +163,10 @@ inside.
 
     Xcode has a way to, at the user-level, specify custom settings for tabs, spaces,
     indentation amount, and line endings within `Preferences -> Text Editing ->
-    Indentation`.  However, the user might change these preferences at a file or
-    project level, altering the experience for team-members.  As such, we want to
-    keep the file clean of these preferences and rely on `swiftformat` to shape
-    the code into a team-unified format before commits.
+    Indentation`.  Formatting preferences can also be set at a file or project level,
+    altering the experience for team-members if passed through PR unnoticed.  This
+    rule aims to alieviate the existence of any whitespace specification and provides
+    the appropriate messages for each and their location within the project file.
 
 ## Contributing
 
