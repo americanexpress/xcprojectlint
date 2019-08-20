@@ -15,7 +15,7 @@
 import XCTest
 @testable import xcprojectlint_package
 
-class ItemsInAlphaOrderTests: XCTestCase {
+final class ItemsInAlphaOrderTests: XCTestCase {
   
   func testUnorderedGroupReturnsError() {
     do {

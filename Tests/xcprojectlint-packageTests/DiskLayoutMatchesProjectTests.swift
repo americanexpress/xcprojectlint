@@ -15,7 +15,7 @@
 import XCTest
 @testable import xcprojectlint_package
 
-class DiskLayoutMatchesProjectTests: XCTestCase {
+final class DiskLayoutMatchesProjectTests: XCTestCase {
   
   func testDiskLayoutMatchesProjectReturnsError() {
     do {

@@ -15,7 +15,7 @@
 import XCTest
 @testable import xcprojectlint_package
 
-class InternalProjectSettingsTests: XCTestCase {
+final class InternalProjectSettingsTests: XCTestCase {
   
   func testInternalProjectSettingsReturnsError() {
     do {
