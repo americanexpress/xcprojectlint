@@ -15,7 +15,7 @@
 import XCTest
 @testable import xcprojectlint_package
 
-class NoEmptyGroupsTests: XCTestCase {
+final class NoEmptyGroupsTests: XCTestCase {
   
   func testEmptyGroupReturnsError() {
     do {

@@ -15,7 +15,7 @@
 import XCTest
 @testable import xcprojectlint_package
 
-class FilesExistOnDiskTests: XCTestCase {
+final class FilesExistOnDiskTests: XCTestCase {
   
   func testMissingFileReturnsError() {
     do {
