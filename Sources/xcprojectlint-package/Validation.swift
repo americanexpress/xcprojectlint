@@ -20,10 +20,11 @@ public enum Validation: String, StringEnumArgument {
   case diskLayoutMatchesProject = "disk-layout-matches-project"
   case filesExistOnDisk = "files-exist-on-disk"
   case itemsInAlphaOrder = "items-in-alpha-order"
+  case noDanglingSourceFiles = "dangling-source-files"
   case noEmptyGroups = "empty-groups"
-  
+
   case all = "all"
-  
+
   public init(_ argument: String) throws {
     guard let validation = Validation(rawValue: argument) else {
       throw ArgumentConversionError.typeMismatch(value: argument, expectedType: Validation.self)
@@ -31,14 +32,17 @@ public enum Validation: String, StringEnumArgument {
     
     self = validation
   }
-  
+
   public static let completion: ShellCompletion = .values([(value: "Test", description: "Test2")])
-  
+
   public static let usage =
   """
 List of validations to perform:
                      build-settings-externalized:
                        Looks for project settings defined in the project file
+
+                     dangling-source-files:
+                       Ensures each source code files is member of a target
 
                      disk-layout-matches-project:
                        Validates files on disk are arranged like the project
@@ -57,12 +61,13 @@ List of validations to perform:
                      all:
                        Runs all known validations
 """
-  
+
   public static func allValidations() -> [Validation] {
     return [Validation.buildSettingsExternalized,
             Validation.diskLayoutMatchesProject,
             Validation.filesExistOnDisk,
             Validation.itemsInAlphaOrder,
+            Validation.noDanglingSourceFiles,
             Validation.noEmptyGroups]
   }
 }
