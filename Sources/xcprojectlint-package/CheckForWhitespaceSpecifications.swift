@@ -14,61 +14,51 @@
 
 import Foundation
 
-public func checkForWhiteSpaceSpecifications(_ project: Project, errorReporter: ErrorReporter) -> Int32
-{
-	var errors: [String] = []
-	var scriptResult = EX_OK
+public func checkForWhiteSpaceSpecifications(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
+  var errors: [String] = []
+  var scriptResult = EX_OK
 
-	for group in project.groups.values
-	{
-		if group.tabWidth != nil
-		{
-			errors.append("\(errorReporter.reportKind.logEntry) Group item (\(group.id)) contains white space specification of 'tabWidth'.\n ")
+  for group in project.groups.values {
+    if group.tabWidth != nil {
+      errors.append("\(errorReporter.reportKind.logEntry) Group item (\(group.id)) contains white space specification of 'tabWidth'.\n ")
 
-			scriptResult = errorReporter.reportKind.returnType
-		}
+      scriptResult = errorReporter.reportKind.returnType
+    }
 
-		if group.indentWidth != nil 
-		{
-			errors.append("\(errorReporter.reportKind.logEntry) Group item (\(group.id)) contains white space specification of 'indentWidth'.\n ")
+    if group.indentWidth != nil {
+      errors.append("\(errorReporter.reportKind.logEntry) Group item (\(group.id)) contains white space specification of 'indentWidth'.\n ")
 
-			scriptResult = errorReporter.reportKind.returnType
-		}
+      scriptResult = errorReporter.reportKind.returnType
+    }
 
-		if group.usesTabs != nil
-		{
-			errors.append("\(errorReporter.reportKind.logEntry) Group item (\(group.id)) contains white space specification of 'usesTabs'.\n ")
+    if group.usesTabs != nil {
+      errors.append("\(errorReporter.reportKind.logEntry) Group item (\(group.id)) contains white space specification of 'usesTabs'.\n ")
 
-			scriptResult = errorReporter.reportKind.returnType
-		}
-	}
+      scriptResult = errorReporter.reportKind.returnType
+    }
+  }
 
-	for fileReference in project.fileReferences.values
-	{
-		if fileReference.tabWidth != nil
-		{
-			errors.append("\(project.absolutePathToReference(fileReference)):0:\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains white space specification of 'tabWidth'.\n")
+  for fileReference in project.fileReferences.values {
+    if fileReference.tabWidth != nil {
+      errors.append("\(project.absolutePathToReference(fileReference)):0:\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains white space specification of 'tabWidth'.\n")
 
-			scriptResult = errorReporter.reportKind.returnType
-		}
-		if fileReference.indentWidth != nil
-		{
-			errors.append("\(project.absolutePathToReference(fileReference)):0:\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains white space specification of 'indentWidth'.\n")
+      scriptResult = errorReporter.reportKind.returnType
+    }
+    if fileReference.indentWidth != nil {
+      errors.append("\(project.absolutePathToReference(fileReference)):0:\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains white space specification of 'indentWidth'.\n")
 
-			scriptResult = errorReporter.reportKind.returnType
-		}
-		if fileReference.lineEnding != nil
-		{
-			errors.append("\(project.absolutePathToReference(fileReference)):0:\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains white space specification of 'lineEnding'.\n")
+      scriptResult = errorReporter.reportKind.returnType
+    }
+    if fileReference.lineEnding != nil {
+      errors.append("\(project.absolutePathToReference(fileReference)):0:\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains white space specification of 'lineEnding'.\n")
 
-			scriptResult = errorReporter.reportKind.returnType
-		}
-	}
+      scriptResult = errorReporter.reportKind.returnType
+    }
+  }
 
-	for error in errors
-	{
-		ErrorReporter.report(error)
-	}
+  for error in errors {
+    ErrorReporter.report(error)
+  }
 
-	return (scriptResult)
+  return (scriptResult)
 }
