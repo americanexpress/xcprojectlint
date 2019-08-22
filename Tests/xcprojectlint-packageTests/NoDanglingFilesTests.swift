@@ -15,15 +15,15 @@
 import XCTest
 @testable import xcprojectlint_package
 
-class noDanglingFilesTests: XCTestCase {
+class NoDanglingSourceFilesTests: XCTestCase {
 
-    func testEmptyGroupReturnsError() {
+    func testDanglingSourceFilesReturnError() {
         do {
             let testData = Bundle.test.testData
             let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
             let project = try Project(testData, errorReporter: errorReporter)
 
-            XCTAssertEqual(noDanglingSourceFiles(project, errorReporter: errorReporter), EX_SOFTWARE)
+            XCTAssertEqual(checkForDanglingSourceFiles(project, errorReporter: errorReporter), EX_SOFTWARE)
         } catch {
             print(error.localizedDescription)
             XCTFail("Failed to initialize test")

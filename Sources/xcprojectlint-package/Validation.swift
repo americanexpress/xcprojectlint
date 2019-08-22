@@ -16,27 +16,27 @@ import Foundation
 import SPMUtility
 
 public enum Validation: String, StringEnumArgument {
-    case buildSettingsExternalized = "build-settings-externalized"
-    case diskLayoutMatchesProject = "disk-layout-matches-project"
-    case filesExistOnDisk = "files-exist-on-disk"
-    case itemsInAlphaOrder = "items-in-alpha-order"
-    case noEmptyGroups = "empty-groups"
-    case noDanglingSourceFiles = "dangling-source-files"
+  case buildSettingsExternalized = "build-settings-externalized"
+  case diskLayoutMatchesProject = "disk-layout-matches-project"
+  case filesExistOnDisk = "files-exist-on-disk"
+  case itemsInAlphaOrder = "items-in-alpha-order"
+  case noDanglingSourceFiles = "dangling-source-files"
+  case noEmptyGroups = "empty-groups"
 
-    case all = "all"
+  case all = "all"
 
-    public init(_ argument: String) throws {
-        guard let validation = Validation(rawValue: argument) else {
-            throw ArgumentConversionError.typeMismatch(value: argument, expectedType: Validation.self)
-        }
-
-        self = validation
+  public init(_ argument: String) throws {
+    guard let validation = Validation(rawValue: argument) else {
+      throw ArgumentConversionError.typeMismatch(value: argument, expectedType: Validation.self)
     }
+    
+    self = validation
+  }
 
-    public static let completion: ShellCompletion = .values([(value: "Test", description: "Test2")])
+  public static let completion: ShellCompletion = .values([(value: "Test", description: "Test2")])
 
-    public static let usage =
-    """
+  public static let usage =
+  """
 List of validations to perform:
                      build-settings-externalized:
                        Looks for project settings defined in the project file
@@ -62,12 +62,12 @@ List of validations to perform:
                        Runs all known validations
 """
 
-    public static func allValidations() -> [Validation] {
-        return [Validation.buildSettingsExternalized,
-                Validation.diskLayoutMatchesProject,
-                Validation.filesExistOnDisk,
-                Validation.itemsInAlphaOrder,
-                Validation.noDanglingSourceFiles,
-                Validation.noEmptyGroups]
-    }
+  public static func allValidations() -> [Validation] {
+    return [Validation.buildSettingsExternalized,
+            Validation.diskLayoutMatchesProject,
+            Validation.filesExistOnDisk,
+            Validation.itemsInAlphaOrder,
+            Validation.noDanglingSourceFiles,
+            Validation.noEmptyGroups]
+  }
 }
