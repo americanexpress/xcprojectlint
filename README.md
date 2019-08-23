@@ -160,23 +160,25 @@ inside.
 - Items in Alpha Order
 
     We expect our project nodes to contain alphabetized Folders, followed by
-    alphabetized Files. We check on that by again recursing the groups, and at
+    alphabetized files. We check on that by again recursing the groups, and at
     each level sifting the entries into `groupNames`, `fileNames`, and
     `allNames`. We sort the groups and files, contatenate them, then compare
     that to the list of everything.
 
 ## Contributing
 
-We welcome Your interest in the American Express Open Source Community on Github.
-Any Contributor to any Open Source Project managed by the American Express Open
-Source Community must accept and sign an Agreement indicating agreement to the
-terms below. Except for the rights granted in this Agreement to American Express
+We welcome your interest in the American Express Open Source Community on Github.
+Any contributor to any Open Source Project managed by the American Express Open
+Source Community must accept and sign an agreement indicating agreement to the
+terms below. Except for the rights granted in this agreement to American Express
 and to recipients of software distributed by American Express, You reserve all
-right, title, and interest, if any, in and to Your Contributions. Please [fill
-out the Agreement](https://cla-assistant.io/americanexpress/xcprojectlint).
+right, title, and interest, if any, in and to your contributions. Please [fill
+out the agreement](https://cla-assistant.io/americanexpress/xcprojectlint).
 
-Please feel free to open pull requests and see
-[CONTRIBUTING.md](./CONTRIBUTING.md) for commit formatting details.
+Before submitting a PR, please run your code through `swiftformat` with the config
+file provided:
+`swiftformat --config swiftformat.config Sources/`
+`swiftformat --config swiftformat.config Tests/`
 
 ## License
 
