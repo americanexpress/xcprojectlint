@@ -177,8 +177,7 @@ out the agreement](https://cla-assistant.io/americanexpress/xcprojectlint).
 
 Before submitting a PR, please run your code through `swiftformat` with the config
 file provided:
-`swiftformat --config swiftformat.config Sources/`
-`swiftformat --config swiftformat.config Tests/`
+`swiftformat --config swiftformat.config Sources/ Tests/`
 
 ## License
 
