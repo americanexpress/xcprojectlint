@@ -20,6 +20,7 @@ public enum Validation: String, StringEnumArgument {
   case diskLayoutMatchesProject = "disk-layout-matches-project"
   case filesExistOnDisk = "files-exist-on-disk"
   case itemsInAlphaOrder = "items-in-alpha-order"
+  case noDanglingSourceFiles = "dangling-source-files"
   case noEmptyGroups = "empty-groups"
   case noWhiteSpaceSpecifications = "no-white-space-specifications"
 
@@ -52,6 +53,9 @@ public enum Validation: String, StringEnumArgument {
                            Look for files referenced by the project that are not
                            found on disk
 
+                         dangling-source-files:
+                           Ensures each source code file is member of a target
+
                          items-in-alpha-order:
                            Ensure groups and files are sorted alphabetically
 
@@ -69,6 +73,7 @@ public enum Validation: String, StringEnumArgument {
       Validation.diskLayoutMatchesProject,
       Validation.filesExistOnDisk,
       Validation.itemsInAlphaOrder,
+      Validation.noDanglingSourceFiles,      
       Validation.noEmptyGroups,
       Validation.noWhiteSpaceSpecifications,
     ]

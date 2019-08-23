@@ -11,6 +11,10 @@ currently supports these checks:
 
     This mode ensures there are no settings configured at the project level,
     instead encouraging the use of xcconfig files.
+    
+- `dangling-source-files`
+    
+    Ensures all source code files are members of a target.
 
 - `disk-layout-matches-project`
 
@@ -130,6 +134,13 @@ inside.
     We iterate all the `BuildConfiguration` blobs, and investigate their
     `BuildSettings` entry. Empty settings are A-OK. Any found settings are in
     error.
+
+- Dangling Source Files
+
+    Iterating through all the source files that appear in the Project Navigator of
+    a project file, and ensures all are associated with a target within the same
+    project/workspace. Any dangling files found will result in an error. This is
+    particularly useful for test files.
 
 - Disk Layout Matches Project
 

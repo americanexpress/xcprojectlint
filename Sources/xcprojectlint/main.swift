@@ -91,6 +91,8 @@ func main() -> Int32 {
         scriptResult |= filesExistOnDisk(project, errorReporter: errorReporter)
       case .itemsInAlphaOrder:
         scriptResult |= ensureAlphaOrder(project, errorReporter: errorReporter)
+      case .noDanglingSourceFiles:
+        scriptResult |= checkForDanglingSourceFiles(project, errorReporter: errorReporter)
       case .noEmptyGroups:
         scriptResult |= noEmptyGroups(project, errorReporter: errorReporter)
       case .noWhiteSpaceSpecifications:
