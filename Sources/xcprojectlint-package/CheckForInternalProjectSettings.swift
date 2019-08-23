@@ -23,7 +23,8 @@ public func checkForInternalProjectSettings(_ project: Project, errorReporter: E
 
     scriptResult = errorReporter.reportKind.returnType // if we get to this line, we've found at least one misplaced build setting
 
-    guard let title = project.titles[buildConfiguration.id] else { errorReporter.report(ProjectSettingsError.problemLocatingMatchingConfiguration)
+    guard let title = project.titles[buildConfiguration.id] else {
+      errorReporter.report(ProjectSettingsError.problemLocatingMatchingConfiguration)
       return errorReporter.reportKind.returnType
     }
 
