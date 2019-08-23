@@ -20,7 +20,7 @@ import xcprojectlint_package
 func noteSuccess() {
   let processInfo = ProcessInfo.processInfo
   let env = processInfo.environment
-  
+
   if let output = env["SCRIPT_OUTPUT_FILE_0"] {
     print("Touching \(output)")
     try? "OK".write(toFile: output, atomically: false, encoding: .utf8)
@@ -35,7 +35,7 @@ func main() -> Int32 {
     let validationsArg: OptionArgument<[Validation]> = parser.add(option: "--validations", kind: [Validation].self, usage: Validation.usage)
     let projectArg: OptionArgument<PathArgument> = parser.add(option: "--project", kind: PathArgument.self, usage: Usage.project)
     let skipFoldersArg: OptionArgument<[String]> = parser.add(option: "--skip-folders", kind: [String].self, usage: Usage.skipFolders)
-    
+
     // The first argument is always the executable, so drop it
     var processArgs = ProcessInfo.processInfo.arguments.dropFirst()
     // Special case for "no arguments"
@@ -44,13 +44,13 @@ func main() -> Int32 {
     }
     let arguments = Array(ProcessInfo.processInfo.arguments.dropFirst())
     let args = try parser.parse(arguments)
-    
+
     // fast path out if the version was requested
     if args.get(versionArg) != nil {
       print("xcprojectlint version \(currentVersion)")
       return EX_OK
     }
-    
+
     // otherwise, check for the required arguments
     var missingArgs = [String]()
     if args.get(reportArg) == nil {
@@ -77,7 +77,7 @@ func main() -> Int32 {
     if validations.last == .all {
       validations = Validation.allValidations()
     }
-    
+
     let errorReporter = ErrorReporter(pbxprojPath: proj.path.description, reportKind: reportKind)
     let project = try Project(proj.path.description, errorReporter: errorReporter)
     var scriptResult: Int32 = EX_OK
@@ -104,11 +104,9 @@ func main() -> Int32 {
       noteSuccess()
     }
     return scriptResult
-  }
-  catch let error as ArgumentParserError {
+  } catch let error as ArgumentParserError {
     print(error.description)
-  }
-  catch let error {
+  } catch {
     print(error.localizedDescription)
   }
   return EX_DATAERR

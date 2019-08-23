@@ -15,30 +15,30 @@
 import Foundation
 
 public func checkForDanglingSourceFiles(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
-    var result = EX_DATAERR
+  var result = EX_DATAERR
 
-    let targetFiles = Set(project.buildFiles.map{$1.fileRef})
-    let extensionsWhiteList = Set(["m", "mm", "swift", "cpp", "c"])
+  let targetFiles = Set(project.buildFiles.map { $1.fileRef })
+  let extensionsWhiteList = Set(["m", "mm", "swift", "cpp", "c"])
 
-    let results = project.fileReferences.values
-        .compactMap { fileRef -> String? in
-          guard let fileExtension = fileRef.title.components(separatedBy: ".").last else {return nil}
-            let shouldReport = extensionsWhiteList.contains(fileExtension) && !targetFiles.contains(fileRef.id)
-            if shouldReport {
-                return "\(project.absolutePathToReference(fileRef)):0: \(errorReporter.reportKind.logEntry) \(fileRef.path) is not added to any target.\n"
-            } else {
-                return nil
-            }
+  let results = project.fileReferences.values
+    .compactMap { fileRef -> String? in
+      guard let fileExtension = fileRef.title.components(separatedBy: ".").last else { return nil }
+      let shouldReport = extensionsWhiteList.contains(fileExtension) && !targetFiles.contains(fileRef.id)
+      if shouldReport {
+        return "\(project.absolutePathToReference(fileRef)):0: \(errorReporter.reportKind.logEntry) \(fileRef.path) is not added to any target.\n"
+      } else {
+        return nil
+      }
     }
 
   if !results.isEmpty {
-        result = errorReporter.reportKind.returnType
-        for error in results {
-            ErrorReporter.report(error)
-        }
-    } else {
-        result = EX_OK
+    result = errorReporter.reportKind.returnType
+    for error in results {
+      ErrorReporter.report(error)
     }
+  } else {
+    result = EX_OK
+  }
 
-    return result
+  return result
 }

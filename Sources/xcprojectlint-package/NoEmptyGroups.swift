@@ -36,7 +36,7 @@ private func recurseLookingForEmpties(_ groups: [String], project: Project, prev
       result = recurseLookingForEmpties(group.children, project: project, prevResult: result, errorReporter: errorReporter)
     }
   }
-  
+
   return result
 }
 
@@ -45,12 +45,11 @@ public func noEmptyGroups(_ project: Project, errorReporter: ErrorReporter) -> I
   if let proj = project.projectNodes.first {
     let mainGroup = proj.mainGroup
     let group = project.groups[mainGroup]
-    
+
     if let children = group?.children {
       result = recurseLookingForEmpties(children, project: project, prevResult: EX_OK, errorReporter: errorReporter)
     }
   }
-  
+
   return result
 }
-

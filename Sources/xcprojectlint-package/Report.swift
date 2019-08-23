@@ -18,7 +18,7 @@ import SPMUtility
 public enum ReportKind: StringEnumArgument {
   case warning
   case error
-  
+
   public init?(rawValue: String) {
     switch rawValue {
     case "error":
@@ -29,7 +29,7 @@ public enum ReportKind: StringEnumArgument {
       return nil
     }
   }
-  
+
   public static var completion = ShellCompletion.values([("error", ""), ("warning", "")])
   public static var usage = "Either 'error' or 'warning'"
 }
@@ -43,6 +43,7 @@ extension ReportKind {
       return "warning:"
     }
   }
+
   public var returnType: Int32 {
     switch self {
     case .error:

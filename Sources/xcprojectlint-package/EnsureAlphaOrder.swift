@@ -30,20 +30,20 @@ private func validateThisGroup(_ id: String, title: String, project: Project, er
       }
     }
   }
-  
+
   let sortedArray = groupNames.sorted {
-    (s1, s2) -> Bool in return s1.localizedStandardCompare(s2) == .orderedAscending
-    }
-    + fileNames.sorted {
-      (s1, s2) -> Bool in return s1.localizedStandardCompare(s2) == .orderedAscending
+    (s1, s2) -> Bool in s1.localizedStandardCompare(s2) == .orderedAscending
   }
-  
+    + fileNames.sorted {
+      (s1, s2) -> Bool in s1.localizedStandardCompare(s2) == .orderedAscending
+    }
+
   let matches = allNames == sortedArray
   if !matches {
     let errStr = "\(errorReporter.reportKind.logEntry) Xcode folder “\(pathToParent)/\(title)” has out-of-order children.\nExpected: \(sortedArray)\nActual:   \(allNames)"
     print(errStr)
   }
-  
+
   return matches
 }
 
@@ -57,7 +57,7 @@ private func recurseLookingForOrder(_ groups: [String], project: Project, prevRe
       result = recurseLookingForOrder(group.children, project: project, prevResult: result, errorReporter: errorReporter)
     }
   }
-  
+
   return result
 }
 
@@ -66,11 +66,11 @@ public func ensureAlphaOrder(_ project: Project, errorReporter: ErrorReporter) -
   if let proj = project.projectNodes.first {
     let mainGroup = proj.mainGroup
     let group = project.groups[mainGroup]
-    
+
     if let children = group?.children {
       result = recurseLookingForOrder(children, project: project, prevResult: EX_OK, errorReporter: errorReporter)
     }
   }
-  
+
   return result
 }

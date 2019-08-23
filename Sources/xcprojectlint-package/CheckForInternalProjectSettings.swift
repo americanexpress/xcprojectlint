@@ -16,15 +16,17 @@ import Foundation
 
 public func checkForInternalProjectSettings(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
   var scriptResult = EX_OK
-  
+
   for buildConfiguration in project.buildConfigurations {
     let settings = buildConfiguration.buildSettings
     guard settings.count > 0 else { continue } // this is a non-error
-    
-    scriptResult = errorReporter.reportKind.returnType  // if we get to this line, we've found at least one misplaced build setting
-    
-    guard let title = project.titles[buildConfiguration.id] else { errorReporter.report(ProjectSettingsError.problemLocatingMatchingConfiguration); return errorReporter.reportKind.returnType }
-    
+
+    scriptResult = errorReporter.reportKind.returnType // if we get to this line, we've found at least one misplaced build setting
+
+    guard let title = project.titles[buildConfiguration.id] else { errorReporter.report(ProjectSettingsError.problemLocatingMatchingConfiguration)
+      return errorReporter.reportKind.returnType
+    }
+
     var matchingTarget: String?
     if let base = buildConfiguration.baseConfigurationReference {
       matchingTarget = project.titles[base]
@@ -32,7 +34,7 @@ public func checkForInternalProjectSettings(_ project: Project, errorReporter: E
       let target = project.legacyTargets.filter { $0.buildConfigurationList == buildConfiguration.id }
       matchingTarget = target.last?.name
     }
-    
+
     // see if we can find the buildSettings node closest to this build configuration
     var currentLine = 0
     var foundKey = false
@@ -48,7 +50,7 @@ public func checkForInternalProjectSettings(_ project: Project, errorReporter: E
         }
       }
     }
-    
+
     let errStr: String!
     // NOTE: The spaces around the error: portion of the string are required with Xcode 8.3. Without them, no output gets reported in the Issue Navigator.
     if let matchingTarget = matchingTarget {
@@ -56,11 +58,11 @@ public func checkForInternalProjectSettings(_ project: Project, errorReporter: E
     } else {
       errStr = "\(project.url.path):\(currentLine): \(errorReporter.reportKind.logEntry) \(title) has settings defined at the project level.\n"
     }
-    
+
     ErrorReporter.report(errStr)
   }
-  
-  return(scriptResult)
+
+  return (scriptResult)
 }
 
 enum ProjectSettingsError: String, Error {
