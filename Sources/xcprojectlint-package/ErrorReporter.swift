@@ -17,18 +17,18 @@ import Foundation
 public struct ErrorReporter {
   public let pbxprojPath: String
   public let reportKind: ReportKind
-  
+
   public init(pbxprojPath: String, reportKind: ReportKind) {
     self.pbxprojPath = pbxprojPath
     self.reportKind = reportKind
   }
-  
+
   public func report(_ error: Error) {
     // NOTE: The spaces around the error: portion of the screen are required with Xcode 8.3. Without them, no output gets reported in the Issue Navigator.
     let errStr = "\(pbxprojPath):0: \(reportKind.logEntry) \(error.localizedDescription)\n"
     ErrorReporter.report(errStr)
   }
-  
+
   public static func report(_ errorString: String) {
     let handle = FileHandle.standardError
     if let data = errorString.data(using: .utf8) {
@@ -36,4 +36,3 @@ public struct ErrorReporter {
     }
   }
 }
-

@@ -20,14 +20,14 @@ extension Bundle {
   internal static var test: Bundle {
     return Bundle(for: BundleLocator.self)
   }
-  
+
   internal var testData: String {
-    let testDataURL = self.bundleURL
+    let testDataURL = bundleURL
       .appendingPathComponent("Contents")
       .appendingPathComponent("Resources")
       .appendingPathComponent("TestData")
       .appendingPathComponent("Bad.xcodeproj")
-    
+
     return testDataURL.path
   }
 }

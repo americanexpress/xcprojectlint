@@ -12,23 +12,20 @@
  * the License.
  */
 
-import XCTest
 @testable import xcprojectlint_package
+import XCTest
 
 final class DiskLayoutMatchesProjectTests: XCTestCase {
-  
   func testDiskLayoutMatchesProjectReturnsError() {
     do {
       let testData = Bundle.test.testData
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-      
+
       XCTAssertEqual(diskLayoutMatchesProject(project, errorReporter: errorReporter, skipFolders: ["Products"]), EX_SOFTWARE)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialize test")
     }
   }
-  
 }
-

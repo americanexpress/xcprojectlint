@@ -17,11 +17,11 @@ import Foundation
 public struct Usage {
   public static let version = "The version of the tool"
   public static let project = "Path to the project.xcproject file"
-  
+
   public static let skipFolders =
-"""
-List of folders to ignore during `disk-layout-matches-project`.
-                     Useful for Frameworks, Products, and/or source trees
-                     that aren’t chidren to the project file
-"""
+    """
+    List of folders to ignore during `disk-layout-matches-project`.
+                         Useful for Frameworks, Products, and/or source trees
+                         that aren’t chidren to the project file
+    """
 }
