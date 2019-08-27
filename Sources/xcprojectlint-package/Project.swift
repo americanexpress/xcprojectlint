@@ -18,15 +18,15 @@ public struct Project {
   public let projectName: String
   public let url: URL
   public let projectText: String
-  
-  public let buildConfigurationLists: Dictionary<String, BuildConfigurationList>
+
+  public let buildConfigurationLists: [String: BuildConfigurationList]
   public let buildConfigurations: [BuildConfiguration]
-  public let buildFiles: Dictionary<String, BuildFile>
+  public let buildFiles: [String: BuildFile]
   public let containerItemProxies: [ContainerItemProxy]
   public let copyFilesPhases: [CopyFilesBuildPhase]
-  public let fileReferences: Dictionary<String, FileReference>
+  public let fileReferences: [String: FileReference]
   public let frameworksBuildPhases: [FrameworksBuildPhase]
-  public let groups: Dictionary<String, Group>
+  public let groups: [String: Group]
   public let legacyTargets: [LegacyTarget]
   public let nativeTargets: [NativeTarget]
   public let projectNodes: [ProjectNode]
@@ -34,53 +34,53 @@ public struct Project {
   public let shellScriptBuildPhases: [ShellScriptBuildPhase]
   public let sourcesBuildPhases: [SourcesBuildPhase]
   public let targetDependencies: [TargetDependency]
-  public let titles: Dictionary<String, String>
+  public let titles: [String: String]
   public let variantGroups: [VariantGroup]
-  
-  public init(_ projectPath: String, errorReporter: ErrorReporter) throws {
+
+  public init(_ projectPath: String, errorReporter _: ErrorReporter) throws {
     let filename = "project.pbxproj"
     let projectURL = URL(fileURLWithPath: projectPath)
     let url = projectURL.appendingPathComponent(filename)
-        
+
     guard let data = try? Data(contentsOf: url) else { throw ProjectParseError.failedToReadProjectFile }
     guard let projectText = String(data: data, encoding: .utf8) else { throw ProjectParseError.failedToInflateProjectFile }
-    guard let serialization = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [AnyHashable : Any] else { throw ProjectParseError.failedToSerializeProjectData }
+    guard let serialization = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [AnyHashable: Any] else { throw ProjectParseError.failedToSerializeProjectData }
     guard let plist = serialization else { throw ProjectParseError.failedToSerializeProjectData }
-    guard let dict = plist as? [String : Any] else { throw ProjectParseError.failedToContortDictionary }
-    
+    guard let dict = plist as? [String: Any] else { throw ProjectParseError.failedToContortDictionary }
+
     let parser = ProjectParser(project: dict, projectText: projectText, projectPath: projectPath)
     guard parser.parse() else { throw ProjectParseError.failedToParseProjectStructure }
-    
-    self.projectName = projectURL.lastPathComponent
+
+    projectName = projectURL.lastPathComponent
     self.url = url
     self.projectText = projectText
-    
-    self.buildConfigurationLists = parser.buildConfigurationLists
-    self.buildConfigurations = parser.buildConfigurations
-    self.buildFiles = parser.buildFiles
-    self.containerItemProxies = parser.containerItemProxies
-    self.copyFilesPhases = parser.copyFilesPhases
-    self.fileReferences = parser.fileReferences
-    self.frameworksBuildPhases = parser.frameworksBuildPhases
-    self.groups = parser.groups
-    self.legacyTargets = parser.legacyTargets
-    self.nativeTargets = parser.nativeTargets
-    self.projectNodes = parser.projectNodes
-    self.resourceBuildPhases = parser.resourceBuildPhases
-    self.shellScriptBuildPhases = parser.shellScriptBuildPhases
-    self.sourcesBuildPhases = parser.sourcesBuildPhases
-    self.targetDependencies = parser.targetDependencies
-    self.titles = parser.titles
-    self.variantGroups = parser.variantGroups
+
+    buildConfigurationLists = parser.buildConfigurationLists
+    buildConfigurations = parser.buildConfigurations
+    buildFiles = parser.buildFiles
+    containerItemProxies = parser.containerItemProxies
+    copyFilesPhases = parser.copyFilesPhases
+    fileReferences = parser.fileReferences
+    frameworksBuildPhases = parser.frameworksBuildPhases
+    groups = parser.groups
+    legacyTargets = parser.legacyTargets
+    nativeTargets = parser.nativeTargets
+    projectNodes = parser.projectNodes
+    resourceBuildPhases = parser.resourceBuildPhases
+    shellScriptBuildPhases = parser.shellScriptBuildPhases
+    sourcesBuildPhases = parser.sourcesBuildPhases
+    targetDependencies = parser.targetDependencies
+    titles = parser.titles
+    variantGroups = parser.variantGroups
   }
-  
+
   func parentForObject(_ objectID: String) -> TitledNode? {
     let parent = groups.filter { $0.value.children.contains(objectID) }
     guard let result = parent.first else { return nil }
-    
+
     return result.value
   }
-  
+
   func absolutePathToReference(_ fileReference: FileReference) -> String {
     // trim back to the parent directory
     var path = url.deletingLastPathComponent().deletingLastPathComponent()
@@ -88,7 +88,7 @@ public struct Project {
     path.appendPathComponent(fileReference.title)
     return path.path
   }
-  
+
   func pathToReference(_ objectID: String) -> String {
     var segment = parentForObject(objectID)
     var path = [String]()
@@ -98,7 +98,7 @@ public struct Project {
       }
       segment = parentForObject(unwrapped.id)
     }
-    return path.reversed().joined(separator:"/")
+    return path.reversed().joined(separator: "/")
   }
 }
 
