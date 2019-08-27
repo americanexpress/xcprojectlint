@@ -17,17 +17,24 @@ import Foundation
 private class BundleLocator: NSObject {}
 
 extension Bundle {
-  internal static var test: Bundle {
+  enum typeOfData {
+    case bad
+    case good
+  }
+
+  static var test: Bundle {
     return Bundle(for: BundleLocator.self)
   }
-  
-  internal var testData: String {
-    let testDataURL = self.bundleURL
+
+  func testData(_ testType: typeOfData = .bad) -> String {
+    let pathSuffix = testType == .bad ? "Bad.xcodeproj" : "Good.xcodeproj"
+
+    let testDataURL = bundleURL
       .appendingPathComponent("Contents")
       .appendingPathComponent("Resources")
       .appendingPathComponent("TestData")
-      .appendingPathComponent("Bad.xcodeproj")
-    
+      .appendingPathComponent(pathSuffix)
+
     return testDataURL.path
   }
 }
