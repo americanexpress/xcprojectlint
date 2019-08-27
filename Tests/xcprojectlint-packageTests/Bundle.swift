@@ -17,7 +17,7 @@ import Foundation
 private class BundleLocator: NSObject {}
 
 extension Bundle {
-  enum typeOfData {
+  enum TypeOfData {
     case bad
     case good
   }
@@ -26,7 +26,7 @@ extension Bundle {
     return Bundle(for: BundleLocator.self)
   }
 
-  func testData(_ testType: typeOfData = .bad) -> String {
+  func testData(_ testType: TypeOfData = .bad) -> String {
     let pathSuffix = testType == .bad ? "Bad.xcodeproj" : "Good.xcodeproj"
 
     let testDataURL = bundleURL
