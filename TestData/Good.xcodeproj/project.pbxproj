@@ -1,0 +1,224 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C3F569CA231592740042FB7A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F569C9231592740042FB7A /* main.swift */; };
+		D23231BD23158DA300168CE6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23231BC23158DA300168CE6 /* AppDelegate.swift */; };
+		D23231BF23158DA300168CE6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23231BE23158DA300168CE6 /* ViewController.swift */; };
+		D23231C223158DA300168CE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D23231C023158DA300168CE6 /* Main.storyboard */; };
+		D23231C423158DA500168CE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D23231C323158DA500168CE6 /* Assets.xcassets */; };
+		D23231C723158DA500168CE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D23231C523158DA500168CE6 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C3F569C9231592740042FB7A /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		C3F569CB231593750042FB7A /* Good.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Good.app; path = "/Users/llisia/Documents/random projects/Swift/xcprojectlint/TestData/build/Debug/Good.app"; sourceTree = "<absolute>"; };
+		D23231BC23158DA300168CE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D23231BE23158DA300168CE6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D23231C123158DA300168CE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D23231C323158DA500168CE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D23231C623158DA500168CE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D23231C823158DA500168CE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D23231D123158E5100168CE6 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		D23231D223158E5100168CE6 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		D23231D323158F4E00168CE6 /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D23231B623158DA300168CE6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D23231B023158DA200168CE6 = {
+			isa = PBXGroup;
+			children = (
+				D23231BB23158DA300168CE6 /* Good */,
+			);
+			sourceTree = "<group>";
+		};
+		D23231BB23158DA300168CE6 /* Good */ = {
+			isa = PBXGroup;
+			children = (
+				D23231D023158E5100168CE6 /* xcconfigs */,
+				D23231BC23158DA300168CE6 /* AppDelegate.swift */,
+				D23231C323158DA500168CE6 /* Assets.xcassets */,
+				D23231C823158DA500168CE6 /* Info.plist */,
+				D23231C523158DA500168CE6 /* LaunchScreen.storyboard */,
+				D23231C023158DA300168CE6 /* Main.storyboard */,
+				C3F569C9231592740042FB7A /* main.swift */,
+				D23231BE23158DA300168CE6 /* ViewController.swift */,
+			);
+			path = Good;
+			sourceTree = "<group>";
+		};
+		D23231D023158E5100168CE6 /* xcconfigs */ = {
+			isa = PBXGroup;
+			children = (
+				D23231D323158F4E00168CE6 /* Common.xcconfig */,
+				D23231D123158E5100168CE6 /* Debug.xcconfig */,
+				D23231D223158E5100168CE6 /* Release.xcconfig */,
+			);
+			path = xcconfigs;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D23231B823158DA300168CE6 /* Good */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D23231CB23158DA500168CE6 /* Build configuration list for PBXNativeTarget "Good" */;
+			buildPhases = (
+				D23231B523158DA300168CE6 /* Sources */,
+				D23231B623158DA300168CE6 /* Frameworks */,
+				D23231B723158DA300168CE6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Good;
+			productName = Good;
+			productReference = C3F569CB231593750042FB7A /* Good.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D23231B123158DA200168CE6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1030;
+				LastUpgradeCheck = 1030;
+				ORGANIZATIONNAME = "American Express";
+				TargetAttributes = {
+					D23231B823158DA300168CE6 = {
+						CreatedOnToolsVersion = 10.3;
+					};
+				};
+			};
+			buildConfigurationList = D23231B423158DA200168CE6 /* Build configuration list for PBXProject "Good" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D23231B023158DA200168CE6;
+			productRefGroup = D23231B023158DA200168CE6;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D23231B823158DA300168CE6 /* Good */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D23231B723158DA300168CE6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D23231C723158DA500168CE6 /* LaunchScreen.storyboard in Resources */,
+				D23231C423158DA500168CE6 /* Assets.xcassets in Resources */,
+				D23231C223158DA300168CE6 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D23231B523158DA300168CE6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D23231BF23158DA300168CE6 /* ViewController.swift in Sources */,
+				D23231BD23158DA300168CE6 /* AppDelegate.swift in Sources */,
+				C3F569CA231592740042FB7A /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D23231C023158DA300168CE6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D23231C123158DA300168CE6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D23231C523158DA500168CE6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D23231C623158DA500168CE6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C3F569C72315918E0042FB7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D23231D123158E5100168CE6 /* Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		C3F569C82315918E0042FB7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		D23231CA23158DA500168CE6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D23231D223158E5100168CE6 /* Release.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		D23231CD23158DA500168CE6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D23231B423158DA200168CE6 /* Build configuration list for PBXProject "Good" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D23231CA23158DA500168CE6 /* Release */,
+				C3F569C72315918E0042FB7A /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D23231CB23158DA500168CE6 /* Build configuration list for PBXNativeTarget "Good" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D23231CD23158DA500168CE6 /* Release */,
+				C3F569C82315918E0042FB7A /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D23231B123158DA200168CE6 /* Project object */;
+}
