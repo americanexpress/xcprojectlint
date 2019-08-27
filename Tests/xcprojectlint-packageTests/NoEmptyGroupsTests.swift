@@ -16,7 +16,20 @@
 import XCTest
 
 final class NoEmptyGroupsTests: XCTestCase {
-  func testEmptyGroupReturnsError() {
+  func test_allGropusPopulated_returnsClean() {
+    do {
+      let testData = Bundle.test.testData(.good)
+      let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
+      let project = try Project(testData, errorReporter: errorReporter)
+
+      XCTAssertEqual(noEmptyGroups(project, errorReporter: errorReporter), EX_OK)
+    } catch {
+      print(error.localizedDescription)
+      XCTFail("Failed to initialise test")
+    }
+  }
+
+  func test_emptyGroup_returnsError() {
     do {
       let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)

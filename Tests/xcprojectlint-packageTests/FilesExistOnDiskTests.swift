@@ -16,7 +16,20 @@
 import XCTest
 
 final class FilesExistOnDiskTests: XCTestCase {
-  func testMissingFileReturnsError() {
+  func test_filesExistOnDisk_returnsClean() {
+    do {
+      let testData = Bundle.test.testData(.good)
+      let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
+      let project = try Project(testData, errorReporter: errorReporter)
+
+      XCTAssertEqual(filesExistOnDisk(project, errorReporter: errorReporter), EX_OK)
+    } catch {
+      print(error.localizedDescription)
+      XCTFail("Failed to initialize test")
+    }
+  }
+
+  func test_missingFile_returnsError() {
     do {
       let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
