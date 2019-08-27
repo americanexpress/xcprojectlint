@@ -18,7 +18,7 @@ import XCTest
 final class ItemsInAlphaOrderTests: XCTestCase {
   func testUnorderedGroupReturnsError() {
     do {
-      let testData = Bundle.test.testData
+      let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
 
