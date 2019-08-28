@@ -29,7 +29,7 @@ class NoDanglingSourceFilesTests: XCTestCase {
     }
   }
 
-  func test_danglingSourceFiles_returnError() {
+  func test_danglingSourceFiles_returnsError() {
     do {
       let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)

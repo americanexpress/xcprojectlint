@@ -16,7 +16,7 @@
 import XCTest
 
 final class NoEmptyGroupsTests: XCTestCase {
-  func test_allGropusPopulated_returnsClean() {
+  func test_allGroupsPopulated_returnsClean() {
     do {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
