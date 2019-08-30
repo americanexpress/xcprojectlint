@@ -15,27 +15,27 @@
 @testable import xcprojectlint_package
 import XCTest
 
-final class DiskLayoutMatchesProjectTests: XCTestCase {
-  func test_diskLayoutIsGood_returnsClean() {
+class NoDanglingSourceFilesTests: XCTestCase {
+  func test_sourceFilesPresentInProject_returnsClean() {
     do {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
 
-      XCTAssertEqual(diskLayoutMatchesProject(project, errorReporter: errorReporter, skipFolders: ["Products"]), EX_OK)
+      XCTAssertEqual(checkForDanglingSourceFiles(project, errorReporter: errorReporter), EX_OK)
     } catch {
       print(error.localizedDescription)
-      XCTFail("Failed to initialize test")
+      XCTFail("Failed to initialise test")
     }
   }
 
-  func test_diskLayoutMatchesProject_returnsError() {
+  func test_danglingSourceFiles_returnsError() {
     do {
       let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
 
-      XCTAssertEqual(diskLayoutMatchesProject(project, errorReporter: errorReporter, skipFolders: ["Products"]), EX_SOFTWARE)
+      XCTAssertEqual(checkForDanglingSourceFiles(project, errorReporter: errorReporter), EX_SOFTWARE)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialize test")

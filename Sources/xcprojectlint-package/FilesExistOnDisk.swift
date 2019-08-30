@@ -34,7 +34,7 @@ private func recurseForMissingFiles(_ groups: [String], hierarchy: [String], pro
         }
         url = url.appendingPathComponent(file.path)
         url = url.standardized
-        
+
         let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: url.path) {
           let errStr = "\(project.url.path):0: \(errorReporter.reportKind.logEntry) \(uiPath) references files that are not on disk.\n"
@@ -51,11 +51,11 @@ public func filesExistOnDisk(_ project: Project, errorReporter: ErrorReporter) -
   if let proj = project.projectNodes.first {
     let mainGroup = proj.mainGroup
     let group = project.groups[mainGroup]
-    
+
     let errors = Set<String>()
     if let children = group?.children {
       let results = recurseForMissingFiles(children, hierarchy: [], project: project, errors: errors, errorReporter: errorReporter).sorted()
-      
+
       if results.count > 0 {
         result = errorReporter.reportKind.returnType
         for error in results {
@@ -66,6 +66,6 @@ public func filesExistOnDisk(_ project: Project, errorReporter: ErrorReporter) -
       }
     }
   }
-  
+
   return result
 }

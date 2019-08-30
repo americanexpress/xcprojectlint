@@ -12,22 +12,33 @@
  * the License.
  */
 
-import XCTest
 @testable import xcprojectlint_package
+import XCTest
 
-class InternalProjectSettingsTests: XCTestCase {
-  
-  func testInternalProjectSettingsReturnsError() {
+final class InternalProjectSettingsTests: XCTestCase {
+  func test_containsNoInternalProjectSettings_returnsClean() {
     do {
-      let testData = Bundle.test.testData
+      let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-      
+
+      XCTAssertEqual(checkForInternalProjectSettings(project, errorReporter: errorReporter), EX_OK)
+    } catch {
+      print(error.localizedDescription)
+      XCTFail("Failed to initialise test")
+    }
+  }
+
+  func test_containsInternalProjectSettings_returnsError() {
+    do {
+      let testData = Bundle.test.testData()
+      let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
+      let project = try Project(testData, errorReporter: errorReporter)
+
       XCTAssertEqual(checkForInternalProjectSettings(project, errorReporter: errorReporter), EX_SOFTWARE)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialize test")
     }
   }
-  
 }

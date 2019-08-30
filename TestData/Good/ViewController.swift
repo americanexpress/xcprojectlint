@@ -12,29 +12,11 @@
  * the License.
  */
 
-import Foundation
+import UIKit
 
-private class BundleLocator: NSObject {}
-
-extension Bundle {
-  enum TypeOfData {
-    case bad
-    case good
-  }
-
-  static var test: Bundle {
-    return Bundle(for: BundleLocator.self)
-  }
-
-  func testData(_ testType: TypeOfData = .bad) -> String {
-    let pathSuffix = testType == .bad ? "Bad.xcodeproj" : "Good.xcodeproj"
-
-    let testDataURL = bundleURL
-      .appendingPathComponent("Contents")
-      .appendingPathComponent("Resources")
-      .appendingPathComponent("TestData")
-      .appendingPathComponent(pathSuffix)
-
-    return testDataURL.path
+class ViewController: UIViewController {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    // Do any additional setup after loading the view.
   }
 }

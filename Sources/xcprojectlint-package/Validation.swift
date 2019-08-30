@@ -20,6 +20,7 @@ public enum Validation: String, StringEnumArgument {
   case diskLayoutMatchesProject = "disk-layout-matches-project"
   case filesExistOnDisk = "files-exist-on-disk"
   case itemsInAlphaOrder = "items-in-alpha-order"
+  case noDanglingSourceFiles = "dangling-source-files"
   case noEmptyGroups = "empty-groups"
   case noWhiteSpaceSpecifications = "no-white-space-specifications"
 
@@ -40,6 +41,9 @@ public enum Validation: String, StringEnumArgument {
     List of validations to perform:
                          build-settings-externalized:
                            Looks for project settings defined in the project file
+
+                         dangling-source-files:
+                           Ensures each source code files is member of a target
 
                          disk-layout-matches-project:
                            Validates files on disk are arranged like the project
@@ -69,6 +73,7 @@ public enum Validation: String, StringEnumArgument {
       Validation.diskLayoutMatchesProject,
       Validation.filesExistOnDisk,
       Validation.itemsInAlphaOrder,
+      Validation.noDanglingSourceFiles,
       Validation.noEmptyGroups,
       Validation.noWhiteSpaceSpecifications,
     ]
