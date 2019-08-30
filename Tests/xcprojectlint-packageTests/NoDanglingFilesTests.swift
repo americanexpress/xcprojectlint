@@ -16,9 +16,22 @@
 import XCTest
 
 class NoDanglingSourceFilesTests: XCTestCase {
-  func testDanglingSourceFilesReturnError() {
+  func test_sourceFilesPresentInProject_returnsClean() {
     do {
-      let testData = Bundle.test.testData
+      let testData = Bundle.test.testData(.good)
+      let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
+      let project = try Project(testData, errorReporter: errorReporter)
+
+      XCTAssertEqual(checkForDanglingSourceFiles(project, errorReporter: errorReporter), EX_OK)
+    } catch {
+      print(error.localizedDescription)
+      XCTFail("Failed to initialise test")
+    }
+  }
+
+  func test_danglingSourceFiles_returnsError() {
+    do {
+      let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
 

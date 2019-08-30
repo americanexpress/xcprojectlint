@@ -12,20 +12,6 @@
  * the License.
  */
 
-@testable import xcprojectlint_package
-import XCTest
+import Foundation
 
-final class FilesExistOnDiskTests: XCTestCase {
-  func testMissingFileReturnsError() {
-    do {
-      let testData = Bundle.test.testData
-      let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
-      let project = try Project(testData, errorReporter: errorReporter)
-
-      XCTAssertEqual(filesExistOnDisk(project, errorReporter: errorReporter), EX_SOFTWARE)
-    } catch {
-      print(error.localizedDescription)
-      XCTFail("Failed to initialize test")
-    }
-  }
-}
+print("Hello, World!")

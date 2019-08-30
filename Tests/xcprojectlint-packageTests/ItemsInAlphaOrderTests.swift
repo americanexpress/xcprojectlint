@@ -16,9 +16,22 @@
 import XCTest
 
 final class ItemsInAlphaOrderTests: XCTestCase {
-  func testUnorderedGroupReturnsError() {
+  func test_sortedGroup_returnsClean() {
     do {
-      let testData = Bundle.test.testData
+      let testData = Bundle.test.testData(.good)
+      let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
+      let project = try Project(testData, errorReporter: errorReporter)
+
+      XCTAssertEqual(ensureAlphaOrder(project, errorReporter: errorReporter), EX_OK)
+    } catch {
+      print(error.localizedDescription)
+      XCTFail("Failed to initialise test")
+    }
+  }
+
+  func test_unorderedGroup_returnsError() {
+    do {
+      let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
 
