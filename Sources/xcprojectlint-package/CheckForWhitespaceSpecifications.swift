@@ -15,50 +15,39 @@
 import Foundation
 
 public func checkForWhiteSpaceSpecifications(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
-  var errors: [String] = []
-  var scriptResult = EX_OK
-
-  for group in project.groups.values {
-    if group.tabWidth != nil {
-      errors.append("\(errorReporter.reportKind.logEntry) Group item (\(group.id)) contains white space specification of 'tabWidth'.\n ")
-
-      scriptResult = errorReporter.reportKind.returnType
-    }
-
-    if group.indentWidth != nil {
-      errors.append("\(errorReporter.reportKind.logEntry) Group item (\(group.id)) contains white space specification of 'indentWidth'.\n ")
-
-      scriptResult = errorReporter.reportKind.returnType
-    }
-
-    if group.usesTabs != nil {
-      errors.append("\(errorReporter.reportKind.logEntry) Group item (\(group.id)) contains white space specification of 'usesTabs'.\n ")
-
-      scriptResult = errorReporter.reportKind.returnType
+  let mapToGroupError: (String, String) -> (String) -> String = { groupID, type in
+    { _ in
+      "\(errorReporter.reportKind.logEntry) Group item (\(groupID)) contains white space specification of '\(type)'.\n "
     }
   }
 
-  for fileReference in project.fileReferences.values {
-    if fileReference.tabWidth != nil {
-      errors.append("\(project.absolutePathToReference(fileReference)):0:\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains white space specification of 'tabWidth'.\n")
+  let groupsErrors = project.groups.values.flatMap { group -> [String] in
+    [
+      group.tabWidth.map(mapToGroupError(group.id, "tabWidth")),
+      group.indentWidth.map(mapToGroupError(group.id, "indentWidth")),
+      group.usesTabs.map(mapToGroupError(group.id, "usesTabs")),
+    ].compactMap { $0 }
+  }
 
-      scriptResult = errorReporter.reportKind.returnType
-    }
-    if fileReference.indentWidth != nil {
-      errors.append("\(project.absolutePathToReference(fileReference)):0:\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains white space specification of 'indentWidth'.\n")
-
-      scriptResult = errorReporter.reportKind.returnType
-    }
-    if fileReference.lineEnding != nil {
-      errors.append("\(project.absolutePathToReference(fileReference)):0:\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains white space specification of 'lineEnding'.\n")
-
-      scriptResult = errorReporter.reportKind.returnType
+  let mapToFileError: (FileReference, String) -> (String) -> String = { fileReference, type in
+    { _ in
+      "\(project.absolutePathToReference(fileReference)):0:\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains white space specification of '\(type)'.\n"
     }
   }
 
-  for error in errors {
+  let fileReferenceErrors = project.fileReferences.values.flatMap { fileReference -> [String] in
+    [
+      fileReference.tabWidth.map(mapToFileError(fileReference, "tabWidth")),
+      fileReference.indentWidth.map(mapToFileError(fileReference, "indentWidth")),
+      fileReference.lineEnding.map(mapToFileError(fileReference, "lineEnding")),
+    ].compactMap { $0 }
+  }
+
+  let allErrors = groupsErrors + fileReferenceErrors
+
+  for error in allErrors {
     ErrorReporter.report(error)
   }
 
-  return (scriptResult)
+  return allErrors.isEmpty ? EX_OK : errorReporter.reportKind.returnType
 }
