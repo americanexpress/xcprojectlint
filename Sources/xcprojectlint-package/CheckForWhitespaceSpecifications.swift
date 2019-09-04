@@ -15,7 +15,7 @@
 import Foundation
 
 public func checkForWhiteSpaceSpecifications(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
-  let mapToGroupError: (String, String) -> (String) -> String = { groupID, type in
+  let toGroupError: (String, String) -> (String) -> String = { groupID, type in
     { _ in
       "\(errorReporter.reportKind.logEntry) Group item (\(groupID)) contains white space specification of '\(type)'.\n "
     }
@@ -23,13 +23,13 @@ public func checkForWhiteSpaceSpecifications(_ project: Project, errorReporter: 
 
   let groupsErrors = project.groups.values.flatMap { group -> [String] in
     [
-      group.tabWidth.map(mapToGroupError(group.id, "tabWidth")),
-      group.indentWidth.map(mapToGroupError(group.id, "indentWidth")),
-      group.usesTabs.map(mapToGroupError(group.id, "usesTabs")),
+      group.tabWidth.map(toGroupError(group.id, "tabWidth")),
+      group.indentWidth.map(toGroupError(group.id, "indentWidth")),
+      group.usesTabs.map(toGroupError(group.id, "usesTabs")),
     ].compactMap { $0 }
   }
 
-  let mapToFileError: (FileReference, String) -> (String) -> String = { fileReference, type in
+  let toFileError: (FileReference, String) -> (String) -> String = { fileReference, type in
     { _ in
       "\(project.absolutePathToReference(fileReference)):0:\(errorReporter.reportKind.logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains white space specification of '\(type)'.\n"
     }
@@ -37,9 +37,9 @@ public func checkForWhiteSpaceSpecifications(_ project: Project, errorReporter: 
 
   let fileReferenceErrors = project.fileReferences.values.flatMap { fileReference -> [String] in
     [
-      fileReference.tabWidth.map(mapToFileError(fileReference, "tabWidth")),
-      fileReference.indentWidth.map(mapToFileError(fileReference, "indentWidth")),
-      fileReference.lineEnding.map(mapToFileError(fileReference, "lineEnding")),
+      fileReference.tabWidth.map(toFileError(fileReference, "tabWidth")),
+      fileReference.indentWidth.map(toFileError(fileReference, "indentWidth")),
+      fileReference.lineEnding.map(toFileError(fileReference, "lineEnding")),
     ].compactMap { $0 }
   }
 
