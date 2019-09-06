@@ -22,6 +22,7 @@ public enum Validation: String, StringEnumArgument {
   case itemsInAlphaOrder = "items-in-alpha-order"
   case noDanglingSourceFiles = "dangling-source-files"
   case noEmptyGroups = "empty-groups"
+  case noWhiteSpaceSpecifications = "no-white-space-specifications"
 
   case all
 
@@ -58,6 +59,10 @@ public enum Validation: String, StringEnumArgument {
                          items-in-alpha-order:
                            Ensure groups and files are sorted alphabetically
 
+                         no-white-space-specifications:
+                           Ensure user specifications of tabs, tabWidth, and identWidth
+                           are not carried through project file.
+
                          all:
                            Runs all known validations
     """
@@ -70,6 +75,7 @@ public enum Validation: String, StringEnumArgument {
       Validation.itemsInAlphaOrder,
       Validation.noDanglingSourceFiles,
       Validation.noEmptyGroups,
+      Validation.noWhiteSpaceSpecifications,
     ]
   }
 }

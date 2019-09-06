@@ -162,10 +162,13 @@ public struct FileReference: TitledNode {
   public let xcLanguageSpecificationIdentifier: String?
   public let includeInIndex: Bool?
   public let debugDescription: String
+  public let indentWidth: String?
+  public let tabWidth: String?
 
   init(key: String, value: [String: Any], title: String, projectPath _: String) {
-    identifyUnparsedKeys(value, knownKeys: ["path", "name", "explicitFileType", "lastKnownFileType", "sourceTree", "fileEncoding", "lineEnding", "xcLanguageSpecificationIdentifier", "includeInIndex"])
+    identifyUnparsedKeys(value, knownKeys: ["path", "name", "explicitFileType", "lastKnownFileType", "sourceTree", "fileEncoding", "lineEnding", "xcLanguageSpecificationIdentifier", "includeInIndex", "indentWidth", "tabWidth"])
     self.title = title
+    id = key
     path = value.string(forKey: "path", container: "(type(of: self))")
     name = value["name"] as? String
     explicitFileType = value["explicitFileType"] as? String
@@ -175,7 +178,8 @@ public struct FileReference: TitledNode {
     lineEnding = value["lineEnding"] as? String
     xcLanguageSpecificationIdentifier = value["xcLanguageSpecificationIdentifier"] as? String
     includeInIndex = (value["includeInIndex"] as? String) == "1"
-    id = key
+    indentWidth = value["indentWidth"] as? String
+    tabWidth = value["tabWidth"] as? String
 
     debugDescription = "\(title) (\(id))"
   }
@@ -209,9 +213,10 @@ public struct Group: TitledNode {
   public let children: [String]
   public let indentWidth: String?
   public let tabWidth: String?
+  public let usesTabs: String?
 
   init(key: String, value: [String: Any], title: String) {
-    identifyUnparsedKeys(value, knownKeys: ["name", "path", "sourceTree", "children", "indentWidth", "tabWidth"])
+    identifyUnparsedKeys(value, knownKeys: ["name", "path", "sourceTree", "children", "indentWidth", "tabWidth", "usesTabs"])
     self.title = title
     id = key
     name = value["name"] as? String
@@ -220,6 +225,7 @@ public struct Group: TitledNode {
     children = value["children"] as! [String]
     indentWidth = value["indentWidth"] as? String
     tabWidth = value["tabWidth"] as? String
+    usesTabs = value["usesTabs"] as? String
 
     debugDescription = title
   }
