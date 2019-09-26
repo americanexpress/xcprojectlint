@@ -37,7 +37,7 @@ build:
 	swift build
 
 release:
-	swift build --configuration release
+	swift build --configuration release --disable-sandbox --build-path "$(BUILDDIR)"
 
 install: release
 	@install -d "$(bindir)" "$(libdir)"
