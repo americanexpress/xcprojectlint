@@ -43,6 +43,9 @@ install: release
 	@install -d "$(bindir)" "$(libdir)"
 	@install "$(BUILDDIR)/release/xcprojectlint" "$(bindir)"
 
+uninstall:
+	@rm -rf "$(bindir)/xcprojectlint"
+
 copyTestResources: build
 	mkdir -p ${TEST_RESOURCES_DIRECTORY}
 	cp -r TestData ${TEST_RESOURCES_DIRECTORY}
@@ -60,4 +63,4 @@ xcode:
 clean:
 	swift package reset
 
-.PHONY: run build install test copyTestResources clean xcode
+.PHONY: run build install uninstall test copyTestResources clean xcode
