@@ -19,6 +19,13 @@
 # https://stackoverflow.com/a/47243701
 # which came with the above license
 
+prefix ?= /usr/local
+bindir ?= $(prefix)/bin
+libdir ?= $(prefix)/lib
+
+REPODIR = $(shell pwd)
+BUILDDIR = $(REPODIR)/.build
+
 EXECUTABLE_DIRECTORY = ./.build/x86_64-apple-macosx/debug
 TEST_RESOURCES_DIRECTORY = ./.build/x86_64-apple-macosx/debug/xcprojectlintPackageTests.xctest/Contents/Resources/
 
@@ -31,6 +38,10 @@ build:
 
 release:
 	swift build --configuration release
+
+install: release
+	@install -d "$(bindir)" "$(libdir)"
+	@install "$(BUILDDIR)/release/xcprojectlint" "$(bindir)"
 
 copyTestResources: build
 	mkdir -p ${TEST_RESOURCES_DIRECTORY}
@@ -49,4 +60,4 @@ xcode:
 clean:
 	swift package reset
 
-.PHONY: run build test copyTestResources clean xcode
+.PHONY: run build install test copyTestResources clean xcode
