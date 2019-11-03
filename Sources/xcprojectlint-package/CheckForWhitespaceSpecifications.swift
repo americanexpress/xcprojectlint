@@ -26,6 +26,7 @@ public func checkForWhiteSpaceSpecifications(_ project: Project, errorReporter: 
       group.tabWidth.map(toGroupError(group.id, "tabWidth")),
       group.indentWidth.map(toGroupError(group.id, "indentWidth")),
       group.usesTabs.map(toGroupError(group.id, "usesTabs")),
+      group.wrapsLines.map(toGroupError(group.id, "wrapsLines")),
     ].compactMap { $0 }
   }
 
@@ -40,14 +41,11 @@ public func checkForWhiteSpaceSpecifications(_ project: Project, errorReporter: 
       fileReference.tabWidth.map(toFileError(fileReference, "tabWidth")),
       fileReference.indentWidth.map(toFileError(fileReference, "indentWidth")),
       fileReference.lineEnding.map(toFileError(fileReference, "lineEnding")),
+      fileReference.wrapsLines.map(toFileError(fileReference, "wrapsLines")),
     ].compactMap { $0 }
   }
 
   let allErrors = groupsErrors + fileReferenceErrors
-
-  for error in allErrors {
-    ErrorReporter.report(error)
-  }
-
+  allErrors.forEach(ErrorReporter.report)
   return allErrors.isEmpty ? EX_OK : errorReporter.reportKind.returnType
 }
