@@ -15,6 +15,19 @@
 import Foundation
 import SPMUtility
 
+public enum Report: Equatable {
+  case invalidInput
+  case failed(errors: [String])
+  case passed
+  
+  public var errors: [String] {
+    guard case let .failed(errors) = self else {
+      return []
+    }
+    return errors
+  }
+}
+
 public enum ReportKind: StringEnumArgument {
   case warning
   case error

@@ -14,56 +14,48 @@
 
 import Foundation
 
-public func checkForInternalProjectSettings(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
-  var scriptResult = EX_OK
-
-  for buildConfiguration in project.buildConfigurations {
-    let settings = buildConfiguration.buildSettings
-    guard settings.count > 0 else { continue } // this is a non-error
-
-    scriptResult = errorReporter.reportKind.returnType // if we get to this line, we've found at least one misplaced build setting
-
-    guard let title = project.titles[buildConfiguration.id] else {
-      errorReporter.report(ProjectSettingsError.problemLocatingMatchingConfiguration)
-      return errorReporter.reportKind.returnType
-    }
-
-    var matchingTarget: String?
-    if let base = buildConfiguration.baseConfigurationReference {
-      matchingTarget = project.titles[base]
-    } else {
-      let target = project.legacyTargets.filter { $0.buildConfigurationList == buildConfiguration.id }
-      matchingTarget = target.last?.name
-    }
-
-    // see if we can find the buildSettings node closest to this build configuration
-    var currentLine = 0
-    var foundKey = false
-    for line in project.projectText.components(separatedBy: CharacterSet.newlines) {
-      currentLine += 1
-      if !foundKey {
-        if line.contains(buildConfiguration.id) {
-          foundKey = true
-        }
+public func checkForInternalProjectSettings(_ project: Project, pbxprojPath: String, logEntry: String) -> Report {
+  let errors = project.buildConfigurations
+    .filter { !$0.buildSettings.isEmpty }
+    .map { buildConfiguration -> String in
+      guard let title = project.titles[buildConfiguration.id] else {
+        let error = ProjectSettingsError.problemLocatingMatchingConfiguration
+        return "\(pbxprojPath):0: \(logEntry) \(error.localizedDescription)\n"
+      }
+      
+      var matchingTarget: String?
+      if let base = buildConfiguration.baseConfigurationReference {
+        matchingTarget = project.titles[base]
       } else {
-        if line.contains("buildSettings") {
-          break
+        let target = project.legacyTargets.filter { $0.buildConfigurationList == buildConfiguration.id }
+        matchingTarget = target.last?.name
+      }
+      
+      // see if we can find the buildSettings node closest to this build configuration
+      var currentLine = 0
+      var foundKey = false
+      for line in project.projectText.components(separatedBy: CharacterSet.newlines) {
+        currentLine += 1
+        if !foundKey {
+          if line.contains(buildConfiguration.id) {
+            foundKey = true
+          }
+        } else {
+          if line.contains("buildSettings") {
+            break
+          }
         }
       }
-    }
-
-    let errStr: String!
-    // NOTE: The spaces around the error: portion of the string are required with Xcode 8.3. Without them, no output gets reported in the Issue Navigator.
-    if let matchingTarget = matchingTarget {
-      errStr = "\(project.url.path):\(currentLine): \(errorReporter.reportKind.logEntry) \(matchingTarget) (\(buildConfiguration.name)) has settings defined in the project file.\n"
-    } else {
-      errStr = "\(project.url.path):\(currentLine): \(errorReporter.reportKind.logEntry) \(title) has settings defined at the project level.\n"
-    }
-
-    ErrorReporter.report(errStr)
+      
+      // NOTE: The spaces around the error: portion of the string are required with Xcode 8.3. Without them, no output gets reported in the Issue Navigator.
+      if let matchingTarget = matchingTarget {
+        return "\(project.url.path):\(currentLine): \(logEntry) \(matchingTarget) (\(buildConfiguration.name)) has settings defined in the project file.\n"
+      } else {
+        return "\(project.url.path):\(currentLine): \(logEntry) \(title) has settings defined at the project level.\n"
+      }
   }
-
-  return (scriptResult)
+  
+  return errors.isEmpty ? .passed : .failed(errors: errors.sorted())
 }
 
 enum ProjectSettingsError: String, Error {

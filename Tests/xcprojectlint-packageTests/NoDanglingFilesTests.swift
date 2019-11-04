@@ -21,8 +21,8 @@ class NoDanglingSourceFilesTests: XCTestCase {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-
-      XCTAssertEqual(checkForDanglingSourceFiles(project, errorReporter: errorReporter), EX_OK)
+      let report = checkForDanglingSourceFiles(project, logEntry: errorReporter.reportKind.logEntry)
+      XCTAssertEqual(report, .passed)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialise test")
@@ -32,10 +32,14 @@ class NoDanglingSourceFilesTests: XCTestCase {
   func test_danglingSourceFiles_returnsError() {
     do {
       let testData = Bundle.test.testData()
+      let testDataPath = Bundle.test.testDataRoot.path
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-
-      XCTAssertEqual(checkForDanglingSourceFiles(project, errorReporter: errorReporter), EX_SOFTWARE)
+      let expectedErrors = [
+        "\(testDataPath)/BadUnitTests/DanglingFile/BadUnitTests.swift:0: error: BadUnitTests.swift is not added to any target.\n"
+      ]
+      let report = checkForDanglingSourceFiles(project, logEntry: errorReporter.reportKind.logEntry)
+      XCTAssertEqual(report.errors, expectedErrors)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialize test")

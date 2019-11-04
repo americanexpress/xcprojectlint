@@ -21,21 +21,25 @@ final class ItemsInAlphaOrderTests: XCTestCase {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-
-      XCTAssertEqual(ensureAlphaOrder(project, errorReporter: errorReporter), EX_OK)
+      let report = ensureAlphaOrder(project, logEntry: errorReporter.reportKind.logEntry)
+      XCTAssertEqual(report, .passed)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialise test")
     }
   }
-
+  
   func test_unorderedGroup_returnsError() {
     do {
       let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-
-      XCTAssertEqual(ensureAlphaOrder(project, errorReporter: errorReporter), EX_SOFTWARE)
+      let expectedErrors = [
+        "error: Xcode folder “Bad/ItemsOutOfOrder” has out-of-order children.\nExpected: [\"First.swift\", \"Second.swift\"]\nActual:   [\"Second.swift\", \"First.swift\"]",
+        "error: Xcode folder “/Bad” has out-of-order children.\nExpected: [\"ItemsOutOfOrder\", \"MisplacedFile\", \"MissingFile\", \"ThisGroupIsEmpty\", \"main.swift\"]\nActual:   [\"ItemsOutOfOrder\", \"main.swift\", \"MisplacedFile\", \"MissingFile\", \"ThisGroupIsEmpty\"]"
+      ]
+      let report = ensureAlphaOrder(project, logEntry: errorReporter.reportKind.logEntry)
+      XCTAssertEqual(report.errors, expectedErrors)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialize test")
