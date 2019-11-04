@@ -164,7 +164,8 @@ public struct FileReference: TitledNode {
   public let debugDescription: String
   public let indentWidth: String?
   public let tabWidth: String?
-
+  public let wrapsLines: String?
+    
   init(key: String, value: [String: Any], title: String, projectPath _: String) {
     identifyUnparsedKeys(value, knownKeys: ["path", "name", "explicitFileType", "lastKnownFileType", "sourceTree", "fileEncoding", "lineEnding", "xcLanguageSpecificationIdentifier", "includeInIndex", "indentWidth", "tabWidth"])
     self.title = title
@@ -180,6 +181,7 @@ public struct FileReference: TitledNode {
     includeInIndex = (value["includeInIndex"] as? String) == "1"
     indentWidth = value["indentWidth"] as? String
     tabWidth = value["tabWidth"] as? String
+    wrapsLines = value["wrapsLines"] as? String
 
     debugDescription = "\(title) (\(id))"
   }
@@ -214,6 +216,7 @@ public struct Group: TitledNode {
   public let indentWidth: String?
   public let tabWidth: String?
   public let usesTabs: String?
+  public let wrapsLines: String?
 
   init(key: String, value: [String: Any], title: String) {
     identifyUnparsedKeys(value, knownKeys: ["name", "path", "sourceTree", "children", "indentWidth", "tabWidth", "usesTabs"])
@@ -226,6 +229,7 @@ public struct Group: TitledNode {
     indentWidth = value["indentWidth"] as? String
     tabWidth = value["tabWidth"] as? String
     usesTabs = value["usesTabs"] as? String
+    wrapsLines = value["wrapsLines"] as? String
 
     debugDescription = title
   }
