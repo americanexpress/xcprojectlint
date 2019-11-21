@@ -21,8 +21,8 @@ final class NoEmptyGroupsTests: XCTestCase {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-
-      XCTAssertEqual(noEmptyGroups(project, errorReporter: errorReporter), EX_OK)
+      let report = noEmptyGroups(project, logEntry: errorReporter.reportKind.logEntry)
+      XCTAssertEqual(report, .passed)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialise test")
@@ -34,8 +34,9 @@ final class NoEmptyGroupsTests: XCTestCase {
       let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-
-      XCTAssertEqual(noEmptyGroups(project, errorReporter: errorReporter), EX_SOFTWARE)
+      let expectedErrors = ["error: Xcode folder “Bad/ThisGroupIsEmpty” has no children."]
+      let report = noEmptyGroups(project, logEntry: errorReporter.reportKind.logEntry)
+      XCTAssertEqual(report.errors, expectedErrors)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialize test")

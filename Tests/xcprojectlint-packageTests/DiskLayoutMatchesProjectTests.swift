@@ -22,7 +22,12 @@ final class DiskLayoutMatchesProjectTests: XCTestCase {
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
 
-      XCTAssertEqual(diskLayoutMatchesProject(project, errorReporter: errorReporter, skipFolders: ["Products"]), EX_OK)
+      let report = diskLayoutMatchesProject(
+        project,
+        logEntry: errorReporter.reportKind.logEntry,
+        skipFolders: ["Products"]
+      )
+      XCTAssertEqual(report, .passed)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialize test")
@@ -34,8 +39,16 @@ final class DiskLayoutMatchesProjectTests: XCTestCase {
       let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-
-      XCTAssertEqual(diskLayoutMatchesProject(project, errorReporter: errorReporter, skipFolders: ["Products"]), EX_SOFTWARE)
+      let expectedErrors = [
+        "error: File “ThisFileIsMisplaced.swift” (D2CAE89C2032142D00F76063) is misplaced on disk, or wrong kind of reference.\n",
+        "error: Folder “BadUnitTests” (78BBAB5022FDA2E400FE1D61) is misplaced on disk, or wrong kind of reference.\n"
+      ]
+      let report = diskLayoutMatchesProject(
+        project,
+        logEntry: errorReporter.reportKind.logEntry,
+        skipFolders: ["Products"]
+      )
+      XCTAssertEqual(report.errors, expectedErrors)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialize test")

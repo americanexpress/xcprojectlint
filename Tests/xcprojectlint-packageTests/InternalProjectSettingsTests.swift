@@ -21,21 +21,38 @@ final class InternalProjectSettingsTests: XCTestCase {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-
-      XCTAssertEqual(checkForInternalProjectSettings(project, errorReporter: errorReporter), EX_OK)
+      let report = checkForInternalProjectSettings(
+        project,
+        pbxprojPath: errorReporter.pbxprojPath,
+        logEntry: errorReporter.reportKind.logEntry
+      )
+      XCTAssertEqual(report, .passed)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialise test")
     }
   }
-
+  
   func test_containsInternalProjectSettings_returnsError() {
     do {
       let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-
-      XCTAssertEqual(checkForInternalProjectSettings(project, errorReporter: errorReporter), EX_SOFTWARE)
+      let projectPath = project.url.path
+      let expectedErrors = [
+        "\(projectPath):251: error: Debug has settings defined at the project level.\n",
+        "\(projectPath):271: error: Release has settings defined at the project level.\n",
+        "\(projectPath):290: error: Debug has settings defined at the project level.\n",
+        "\(projectPath):347: error: Release has settings defined at the project level.\n",
+        "\(projectPath):396: error: Debug has settings defined at the project level.\n",
+        "\(projectPath):406: error: Release has settings defined at the project level.\n"
+      ]
+      let report = checkForInternalProjectSettings(
+        project,
+        pbxprojPath: errorReporter.pbxprojPath,
+        logEntry: errorReporter.reportKind.logEntry
+      )
+      XCTAssertEqual(report.errors, expectedErrors)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialize test")

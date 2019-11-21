@@ -14,7 +14,7 @@
 
 import Foundation
 
-private func recurseForMissingFiles(_ groups: [String], hierarchy: [String], project: Project, errors: Set<String>, errorReporter: ErrorReporter) -> Set<String> {
+private func recurseForMissingFiles(_ groups: [String], hierarchy: [String], project: Project, errors: Set<String>, logEntry: String) -> Set<String> {
   let base = project.url.deletingLastPathComponent().deletingLastPathComponent()
   var errors = errors
   for child in groups {
@@ -23,7 +23,7 @@ private func recurseForMissingFiles(_ groups: [String], hierarchy: [String], pro
       if let name = group.path {
         next.append(name)
       }
-      errors = recurseForMissingFiles(group.children, hierarchy: next, project: project, errors: errors, errorReporter: errorReporter)
+      errors = recurseForMissingFiles(group.children, hierarchy: next, project: project, errors: errors, logEntry: logEntry)
     } else if let file = project.fileReferences[child] {
       if let type = file.lastKnownFileType,
         type.hasPrefix("sourcecode.") {
@@ -37,7 +37,7 @@ private func recurseForMissingFiles(_ groups: [String], hierarchy: [String], pro
 
         let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: url.path) {
-          let errStr = "\(project.url.path):0: \(errorReporter.reportKind.logEntry) \(uiPath) references files that are not on disk.\n"
+          let errStr = "\(project.url.path):0: \(logEntry) \(uiPath) references files that are not on disk.\n"
           errors.insert(errStr)
         }
       }
@@ -46,26 +46,18 @@ private func recurseForMissingFiles(_ groups: [String], hierarchy: [String], pro
   return errors
 }
 
-public func filesExistOnDisk(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
-  var result = EX_DATAERR
-  if let proj = project.projectNodes.first {
-    let mainGroup = proj.mainGroup
-    let group = project.groups[mainGroup]
-
-    let errors = Set<String>()
-    if let children = group?.children {
-      let results = recurseForMissingFiles(children, hierarchy: [], project: project, errors: errors, errorReporter: errorReporter).sorted()
-
-      if results.count > 0 {
-        result = errorReporter.reportKind.returnType
-        for error in results {
-          ErrorReporter.report(error)
-        }
-      } else {
-        result = EX_OK
-      }
-    }
+public func filesExistOnDisk(_ project: Project, logEntry: String) -> Report {
+  guard let proj = project.projectNodes.first,
+    let children = project.groups[proj.mainGroup]?.children else {
+      return .invalidInput
   }
-
-  return result
+  
+  let errors = recurseForMissingFiles(
+    children,
+    hierarchy: [],
+    project: project,
+    errors: Set<String>(),
+    logEntry: logEntry
+  )
+  return errors.isEmpty ? .passed : .failed(errors: errors.sorted())
 }

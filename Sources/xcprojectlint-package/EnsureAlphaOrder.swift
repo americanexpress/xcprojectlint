@@ -14,7 +14,7 @@
 
 import Foundation
 
-private func validateThisGroup(_ id: String, title: String, project: Project, errorReporter: ErrorReporter) -> Bool {
+private func validateThisGroup(_ id: String, title: String, project: Project, logEntry: String) -> String? {
   var groupNames = [String]()
   var fileNames = [String]()
   var allNames = [String]()
@@ -40,37 +40,30 @@ private func validateThisGroup(_ id: String, title: String, project: Project, er
 
   let matches = allNames == sortedArray
   if !matches {
-    let errStr = "\(errorReporter.reportKind.logEntry) Xcode folder “\(pathToParent)/\(title)” has out-of-order children.\nExpected: \(sortedArray)\nActual:   \(allNames)"
-    print(errStr)
+    return "\(logEntry) Xcode folder “\(pathToParent)/\(title)” has out-of-order children.\nExpected: \(sortedArray)\nActual:   \(allNames)"
   }
 
-  return matches
+  return nil
 }
 
-private func recurseLookingForOrder(_ groups: [String], project: Project, prevResult: Int32, errorReporter: ErrorReporter) -> Int32 {
-  var result = prevResult
-  for child in groups {
-    if let group = project.groups[child] {
-      if !validateThisGroup(child, title: group.title, project: project, errorReporter: errorReporter) {
-        result = errorReporter.reportKind.returnType
-      }
-      result = recurseLookingForOrder(group.children, project: project, prevResult: result, errorReporter: errorReporter)
+private func recurseLookingForOrder(_ groups: [String], project: Project, logEntry: String) -> [String] {
+  return groups.flatMap { id -> [String] in
+    guard let group = project.groups[id] else {
+      return []
     }
+    
+    let error = validateThisGroup(id, title: group.title, project: project, logEntry: logEntry)
+    let errors = recurseLookingForOrder(group.children, project: project, logEntry: logEntry)
+    return errors + [error].compactMap { $0 }
   }
-
-  return result
 }
 
-public func ensureAlphaOrder(_ project: Project, errorReporter: ErrorReporter) -> Int32 {
-  var result = EX_DATAERR
-  if let proj = project.projectNodes.first {
-    let mainGroup = proj.mainGroup
-    let group = project.groups[mainGroup]
-
-    if let children = group?.children {
-      result = recurseLookingForOrder(children, project: project, prevResult: EX_OK, errorReporter: errorReporter)
-    }
+public func ensureAlphaOrder(_ project: Project, logEntry: String) -> Report {
+  guard let proj = project.projectNodes.first,
+    let children = project.groups[proj.mainGroup]?.children else {
+      return .invalidInput
   }
-
-  return result
+  
+  let errors = recurseLookingForOrder(children, project: project, logEntry: logEntry)
+  return errors.isEmpty ? .passed : .failed(errors: errors)
 }

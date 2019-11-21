@@ -22,7 +22,8 @@ final class WhiteSpaceSpecificationTests: XCTestCase {
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
 
-      XCTAssertEqual(checkForWhiteSpaceSpecifications(project, errorReporter: errorReporter), EX_OK)
+      let report = checkForWhiteSpaceSpecifications(project, logEntry: errorReporter.reportKind.logEntry)
+      XCTAssertEqual(report, .passed)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialize test")
@@ -32,10 +33,23 @@ final class WhiteSpaceSpecificationTests: XCTestCase {
   func test_whiteSpaceSpecifiersArePresent_returnsError() {
     do {
       let testData = Bundle.test.testData()
+      let testDataPath = Bundle.test.testDataRoot.path
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
 
-      XCTAssertEqual(checkForWhiteSpaceSpecifications(project, errorReporter: errorReporter), EX_SOFTWARE)
+      let report = checkForWhiteSpaceSpecifications(project, logEntry: errorReporter.reportKind.logEntry)
+      let expectedErrors = [
+        "error: Group item (D2A90D172032191C00EBA6AA) contains white space specification of \'wrapsLines\'.\n ",
+        "error: Group item (D2CAE8752031EE5F00F76063) contains white space specification of \'indentWidth\'.\n ",
+        "error: Group item (D2CAE8752031EE5F00F76063) contains white space specification of \'tabWidth\'.\n ",
+        "error: Group item (D2CAE8752031EE5F00F76063) contains white space specification of \'usesTabs\'.\n ",
+        "\(testDataPath)/Bad/ItemsOutOfOrder/First.swift:0:error: File “First.swift” (D2A90D132032190A00EBA6AA) contains white space specification of \'wrapsLines\'.\n",
+        "\(testDataPath)/Bad/ItemsOutOfOrder/Second.swift:0:error: File “Second.swift” (D2A90D152032191600EBA6AA) contains white space specification of \'indentWidth\'.\n",
+        "\(testDataPath)/Bad/ItemsOutOfOrder/Second.swift:0:error: File “Second.swift” (D2A90D152032191600EBA6AA) contains white space specification of \'lineEnding\'.\n",
+        "\(testDataPath)/Bad/ItemsOutOfOrder/Second.swift:0:error: File “Second.swift” (D2A90D152032191600EBA6AA) contains white space specification of \'tabWidth\'.\n",
+        "\(testDataPath)/Bad/ItemsOutOfOrder/Second.swift:0:error: File “Second.swift” (D2A90D152032191600EBA6AA) contains white space specification of \'wrapsLines\'.\n"
+      ]
+      XCTAssertEqual(report.errors, expectedErrors)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialize test")

@@ -26,15 +26,15 @@ extension Bundle {
     return Bundle(for: BundleLocator.self)
   }
 
+  var testDataRoot: URL {
+    return bundleURL
+    .appendingPathComponent("Contents")
+    .appendingPathComponent("Resources")
+    .appendingPathComponent("TestData")
+  }
+  
   func testData(_ testType: TypeOfData = .bad) -> String {
     let pathSuffix = testType == .bad ? "Bad.xcodeproj" : "Good.xcodeproj"
-
-    let testDataURL = bundleURL
-      .appendingPathComponent("Contents")
-      .appendingPathComponent("Resources")
-      .appendingPathComponent("TestData")
-      .appendingPathComponent(pathSuffix)
-
-    return testDataURL.path
+    return testDataRoot.appendingPathComponent(pathSuffix).path
   }
 }

@@ -21,8 +21,8 @@ final class FilesExistOnDiskTests: XCTestCase {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-
-      XCTAssertEqual(filesExistOnDisk(project, errorReporter: errorReporter), EX_OK)
+      let report = filesExistOnDisk(project, logEntry: errorReporter.reportKind.logEntry)
+      XCTAssertEqual(report, .passed)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialize test")
@@ -34,8 +34,11 @@ final class FilesExistOnDiskTests: XCTestCase {
       let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-
-      XCTAssertEqual(filesExistOnDisk(project, errorReporter: errorReporter), EX_SOFTWARE)
+      let expectedErrors = [
+        "\(project.url.path):0: error: Bad/MissingFile references files that are not on disk.\n"
+      ]
+      let report = filesExistOnDisk(project, logEntry: errorReporter.reportKind.logEntry)
+      XCTAssertEqual(report.errors, expectedErrors)
     } catch {
       print(error.localizedDescription)
       XCTFail("Failed to initialize test")
