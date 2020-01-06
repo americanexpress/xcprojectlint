@@ -364,8 +364,8 @@ public struct ShellScriptBuildPhase: Identifiable, FileContainer, CustomDebugStr
     name = value["name"] as? String ?? "Untitled"
     runOnlyForDeploymentPostprocessing = value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "(type(of: self))") == "1"
     shellPath = value.string(forKey: "shellPath", container: "(type(of: self))")
-    inputPaths = value["inputPaths"] as! [String]
-    outputPaths = value["outputPaths"] as! [String]
+    inputPaths = value["inputPaths"] as? [String] ?? []
+    outputPaths = value["outputPaths"] as? [String] ?? []
     shellScript = value.string(forKey: "shellScript", container: "(type(of: self))")
     buildActionMask = value.string(forKey: "buildActionMask", container: "(type(of: self))")
 
