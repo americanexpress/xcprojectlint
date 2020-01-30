@@ -14,7 +14,24 @@
 
 import Foundation
 
-private func validateThisGroup(_ id: String, title: String, project: Project, logEntry: String) -> String? {
+private enum SortOrder {
+  case byName
+  case `default`
+
+  func sort(fileNames: [String], groupNames: [String]) -> [String] {
+    switch self {
+    case .byName:
+      return (groupNames + fileNames).sorted {
+        $0.localizedStandardCompare($1) == .orderedAscending
+      }
+    case .default:
+      return groupNames.sorted { $0.localizedStandardCompare($1) == .orderedAscending }
+        + fileNames.sorted { $0.localizedStandardCompare($1) == .orderedAscending }
+    }
+  }
+}
+
+private func validateThisGroup(_ id: String, title: String, project: Project, logEntry: String, sortOrder: SortOrder) -> String? {
   var groupNames = [String]()
   var fileNames = [String]()
   var allNames = [String]()
@@ -31,39 +48,36 @@ private func validateThisGroup(_ id: String, title: String, project: Project, lo
     }
   }
 
-  let sortedArray = groupNames.sorted {
-    (s1, s2) -> Bool in s1.localizedStandardCompare(s2) == .orderedAscending
-  }
-    + fileNames.sorted {
-      (s1, s2) -> Bool in s1.localizedStandardCompare(s2) == .orderedAscending
-    }
+  let sortedArray = sortOrder.sort(fileNames: fileNames, groupNames: groupNames)
 
   let matches = allNames == sortedArray
   if !matches {
-    return "\(logEntry) Xcode folder “\(pathToParent)/\(title)” has out-of-order children.\nExpected: \(sortedArray)\nActual:   \(allNames)"
+    return "\(logEntry) Xcode folder “\(pathToParent)/\(title)” has out-of-order children.\nExpected: \(sortedArray)\nActual:   \(allNames)\n"
   }
 
   return nil
 }
 
-private func recurseLookingForOrder(_ groups: [String], project: Project, logEntry: String) -> [String] {
+private func recurseLookingForOrder(_ groups: [String], project: Project, logEntry: String, sortOrder: SortOrder) -> [String] {
   return groups.flatMap { id -> [String] in
     guard let group = project.groups[id] else {
       return []
     }
-    
-    let error = validateThisGroup(id, title: group.title, project: project, logEntry: logEntry)
-    let errors = recurseLookingForOrder(group.children, project: project, logEntry: logEntry)
+
+    let error = validateThisGroup(id, title: group.title, project: project, logEntry: logEntry, sortOrder: sortOrder)
+    let errors = recurseLookingForOrder(group.children, project: project, logEntry: logEntry, sortOrder: sortOrder)
     return errors + [error].compactMap { $0 }
   }
 }
 
-public func ensureAlphaOrder(_ project: Project, logEntry: String) -> Report {
+public func ensureAlphaOrder(_ project: Project, logEntry: String, sortByName: Bool) -> Report {
   guard let proj = project.projectNodes.first,
     let children = project.groups[proj.mainGroup]?.children else {
-      return .invalidInput
+    return .invalidInput
   }
-  
-  let errors = recurseLookingForOrder(children, project: project, logEntry: logEntry)
+
+  let sortOrder: SortOrder = sortByName ? .byName : .default
+
+  let errors = recurseLookingForOrder(children, project: project, logEntry: logEntry, sortOrder: sortOrder)
   return errors.isEmpty ? .passed : .failed(errors: errors)
 }
