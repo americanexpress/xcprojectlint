@@ -313,7 +313,7 @@ public struct ProjectNode: Identifiable, CustomDebugStringConvertible {
     mainGroup = value.string(forKey: "mainGroup", container: "\(type(of: self))")
     developmentRegion = value.string(forKey: "developmentRegion", container: "\(type(of: self))")
     projectDirPath = value.string(forKey: "projectDirPath", container: "\(type(of: self))")
-    productRefGroup = value.string(forKey: "productRefGroup", container: "(type(of: self))")
+    productRefGroup = value.string(forKey: "productRefGroup", container: "\(type(of: self))")
     targets = value["targets"] as! [String]
     buildConfigurationList = value.string(forKey: "buildConfigurationList", container: "\(type(of: self))")
     knownRegions = value["knownRegions"] as! [String]
