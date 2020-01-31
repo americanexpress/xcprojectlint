@@ -83,7 +83,7 @@ public struct BuildConfigurationList: TitledNode {
     self.title = title
     buildConfigurations = value["buildConfigurations"] as! [String]
     defaultConfigurationName = value["defaultConfigurationName"] as? String
-    defaultConfigurationIsVisible = value.string(forKey: "defaultConfigurationIsVisible", container: "(type(of: self))") == "1"
+    defaultConfigurationIsVisible = value.string(forKey: "defaultConfigurationIsVisible", container: "\(type(of: self))") == "1"
 
     debugDescription = buildConfigurations.debugDescription
   }
@@ -99,7 +99,7 @@ public struct BuildFile: Identifiable, CustomDebugStringConvertible {
     identifyUnparsedKeys(value, knownKeys: ["fileRef", "settings"])
     id = key
     self.key = key
-    fileRef = value.string(forKey: "fileRef", container: "(type(of: self))")
+    fileRef = value.string(forKey: "fileRef", container: "\(type(of: self))")
 
     debugDescription = "\(fileRef) (\(key))"
   }
@@ -116,10 +116,10 @@ public struct ContainerItemProxy: Identifiable, CustomDebugStringConvertible {
   init(key: String, value: [String: Any]) {
     identifyUnparsedKeys(value, knownKeys: ["remoteInfo", "proxyType", "containerPortal", "remoteGlobalIDString"])
     id = key
-    remoteInfo = value.string(forKey: "remoteInfo", container: "(type(of: self))")
-    proxyType = value.string(forKey: "proxyType", container: "(type(of: self))")
-    containerPortal = value.string(forKey: "containerPortal", container: "(type(of: self))")
-    remoteGlobalIDString = value.string(forKey: "remoteGlobalIDString", container: "(type(of: self))")
+    remoteInfo = value.string(forKey: "remoteInfo", container: "\(type(of: self))")
+    proxyType = value.string(forKey: "proxyType", container: "\(type(of: self))")
+    containerPortal = value.string(forKey: "containerPortal", container: "\(type(of: self))")
+    remoteGlobalIDString = value.string(forKey: "remoteGlobalIDString", container: "\(type(of: self))")
 
     debugDescription = "undefined"
   }
@@ -137,13 +137,13 @@ public struct CopyFilesBuildPhase: Identifiable, FileContainer, CustomDebugStrin
 
   init(key: String, value: [String: Any]) {
     identifyUnparsedKeys(value, knownKeys: ["dstSubfolderSpec", "files", "name", "dstPath", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
-    dstSubfolderSpec = value.string(forKey: "dstSubfolderSpec", container: "(type(of: self))")
+    dstSubfolderSpec = value.string(forKey: "dstSubfolderSpec", container: "\(type(of: self))")
     id = key
     files = value["files"] as! [String]
     name = value["name"] as? String ?? "Untitled"
-    dstPath = value.string(forKey: "dstPath", container: "(type(of: self))")
-    runOnlyForDeploymentPostprocessing = value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "(type(of: self))") == "1"
-    buildActionMask = value.string(forKey: "buildActionMask", container: "(type(of: self))")
+    dstPath = value.string(forKey: "dstPath", container: "\(type(of: self))")
+    runOnlyForDeploymentPostprocessing = value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "\(type(of: self))") == "1"
+    buildActionMask = value.string(forKey: "buildActionMask", container: "\(type(of: self))")
 
     debugDescription = name
   }
@@ -170,11 +170,11 @@ public struct FileReference: TitledNode {
     identifyUnparsedKeys(value, knownKeys: ["path", "name", "explicitFileType", "lastKnownFileType", "sourceTree", "fileEncoding", "lineEnding", "xcLanguageSpecificationIdentifier", "includeInIndex", "indentWidth", "tabWidth"])
     self.title = title
     id = key
-    path = value.string(forKey: "path", container: "(type(of: self))")
+    path = value.string(forKey: "path", container: "\(type(of: self))")
     name = value["name"] as? String
     explicitFileType = value["explicitFileType"] as? String
     lastKnownFileType = value["lastKnownFileType"] as? String
-    sourceTree = value.string(forKey: "sourceTree", container: "(type(of: self))")
+    sourceTree = value.string(forKey: "sourceTree", container: "\(type(of: self))")
     fileEncoding = value["fileEncoding"] as? String
     lineEnding = value["lineEnding"] as? String
     xcLanguageSpecificationIdentifier = value["xcLanguageSpecificationIdentifier"] as? String
@@ -198,8 +198,8 @@ public struct FrameworksBuildPhase: Identifiable, FileContainer, CustomDebugStri
     identifyUnparsedKeys(value, knownKeys: ["files", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
     id = key
     files = value["files"] as! [String]
-    runOnlyForDeploymentPostprocessing = value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "(type(of: self))") == "1"
-    buildActionMask = value.string(forKey: "buildActionMask", container: "(type(of: self))")
+    runOnlyForDeploymentPostprocessing = value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "\(type(of: self))") == "1"
+    buildActionMask = value.string(forKey: "buildActionMask", container: "\(type(of: self))")
 
     debugDescription = "undefined"
   }
@@ -224,7 +224,7 @@ public struct Group: TitledNode {
     id = key
     name = value["name"] as? String
     path = value["path"] as? String
-    sourceTree = value.string(forKey: "sourceTree", container: "(type(of: self))")
+    sourceTree = value.string(forKey: "sourceTree", container: "\(type(of: self))")
     children = value["children"] as! [String]
     indentWidth = value["indentWidth"] as? String
     tabWidth = value["tabWidth"] as? String
@@ -251,15 +251,15 @@ public struct LegacyTarget: Identifiable, CustomDebugStringConvertible {
   init(key: String, value: [String: Any]) {
     identifyUnparsedKeys(value, knownKeys: ["name", "productName", "dependencies", "buildArgumentsString", "buildConfigurationList", "buildWorkingDirectory", "passBuildSettingsInEnvironment", "buildPhases", "buildToolPath"])
     id = key
-    name = value.string(forKey: "name", container: "(type(of: self))")
-    productName = value.string(forKey: "productName", container: "(type(of: self))")
+    name = value.string(forKey: "name", container: "\(type(of: self))")
+    productName = value.string(forKey: "productName", container: "\(type(of: self))")
     dependencies = value["dependencies"] as! [String]
-    buildArgumentsString = value.string(forKey: "buildArgumentsString", container: "(type(of: self))")
-    buildConfigurationList = value.string(forKey: "buildConfigurationList", container: "(type(of: self))")
-    buildWorkingDirectory = value.string(forKey: "buildWorkingDirectory", container: "(type(of: self))")
-    passBuildSettingsInEnvironment = value.string(forKey: "passBuildSettingsInEnvironment", container: "(type(of: self))") == "1"
+    buildArgumentsString = value.string(forKey: "buildArgumentsString", container: "\(type(of: self))")
+    buildConfigurationList = value.string(forKey: "buildConfigurationList", container: "\(type(of: self))")
+    buildWorkingDirectory = value.string(forKey: "buildWorkingDirectory", container: "\(type(of: self))")
+    passBuildSettingsInEnvironment = value.string(forKey: "passBuildSettingsInEnvironment", container: "\(type(of: self))") == "1"
     buildPhases = value["buildPhases"] as! [String]
-    buildToolPath = value.string(forKey: "buildToolPath", container: "(type(of: self))")
+    buildToolPath = value.string(forKey: "buildToolPath", container: "\(type(of: self))")
 
     debugDescription = "\(name)\n\(buildConfigurationList)"
   }
@@ -280,13 +280,13 @@ public struct NativeTarget: Identifiable, CustomDebugStringConvertible {
   init(key: String, value: [String: Any]) {
     identifyUnparsedKeys(value, knownKeys: ["name", "productName", "productType", "buildRules", "productReference", "dependencies", "buildConfigurationList", "buildPhases"])
     id = key
-    name = value.string(forKey: "name", container: "(type(of: self))")
-    productName = value.string(forKey: "productName", container: "(type(of: self))")
-    productType = value.string(forKey: "productType", container: "(type(of: self))")
+    name = value.string(forKey: "name", container: "\(type(of: self))")
+    productName = value.string(forKey: "productName", container: "\(type(of: self))")
+    productType = value.string(forKey: "productType", container: "\(type(of: self))")
     buildRules = value["buildRules"] as! [String]
     productReference = value["productReference"] as? String ?? "Not Found"
     dependencies = value["dependencies"] as! [String]
-    buildConfigurationList = value.string(forKey: "buildConfigurationList", container: "(type(of: self))")
+    buildConfigurationList = value.string(forKey: "buildConfigurationList", container: "\(type(of: self))")
     buildPhases = value["buildPhases"] as! [String]
 
     debugDescription = "\(name)\n\(buildConfigurationList)"
@@ -310,16 +310,16 @@ public struct ProjectNode: Identifiable, CustomDebugStringConvertible {
   init(key: String, value: [String: Any]) {
     identifyUnparsedKeys(value, knownKeys: ["mainGroup", "attributes", "developmentRegion", "projectDirPath", "productRefGroup", "targets", "buildConfigurationList", "knownRegions", "compatibilityVersion", "hasScannedForEncodings", "projectRoot"])
     id = key
-    mainGroup = value.string(forKey: "mainGroup", container: "(type(of: self))")
-    developmentRegion = value.string(forKey: "developmentRegion", container: "(type(of: self))")
-    projectDirPath = value.string(forKey: "projectDirPath", container: "(type(of: self))")
-    productRefGroup = value.string(forKey: "productRefGroup", container: "(type(of: self))")
+    mainGroup = value.string(forKey: "mainGroup", container: "\(type(of: self))")
+    developmentRegion = value.string(forKey: "developmentRegion", container: "\(type(of: self))")
+    projectDirPath = value.string(forKey: "projectDirPath", container: "\(type(of: self))")
+    productRefGroup = value.string(forKey: "productRefGroup", container: "\(type(of: self))")
     targets = value["targets"] as! [String]
-    buildConfigurationList = value.string(forKey: "buildConfigurationList", container: "(type(of: self))")
+    buildConfigurationList = value.string(forKey: "buildConfigurationList", container: "\(type(of: self))")
     knownRegions = value["knownRegions"] as! [String]
-    compatibilityVersion = value.string(forKey: "compatibilityVersion", container: "(type(of: self))")
-    hasScannedForEncodings = value.string(forKey: "hasScannedForEncodings", container: "(type(of: self))") == "1"
-    projectRoot = value.string(forKey: "projectRoot", container: "(type(of: self))")
+    compatibilityVersion = value.string(forKey: "compatibilityVersion", container: "\(type(of: self))")
+    hasScannedForEncodings = value.string(forKey: "hasScannedForEncodings", container: "\(type(of: self))") == "1"
+    projectRoot = value.string(forKey: "projectRoot", container: "\(type(of: self))")
 
     debugDescription = "undefined"
   }
@@ -336,8 +336,8 @@ public struct ResourcesBuildPhase: Identifiable, FileContainer, CustomDebugStrin
     identifyUnparsedKeys(value, knownKeys: ["files", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
     id = key
     files = value["files"] as! [String]
-    runOnlyForDeploymentPostprocessing = value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "(type(of: self))") == "1"
-    buildActionMask = value.string(forKey: "buildActionMask", container: "(type(of: self))")
+    runOnlyForDeploymentPostprocessing = value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "\(type(of: self))") == "1"
+    buildActionMask = value.string(forKey: "buildActionMask", container: "\(type(of: self))")
 
     debugDescription = files.debugDescription
   }
@@ -362,12 +362,12 @@ public struct ShellScriptBuildPhase: Identifiable, FileContainer, CustomDebugStr
     showEnvVarsInLog = (value["showEnvVarsInLog"] as? String) == "1"
     files = value["files"] as! [String]
     name = value["name"] as? String ?? "Untitled"
-    runOnlyForDeploymentPostprocessing = value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "(type(of: self))") == "1"
-    shellPath = value.string(forKey: "shellPath", container: "(type(of: self))")
+    runOnlyForDeploymentPostprocessing = value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "\(type(of: self))") == "1"
+    shellPath = value.string(forKey: "shellPath", container: "\(type(of: self))")
     inputPaths = value["inputPaths"] as? [String] ?? []
     outputPaths = value["outputPaths"] as? [String] ?? []
-    shellScript = value.string(forKey: "shellScript", container: "(type(of: self))")
-    buildActionMask = value.string(forKey: "buildActionMask", container: "(type(of: self))")
+    shellScript = value.string(forKey: "shellScript", container: "\(type(of: self))")
+    buildActionMask = value.string(forKey: "buildActionMask", container: "\(type(of: self))")
 
     debugDescription = name
   }
@@ -384,8 +384,8 @@ public struct SourcesBuildPhase: Identifiable, FileContainer, CustomDebugStringC
     identifyUnparsedKeys(value, knownKeys: ["files", "runOnlyForDeploymentPostprocessing", "buildActionMask"])
     id = key
     files = value["files"] as! [String]
-    runOnlyForDeploymentPostprocessing = value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "(type(of: self))") == "1"
-    buildActionMask = value.string(forKey: "buildActionMask", container: "(type(of: self))")
+    runOnlyForDeploymentPostprocessing = value.string(forKey: "runOnlyForDeploymentPostprocessing", container: "\(type(of: self))") == "1"
+    buildActionMask = value.string(forKey: "buildActionMask", container: "\(type(of: self))")
 
     debugDescription = "undefined"
   }
@@ -400,8 +400,8 @@ public struct TargetDependency: Identifiable, CustomDebugStringConvertible {
   init(key: String, value: [String: Any]) {
     identifyUnparsedKeys(value, knownKeys: ["target", "targetProxy"])
     id = key
-    target = value.string(forKey: "target", container: "(type(of: self))")
-    targetProxy = value.string(forKey: "targetProxy", container: "(type(of: self))")
+    target = value.string(forKey: "target", container: "\(type(of: self))")
+    targetProxy = value.string(forKey: "targetProxy", container: "\(type(of: self))")
 
     debugDescription = "undefined"
   }
@@ -420,7 +420,7 @@ public struct VariantGroup: Identifiable, CustomDebugStringConvertible {
     id = key
     name = value["name"] as? String
     path = value["path"] as? String
-    sourceTree = value.string(forKey: "sourceTree", container: "(type(of: self))")
+    sourceTree = value.string(forKey: "sourceTree", container: "\(type(of: self))")
     children = value["children"] as! [String]
 
     debugDescription = "undefined"
