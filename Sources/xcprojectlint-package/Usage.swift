@@ -24,4 +24,10 @@ public struct Usage {
                          Useful for Frameworks, Products, and/or source trees
                          that aren’t chidren to the project file
     """
+
+  public static let sortByName =
+    """
+    Sort order for `items-in-alpha-order` is the same as Xcode's
+                         `Sort by Name` Project Navigator command
+    """
 }

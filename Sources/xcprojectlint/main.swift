@@ -35,6 +35,7 @@ func main() -> Int32 {
     let validationsArg: OptionArgument<[Validation]> = parser.add(option: "--validations", kind: [Validation].self, usage: Validation.usage)
     let projectArg: OptionArgument<PathArgument> = parser.add(option: "--project", kind: PathArgument.self, usage: Usage.project)
     let skipFoldersArg: OptionArgument<[String]> = parser.add(option: "--skip-folders", kind: [String].self, usage: Usage.skipFolders)
+    let sortByNameArg: OptionArgument<Bool> = parser.add(option: "--sort-by-name", kind: Bool.self, usage: Usage.sortByName)
 
     // The first argument is always the executable, so drop it
     var processArgs = ProcessInfo.processInfo.arguments.dropFirst()
@@ -74,6 +75,7 @@ func main() -> Int32 {
       let proj = args.get(projectArg) else { return EX_SOFTWARE }
 
     let skipFolders = args.get(skipFoldersArg)
+    let sortByName = args.get(sortByNameArg)
     if validations.last == .all {
       validations = Validation.allValidations()
     }
@@ -90,7 +92,7 @@ func main() -> Int32 {
             case .filesExistOnDisk:
               return filesExistOnDisk(project, logEntry: logEntry)
             case .itemsInAlphaOrder:
-              return ensureAlphaOrder(project, logEntry: logEntry)
+              return ensureAlphaOrder(project, logEntry: logEntry, sortByName: sortByName ?? false)
             case .noDanglingSourceFiles:
               return checkForDanglingSourceFiles(project, logEntry: logEntry)
             case .noEmptyGroups:
