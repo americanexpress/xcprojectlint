@@ -17,17 +17,17 @@ import Foundation
 public func checkForDanglingSourceFiles(_ project: Project, logEntry: String) -> Report {
   let targetFiles = Set(project.buildFiles.map { $1.fileRef })
   let extensionsWhiteList = Set(["m", "mm", "swift", "cpp", "c"])
-  
+
   let errors = project.fileReferences.values
     .compactMap { fileRef -> String? in
       guard let fileExtension = fileRef.title.components(separatedBy: ".").last else { return nil }
-      
+
       let shouldReport = extensionsWhiteList.contains(fileExtension) && !targetFiles.contains(fileRef.id)
       if shouldReport {
         return "\(project.absolutePathToReference(fileRef)):0: \(logEntry) \(fileRef.path) is not added to any target.\n"
       } else {
         return nil
       }
-  }
+    }
   return errors.isEmpty ? .passed : .failed(errors: errors)
 }

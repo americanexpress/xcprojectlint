@@ -22,7 +22,7 @@ public func checkForInternalProjectSettings(_ project: Project, pbxprojPath: Str
         let error = ProjectSettingsError.problemLocatingMatchingConfiguration
         return "\(pbxprojPath):0: \(logEntry) \(error.localizedDescription)\n"
       }
-      
+
       var matchingTarget: String?
       if let base = buildConfiguration.baseConfigurationReference {
         matchingTarget = project.titles[base]
@@ -30,7 +30,7 @@ public func checkForInternalProjectSettings(_ project: Project, pbxprojPath: Str
         let target = project.legacyTargets.filter { $0.buildConfigurationList == buildConfiguration.id }
         matchingTarget = target.last?.name
       }
-      
+
       // see if we can find the buildSettings node closest to this build configuration
       var currentLine = 0
       var foundKey = false
@@ -46,15 +46,15 @@ public func checkForInternalProjectSettings(_ project: Project, pbxprojPath: Str
           }
         }
       }
-      
+
       // NOTE: The spaces around the error: portion of the string are required with Xcode 8.3. Without them, no output gets reported in the Issue Navigator.
       if let matchingTarget = matchingTarget {
         return "\(project.url.path):\(currentLine): \(logEntry) \(matchingTarget) (\(buildConfiguration.name)) has settings defined in the project file.\n"
       } else {
         return "\(project.url.path):\(currentLine): \(logEntry) \(title) has settings defined at the project level.\n"
       }
-  }
-  
+    }
+
   return errors.isEmpty ? .passed : .failed(errors: errors.sorted())
 }
 

@@ -18,27 +18,32 @@
 import PackageDescription
 
 let package = Package(
-    name: "xcprojectlint",
-    products: [
-        .library(
-            name: "xcprojectlint-package",
-            targets: ["xcprojectlint-package"]),
-        .executable(
-            name: "xcprojectlint",
-            targets: ["xcprojectlint"]),
-    ],
-    dependencies: [
-        .package(url: "https://github.com/apple/swift-package-manager.git", from: "0.1.0"),
-    ],
-    targets: [
-        .target(
-            name: "xcprojectlint",
-            dependencies: ["xcprojectlint-package"]),
-        .target(
-            name: "xcprojectlint-package",
-            dependencies: ["SPMUtility"]),
-        .testTarget(
-            name: "xcprojectlint-packageTests",
-            dependencies: ["xcprojectlint-package"]),
-    ]
+  name: "xcprojectlint",
+  products: [
+    .library(
+      name: "xcprojectlint-package",
+      targets: ["xcprojectlint-package"]
+    ),
+    .executable(
+      name: "xcprojectlint",
+      targets: ["xcprojectlint"]
+    ),
+  ],
+  dependencies: [
+    .package(url: "https://github.com/apple/swift-package-manager.git", from: "0.1.0"),
+  ],
+  targets: [
+    .target(
+      name: "xcprojectlint",
+      dependencies: ["xcprojectlint-package"]
+    ),
+    .target(
+      name: "xcprojectlint-package",
+      dependencies: ["SPMUtility"]
+    ),
+    .testTarget(
+      name: "xcprojectlint-packageTests",
+      dependencies: ["xcprojectlint-package"]
+    ),
+  ]
 )

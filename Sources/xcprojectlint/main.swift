@@ -85,34 +85,34 @@ func main() -> Int32 {
     let logEntry = errorReporter.reportKind.logEntry
     let reports: [Report] = validations.compactMap {
       switch $0 {
-            case .buildSettingsExternalized:
-              return checkForInternalProjectSettings(project, pbxprojPath: errorReporter.pbxprojPath, logEntry: logEntry)
-            case .diskLayoutMatchesProject:
-              return diskLayoutMatchesProject(project, logEntry: logEntry, skipFolders: skipFolders)
-            case .filesExistOnDisk:
-              return filesExistOnDisk(project, logEntry: logEntry)
-            case .itemsInAlphaOrder:
-              return ensureAlphaOrder(project, logEntry: logEntry, sortByName: sortByName ?? false)
-            case .noDanglingSourceFiles:
-              return checkForDanglingSourceFiles(project, logEntry: logEntry)
-            case .noEmptyGroups:
-              return noEmptyGroups(project, logEntry: logEntry)
-            case .noWhiteSpaceSpecifications:
-              return checkForWhiteSpaceSpecifications(project, logEntry: logEntry)
-            case .all:
-              // we should never get here; the parser expanded `all` into the individual cases
-              return nil
-            }
+      case .buildSettingsExternalized:
+        return checkForInternalProjectSettings(project, pbxprojPath: errorReporter.pbxprojPath, logEntry: logEntry)
+      case .diskLayoutMatchesProject:
+        return diskLayoutMatchesProject(project, logEntry: logEntry, skipFolders: skipFolders)
+      case .filesExistOnDisk:
+        return filesExistOnDisk(project, logEntry: logEntry)
+      case .itemsInAlphaOrder:
+        return ensureAlphaOrder(project, logEntry: logEntry, sortByName: sortByName ?? false)
+      case .noDanglingSourceFiles:
+        return checkForDanglingSourceFiles(project, logEntry: logEntry)
+      case .noEmptyGroups:
+        return noEmptyGroups(project, logEntry: logEntry)
+      case .noWhiteSpaceSpecifications:
+        return checkForWhiteSpaceSpecifications(project, logEntry: logEntry)
+      case .all:
+        // we should never get here; the parser expanded `all` into the individual cases
+        return nil
+      }
     }
-    
+
     reports
       .flatMap { $0.errors }
       .forEach(ErrorReporter.report)
-    
+
     let scriptResult = reports
       .map(errorReporter.toStatusCode)
       .reduce(EX_OK) { $0 | $1 }
-    
+
     if scriptResult == EX_OK {
       noteSuccess()
     }

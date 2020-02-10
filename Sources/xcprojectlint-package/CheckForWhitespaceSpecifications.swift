@@ -20,13 +20,13 @@ public func checkForWhiteSpaceSpecifications(_ project: Project, logEntry: Strin
       "\(logEntry) Group item (\(groupID)) contains white space specification of '\(type)'.\n "
     }
   }
-  
+
   let toFileError: (FileReference, String) -> (String) -> String = { fileReference, type in
-  { _ in
-    "\(project.absolutePathToReference(fileReference)):0:\(logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains white space specification of '\(type)'.\n"
+    { _ in
+      "\(project.absolutePathToReference(fileReference)):0:\(logEntry) File “\(fileReference.title)” (\(fileReference.id)) contains white space specification of '\(type)'.\n"
     }
   }
-  
+
   let groupsErrors = project.groups.values.flatMap { group -> [String] in
     [
       group.tabWidth.map(toGroupError(group.id, "tabWidth")),
@@ -36,7 +36,7 @@ public func checkForWhiteSpaceSpecifications(_ project: Project, logEntry: Strin
     ].compactMap { $0 }
   }
   .sorted()
-  
+
   let fileReferenceErrors = project.fileReferences.values.flatMap { fileReference -> [String] in
     [
       fileReference.tabWidth.map(toFileError(fileReference, "tabWidth")),

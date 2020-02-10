@@ -36,7 +36,7 @@ class NoDanglingSourceFilesTests: XCTestCase {
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
       let expectedErrors = [
-        "\(testDataPath)/BadUnitTests/DanglingFile/BadUnitTests.swift:0: error: BadUnitTests.swift is not added to any target.\n"
+        "\(testDataPath)/BadUnitTests/DanglingFile/BadUnitTests.swift:0: error: BadUnitTests.swift is not added to any target.\n",
       ]
       let report = checkForDanglingSourceFiles(project, logEntry: errorReporter.reportKind.logEntry)
       XCTAssertEqual(report.errors, expectedErrors)

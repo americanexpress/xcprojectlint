@@ -165,7 +165,7 @@ public struct FileReference: TitledNode {
   public let indentWidth: String?
   public let tabWidth: String?
   public let wrapsLines: String?
-    
+
   init(key: String, value: [String: Any], title: String, projectPath _: String) {
     identifyUnparsedKeys(value, knownKeys: ["path", "name", "explicitFileType", "lastKnownFileType", "sourceTree", "fileEncoding", "lineEnding", "xcLanguageSpecificationIdentifier", "includeInIndex", "indentWidth", "tabWidth"])
     self.title = title

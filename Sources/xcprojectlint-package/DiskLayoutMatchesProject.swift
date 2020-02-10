@@ -50,9 +50,9 @@ public func diskLayoutMatchesProject(_ project: Project, logEntry: String, skipF
   skkipFolders = skipFolders
   guard let proj = project.projectNodes.first,
     let children = project.groups[proj.mainGroup]?.children else {
-      return .invalidInput
+    return .invalidInput
   }
-  
+
   let errors = recurseForMisplacedFiles(
     children,
     project: project,

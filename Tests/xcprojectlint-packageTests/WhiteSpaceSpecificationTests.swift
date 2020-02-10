@@ -47,7 +47,7 @@ final class WhiteSpaceSpecificationTests: XCTestCase {
         "\(testDataPath)/Bad/ItemsOutOfOrder/Second.swift:0:error: File “Second.swift” (D2A90D152032191600EBA6AA) contains white space specification of \'indentWidth\'.\n",
         "\(testDataPath)/Bad/ItemsOutOfOrder/Second.swift:0:error: File “Second.swift” (D2A90D152032191600EBA6AA) contains white space specification of \'lineEnding\'.\n",
         "\(testDataPath)/Bad/ItemsOutOfOrder/Second.swift:0:error: File “Second.swift” (D2A90D152032191600EBA6AA) contains white space specification of \'tabWidth\'.\n",
-        "\(testDataPath)/Bad/ItemsOutOfOrder/Second.swift:0:error: File “Second.swift” (D2A90D152032191600EBA6AA) contains white space specification of \'wrapsLines\'.\n"
+        "\(testDataPath)/Bad/ItemsOutOfOrder/Second.swift:0:error: File “Second.swift” (D2A90D152032191600EBA6AA) contains white space specification of \'wrapsLines\'.\n",
       ]
       XCTAssertEqual(report.errors, expectedErrors)
     } catch {

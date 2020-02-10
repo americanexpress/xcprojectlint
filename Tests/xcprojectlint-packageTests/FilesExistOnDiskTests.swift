@@ -35,7 +35,7 @@ final class FilesExistOnDiskTests: XCTestCase {
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
       let expectedErrors = [
-        "\(project.url.path):0: error: Bad/MissingFile references files that are not on disk.\n"
+        "\(project.url.path):0: error: Bad/MissingFile references files that are not on disk.\n",
       ]
       let report = filesExistOnDisk(project, logEntry: errorReporter.reportKind.logEntry)
       XCTAssertEqual(report.errors, expectedErrors)

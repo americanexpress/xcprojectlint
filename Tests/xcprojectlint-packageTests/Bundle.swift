@@ -28,11 +28,11 @@ extension Bundle {
 
   var testDataRoot: URL {
     return bundleURL
-    .appendingPathComponent("Contents")
-    .appendingPathComponent("Resources")
-    .appendingPathComponent("TestData")
+      .appendingPathComponent("Contents")
+      .appendingPathComponent("Resources")
+      .appendingPathComponent("TestData")
   }
-  
+
   func testData(_ testType: TypeOfData = .bad) -> String {
     let pathSuffix = testType == .bad ? "Bad.xcodeproj" : "Good.xcodeproj"
     return testDataRoot.appendingPathComponent(pathSuffix).path
