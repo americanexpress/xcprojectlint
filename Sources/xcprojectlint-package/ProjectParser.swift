@@ -357,7 +357,7 @@ public struct ShellScriptBuildPhase: Identifiable, FileContainer, CustomDebugStr
   public let buildActionMask: String
 
   init(key: String, value: [String: Any]) {
-    identifyUnparsedKeys(value, knownKeys: ["showEnvVarsInLog", "files", "name", "runOnlyForDeploymentPostprocessing", "shellPath", "inputPaths", "outputPaths", "shellScript", "buildActionMask"])
+    identifyUnparsedKeys(value, knownKeys: ["showEnvVarsInLog", "files", "name", "runOnlyForDeploymentPostprocessing", "shellPath", "inputPaths", "outputPaths", "shellScript", "buildActionMask", "inputFileListPaths", "outputFileListPaths"])
     id = key
     showEnvVarsInLog = (value["showEnvVarsInLog"] as? String) == "1"
     files = value["files"] as! [String]
@@ -588,7 +588,7 @@ func identifyUnparsedKeys(_ values: [String: Any], knownKeys: [String]) {
   for (key, _) in values {
     guard key != "isa" else { continue }
     if !knownKeys.contains(key) {
-      print("\(key)")
+      print("New key found: \(key)")
     }
   }
 }
