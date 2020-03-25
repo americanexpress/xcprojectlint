@@ -588,7 +588,7 @@ func identifyUnparsedKeys(_ values: [String: Any], knownKeys: [String]) {
   for (key, _) in values {
     guard key != "isa" else { continue }
     if !knownKeys.contains(key) {
-      print("\(key)")
+      print("New key found: \(key)")
     }
   }
 }
