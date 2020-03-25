@@ -41,7 +41,7 @@ final class DiskLayoutMatchesProjectTests: XCTestCase {
       let project = try Project(testData, errorReporter: errorReporter)
       let expectedErrors = [
         "error: File “ThisFileIsMisplaced.swift” (D2CAE89C2032142D00F76063) is misplaced on disk, or wrong kind of reference.\n",
-        "error: Folder “BadUnitTests” (78BBAB5022FDA2E400FE1D61) is misplaced on disk, or wrong kind of reference.\n"
+        "error: Folder “BadUnitTests” (78BBAB5022FDA2E400FE1D61) is misplaced on disk, or wrong kind of reference.\n",
       ]
       let report = diskLayoutMatchesProject(
         project,

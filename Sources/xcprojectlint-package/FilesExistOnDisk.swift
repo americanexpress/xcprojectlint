@@ -49,9 +49,9 @@ private func recurseForMissingFiles(_ groups: [String], hierarchy: [String], pro
 public func filesExistOnDisk(_ project: Project, logEntry: String) -> Report {
   guard let proj = project.projectNodes.first,
     let children = project.groups[proj.mainGroup]?.children else {
-      return .invalidInput
+    return .invalidInput
   }
-  
+
   let errors = recurseForMissingFiles(
     children,
     hierarchy: [],

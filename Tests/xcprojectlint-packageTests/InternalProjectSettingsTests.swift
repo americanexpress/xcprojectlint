@@ -32,7 +32,7 @@ final class InternalProjectSettingsTests: XCTestCase {
       XCTFail("Failed to initialise test")
     }
   }
-  
+
   func test_containsInternalProjectSettings_returnsError() {
     do {
       let testData = Bundle.test.testData()
@@ -45,7 +45,7 @@ final class InternalProjectSettingsTests: XCTestCase {
         "\(projectPath):290: error: Debug has settings defined at the project level.\n",
         "\(projectPath):347: error: Release has settings defined at the project level.\n",
         "\(projectPath):396: error: Debug has settings defined at the project level.\n",
-        "\(projectPath):406: error: Release has settings defined at the project level.\n"
+        "\(projectPath):406: error: Release has settings defined at the project level.\n",
       ]
       let report = checkForInternalProjectSettings(
         project,
