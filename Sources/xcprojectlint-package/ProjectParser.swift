@@ -713,6 +713,10 @@ public class ProjectParser {
           break
         case "PBXHeadersBuildPhase":
           break
+        case "XCSwiftPackageProductDependency":
+          break
+        case "XCRemoteSwiftPackageReference":
+          break
         default:
           print("New type found: \(node)")
         }
