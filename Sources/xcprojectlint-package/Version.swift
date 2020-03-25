@@ -14,4 +14,4 @@
 
 import SPMUtility
 
-public let currentVersion = Version(0, 0, 4)
+public let currentVersion = Version(0, 0, 5)
