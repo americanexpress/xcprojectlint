@@ -124,8 +124,8 @@
 				D2A90D0E2032180800EBA6AA /* MissingFile */,
 				D2A90D18203219FC00EBA6AA /* ThisGroupIsEmpty */,
 			);
-			path = Bad;
 			indentWidth = 7;
+			path = Bad;
 			sourceTree = "<group>";
 			tabWidth = 7;
 			usesTabs = 1;
