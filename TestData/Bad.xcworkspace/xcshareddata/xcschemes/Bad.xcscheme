@@ -17,21 +17,7 @@
                BlueprintIdentifier = "D2CAE8722031EE5F00F76063"
                BuildableName = "Bad"
                BlueprintName = "Bad"
-               ReferencedContainer = "container:Bad.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D23231B823158DA300168CE6"
-               BuildableName = ".app"
-               BlueprintName = "Good"
-               ReferencedContainer = "container:Good.xcodeproj">
+               ReferencedContainer = "container:Bad/Bad.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -61,7 +47,7 @@
             BlueprintIdentifier = "D2CAE8722031EE5F00F76063"
             BuildableName = "Bad"
             BlueprintName = "Bad"
-            ReferencedContainer = "container:Bad.xcodeproj">
+            ReferencedContainer = "container:Bad/Bad.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -78,7 +64,7 @@
             BlueprintIdentifier = "D2CAE8722031EE5F00F76063"
             BuildableName = "Bad"
             BlueprintName = "Bad"
-            ReferencedContainer = "container:Bad.xcodeproj">
+            ReferencedContainer = "container:Bad/Bad.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

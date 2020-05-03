@@ -48,11 +48,11 @@
       },
       {
         "package": "XcodeProj",
-        "repositoryURL": "https://github.com/tuist/xcodeproj.git",
+        "repositoryURL": "https://github.com/Alex-Ozun/XcodeProj.git",
         "state": {
-          "branch": null,
-          "revision": "912d40cc2ea4a300eff6dd7c6a10b4f4dedbcbec",
-          "version": "7.10.0"
+          "branch": "master",
+          "revision": "594baa8063a0add8a2eee3a323e42fb5cb5df2e7",
+          "version": null
         }
       },
       {
