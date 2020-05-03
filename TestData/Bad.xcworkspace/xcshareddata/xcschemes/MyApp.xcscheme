@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D2CAE8722031EE5F00F76063"
-               BuildableName = "Bad"
-               BlueprintName = "Bad"
-               ReferencedContainer = "container:Bad/Bad.xcodeproj">
+               BlueprintIdentifier = "D23231B823158DA300168CE6"
+               BuildableName = ".app"
+               BlueprintName = "Good"
+               ReferencedContainer = "container:Good.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -28,10 +28,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D23231B823158DA300168CE6"
-               BuildableName = ".app"
-               BlueprintName = "Good"
-               ReferencedContainer = "container:Good.xcodeproj">
+               BlueprintIdentifier = "D2CAE8722031EE5F00F76063"
+               BuildableName = "Bad"
+               BlueprintName = "Bad"
+               ReferencedContainer = "container:Bad.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -54,16 +54,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D2CAE8722031EE5F00F76063"
-            BuildableName = "Bad"
-            BlueprintName = "Bad"
-            ReferencedContainer = "container:Bad/Bad.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -71,16 +61,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D2CAE8722031EE5F00F76063"
-            BuildableName = "Bad"
-            BlueprintName = "Bad"
-            ReferencedContainer = "container:Bad/Bad.xcodeproj">
+            BlueprintIdentifier = "D23231B823158DA300168CE6"
+            BuildableName = ".app"
+            BlueprintName = "Good"
+            ReferencedContainer = "container:Good.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

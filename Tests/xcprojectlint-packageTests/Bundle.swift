@@ -34,7 +34,7 @@ extension Bundle {
   }
 
   func testData(_ testType: TypeOfData = .bad) -> String {
-    let pathSuffix = testType == .bad ? "Bad/Bad.xcodeproj" : "Good.xcodeproj"
+    let pathSuffix = testType == .bad ? "Bad.xcodeproj" : "Good.xcodeproj"
     return testDataRoot.appendingPathComponent(pathSuffix).path
   }
   

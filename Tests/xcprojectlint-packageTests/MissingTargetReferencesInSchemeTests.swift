@@ -19,7 +19,7 @@ import XcodeProj
 import PathKit
 
 final class MissingTargetReferencesInSchemeTests: XCTestCase {
-  func test() {
+  func test_missingTargetReferencesInScheme_returnsFailed() {
     do {
       let projectPathString = Bundle.test.testData()
       let badWorkspacePath = Bundle.test.testWorkspace()
