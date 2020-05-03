@@ -13,7 +13,6 @@
 */
 
 import Foundation
-import PathKit
 import XcodeProj
 
 public func missingTargetReferencesInSchemes(workspace: XCWorkspace, logEntry: String) -> Report {
