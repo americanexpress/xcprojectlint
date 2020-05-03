@@ -15,7 +15,7 @@
 import Foundation
 import XcodeProj
 
-public func missingTargetReferencesInSchemes(workspace: XCWorkspace, logEntry: String) -> Report {
+public func missingTargetReferencesInSchemes(workspace: XCWorkspace) -> Report {
   func getAllFiles(in element: XCWorkspaceDataElement) -> [XCWorkspaceDataFileRef] {
     switch element {
     case let .file(file):

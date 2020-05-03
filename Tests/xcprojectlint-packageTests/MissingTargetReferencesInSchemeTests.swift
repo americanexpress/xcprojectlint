@@ -19,28 +19,24 @@ import XcodeProj
 import PathKit
 
 final class MissingTargetReferencesInSchemeTests: XCTestCase {
-  func test_missingTargetReferencesInScheme_returnsFailed() {
-    do {
-      let projectPathString = Bundle.test.testData()
-      let badWorkspacePath = Bundle.test.testWorkspace()
-      let errorReporter = ErrorReporter(pbxprojPath: projectPathString, reportKind: .error)
-      
-      let workspace = try XCWorkspace(path: Path(badWorkspacePath))
-      let report = missingTargetReferencesInSchemes(
-        workspace: workspace,
-        logEntry: errorReporter.reportKind.logEntry
+  func test_missingTargetReferencesInScheme_withBadWorkspace_returnsFailed() throws {
+    let path = Bundle.test.testWorkspace(.bad)
+    let workspace = try XCWorkspace(path: Path(path))
+    let report = missingTargetReferencesInSchemes(workspace: workspace)
+    XCTAssertEqual(
+      report,
+      .failed(errors:
+        [
+          "Target defined in Good.xcodeproj is referenced in scheme. But Good.xcodeproj is missing from workspace."
+        ]
       )
-      XCTAssertEqual(
-        report,
-        .failed(errors:
-          [
-            "Target defined in Good.xcodeproj is referenced in scheme. But Good.xcodeproj is missing from workspace."
-          ]
-        )
-      )
-    } catch {
-      print(error.localizedDescription)
-      XCTFail("Failed to initialize test")
-    }
+    )
+  }
+  
+  func test_missingTargetReferencesInScheme_withGoodWorkspace_returnsFailed() throws {
+    let path = Bundle.test.testWorkspace(.good)
+    let workspace = try XCWorkspace(path: Path(path))
+    let report = missingTargetReferencesInSchemes(workspace: workspace)
+    XCTAssertEqual(report, .passed)
   }
 }
