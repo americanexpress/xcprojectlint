@@ -12,9 +12,8 @@
  * the License.
  */
 
-import Basic
 import Foundation
-import SPMUtility
+import TSCUtility
 import xcprojectlint_package
 
 func noteSuccess() {

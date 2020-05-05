@@ -12,6 +12,6 @@
  * the License.
  */
 
-import SPMUtility
+import TSCUtility
 
 public let currentVersion = Version(0, 0, 6)
