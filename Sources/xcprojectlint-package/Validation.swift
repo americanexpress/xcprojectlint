@@ -13,7 +13,7 @@
  */
 
 import Foundation
-import SPMUtility
+import TSCUtility
 
 public enum Validation: String, StringEnumArgument {
   case buildSettingsExternalized = "build-settings-externalized"

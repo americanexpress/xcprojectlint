@@ -13,7 +13,7 @@
  */
 
 import Foundation
-import SPMUtility
+import TSCUtility
 
 public enum Report: Equatable {
   case invalidInput
