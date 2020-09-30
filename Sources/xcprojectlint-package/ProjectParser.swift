@@ -92,16 +92,18 @@ public struct BuildConfigurationList: TitledNode {
 public struct BuildFile: Identifiable, CustomDebugStringConvertible {
   public let id: String
   public let key: String
-  public let fileRef: String
+  public let fileRef: String?
+  public let productRef: String?
   public let debugDescription: String
 
   init(key: String, value: [String: Any]) {
-    identifyUnparsedKeys(value, knownKeys: ["fileRef", "settings"])
+    identifyUnparsedKeys(value, knownKeys: ["fileRef", "productRef", "settings"])
     id = key
     self.key = key
-    fileRef = value.string(forKey: "fileRef", container: "\(type(of: self))")
+    fileRef = value["fileRef"] as? String
+    productRef = value["productRef"] as? String
 
-    debugDescription = "\(fileRef) (\(key))"
+    debugDescription = "\(fileRef != nil ? "fileRef" : "productRef") (\(key))"
   }
 }
 
@@ -167,7 +169,7 @@ public struct FileReference: TitledNode {
   public let wrapsLines: String?
 
   init(key: String, value: [String: Any], title: String, projectPath _: String) {
-    identifyUnparsedKeys(value, knownKeys: ["path", "name", "explicitFileType", "lastKnownFileType", "sourceTree", "fileEncoding", "lineEnding", "xcLanguageSpecificationIdentifier", "includeInIndex", "indentWidth", "tabWidth"])
+    identifyUnparsedKeys(value, knownKeys: ["explicitFileType", "fileEncoding", "includeInIndex", "indentWidth", "lastKnownFileType", "lineEnding", "name", "path", "sourceTree", "tabWidth", "wrapsLines", "xcLanguageSpecificationIdentifier"])
     self.title = title
     id = key
     path = value.string(forKey: "path", container: "\(type(of: self))")
@@ -219,7 +221,7 @@ public struct Group: TitledNode {
   public let wrapsLines: String?
 
   init(key: String, value: [String: Any], title: String) {
-    identifyUnparsedKeys(value, knownKeys: ["name", "path", "sourceTree", "children", "indentWidth", "tabWidth", "usesTabs"])
+    identifyUnparsedKeys(value, knownKeys: ["children", "indentWidth", "name", "path", "sourceTree", "tabWidth", "usesTabs", "wrapsLines"])
     self.title = title
     id = key
     name = value["name"] as? String
@@ -278,7 +280,7 @@ public struct NativeTarget: Identifiable, CustomDebugStringConvertible {
   public let buildConfigurationList: String
 
   init(key: String, value: [String: Any]) {
-    identifyUnparsedKeys(value, knownKeys: ["name", "productName", "productType", "buildRules", "productReference", "dependencies", "buildConfigurationList", "buildPhases"])
+    identifyUnparsedKeys(value, knownKeys: ["buildConfigurationList", "buildPhases", "buildRules", "dependencies", "name", "packageProductDependencies", "packageReferences", "productName", "productRef", "productReference", "productType"])
     id = key
     name = value.string(forKey: "name", container: "\(type(of: self))")
     productName = value.string(forKey: "productName", container: "\(type(of: self))")
@@ -308,7 +310,7 @@ public struct ProjectNode: Identifiable, CustomDebugStringConvertible {
   public let projectRoot: String
 
   init(key: String, value: [String: Any]) {
-    identifyUnparsedKeys(value, knownKeys: ["mainGroup", "attributes", "developmentRegion", "projectDirPath", "productRefGroup", "targets", "buildConfigurationList", "knownRegions", "compatibilityVersion", "hasScannedForEncodings", "projectRoot"])
+    identifyUnparsedKeys(value, knownKeys: ["attributes", "buildConfigurationList", "compatibilityVersion", "developmentRegion", "hasScannedForEncodings", "knownRegions", "mainGroup", "packageReferences", "productRefGroup", "projectDirPath", "projectRoot", "targets"])
     id = key
     mainGroup = value.string(forKey: "mainGroup", container: "\(type(of: self))")
     developmentRegion = value.string(forKey: "developmentRegion", container: "\(type(of: self))")

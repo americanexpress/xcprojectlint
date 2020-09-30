@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,11 +13,11 @@
 		D23231C223158DA300168CE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D23231C023158DA300168CE6 /* Main.storyboard */; };
 		D23231C423158DA500168CE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D23231C323158DA500168CE6 /* Assets.xcassets */; };
 		D23231C723158DA500168CE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D23231C523158DA500168CE6 /* LaunchScreen.storyboard */; };
+		D29EF0412524CA2400426A83 /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = D29EF0402524CA2400426A83 /* Yams */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C3F569C9231592740042FB7A /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		C3F569CB231593750042FB7A /* Good.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Good.app; path = "/Users/llisia/Documents/random projects/Swift/xcprojectlint/TestData/build/Debug/Good.app"; sourceTree = "<absolute>"; };
 		D23231BC23158DA300168CE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D23231BE23158DA300168CE6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D23231C123158DA300168CE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -27,6 +27,7 @@
 		D23231D123158E5100168CE6 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		D23231D223158E5100168CE6 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		D23231D323158F4E00168CE6 /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
+		D29EF03D2524C8D200426A83 /* Good.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Good.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D29EF0412524CA2400426A83 /* Yams in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				D23231BB23158DA300168CE6 /* Good */,
+				D29EF03D2524C8D200426A83 /* Good.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -88,8 +91,11 @@
 			dependencies = (
 			);
 			name = Good;
+			packageProductDependencies = (
+				D29EF0402524CA2400426A83 /* Yams */,
+			);
 			productName = Good;
-			productReference = C3F569CB231593750042FB7A /* Good.app */;
+			productReference = D29EF03D2524C8D200426A83 /* Good.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -116,6 +122,9 @@
 				Base,
 			);
 			mainGroup = D23231B023158DA200168CE6;
+			packageReferences = (
+				D29EF03F2524CA2400426A83 /* XCRemoteSwiftPackageReference "Yams" */,
+			);
 			productRefGroup = D23231B023158DA200168CE6;
 			projectDirPath = "";
 			projectRoot = "";
@@ -219,6 +228,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D29EF03F2524CA2400426A83 /* XCRemoteSwiftPackageReference "Yams" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jpsim/Yams.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D29EF0402524CA2400426A83 /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D29EF03F2524CA2400426A83 /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D23231B123158DA200168CE6 /* Project object */;
 }
