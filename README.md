@@ -34,7 +34,11 @@ currently supports these checks:
 
 - `items-in-alpha-order`
 
-    This mode ensures the project files and folders are in proper order.
+    This mode ensures the project files and folders are in proper order. 
+    There are some occasions where you may not be able to exactly sort items
+    in specific folders (Frameworks and Products are common examples). For this,
+    there is an additional parameter you can pass: `--skip-folders`, followed by
+    a list of folders to ignore.
 
 - `no-white-space-specifications`
 

@@ -70,10 +70,14 @@ private func recurseLookingForOrder(_ groups: [String], project: Project, logEnt
   }
 }
 
-public func ensureAlphaOrder(_ project: Project, logEntry: String, sortByName: Bool) -> Report {
+public func ensureAlphaOrder(_ project: Project, logEntry: String, sortByName: Bool, skipFolders: [String]?) -> Report {
   guard let proj = project.projectNodes.first,
-    let children = project.groups[proj.mainGroup]?.children else {
+    var children = project.groups[proj.mainGroup]?.children else {
     return .invalidInput
+  }
+
+  if let skipFolders = skipFolders, !skipFolders.isEmpty {
+    children.removeAll { skipFolders.contains(project.groups[$0]?.name ?? "") }
   }
 
   let sortOrder: SortOrder = sortByName ? .byName : .default

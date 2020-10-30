@@ -91,7 +91,7 @@ func main() -> Int32 {
       case .filesExistOnDisk:
         return filesExistOnDisk(project, logEntry: logEntry)
       case .itemsInAlphaOrder:
-        return ensureAlphaOrder(project, logEntry: logEntry, sortByName: sortByName ?? false)
+        return ensureAlphaOrder(project, logEntry: logEntry, sortByName: sortByName ?? false, skipFolders: skipFolders)
       case .noDanglingSourceFiles:
         return checkForDanglingSourceFiles(project, logEntry: logEntry)
       case .noEmptyGroups:
