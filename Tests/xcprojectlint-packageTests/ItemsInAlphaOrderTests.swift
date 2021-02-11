@@ -21,7 +21,12 @@ final class ItemsInAlphaOrderTests: XCTestCase {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-      let report = ensureAlphaOrder(project, logEntry: errorReporter.reportKind.logEntry, sortByName: false)
+      let report = ensureAlphaOrder(
+        project,
+        logEntry: errorReporter.reportKind.logEntry,
+        sortByName: false,
+        skipFolders: nil
+      )
       XCTAssertEqual(report, .passed)
     } catch {
       print(error.localizedDescription)
@@ -34,7 +39,12 @@ final class ItemsInAlphaOrderTests: XCTestCase {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-      let report = ensureAlphaOrder(project, logEntry: errorReporter.reportKind.logEntry, sortByName: true)
+      let report = ensureAlphaOrder(
+        project,
+        logEntry: errorReporter.reportKind.logEntry,
+        sortByName: true,
+        skipFolders: ["Products"]
+      )
       let expectedErrors = [
         """
         error: Xcode folder “/Good” has out-of-order children.
@@ -70,7 +80,12 @@ final class ItemsInAlphaOrderTests: XCTestCase {
 
         """,
       ]
-      let report = ensureAlphaOrder(project, logEntry: errorReporter.reportKind.logEntry, sortByName: false)
+      let report = ensureAlphaOrder(
+        project,
+        logEntry: errorReporter.reportKind.logEntry,
+        sortByName: false,
+        skipFolders: ["Products"]
+      )
       XCTAssertEqual(report.errors, expectedErrors)
     } catch {
       print(error.localizedDescription)

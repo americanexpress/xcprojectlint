@@ -40,14 +40,14 @@ private func recurseForMisplacedFiles(_ groups: [String], project: Project, erro
 
 private func groupExcluded(_ group: Group) -> Bool {
   guard let name = group.name,
-    let skipFolders = skkipFolders else { return false }
+    let skipFolders = _skipFolders else { return false }
   return skipFolders.contains(name)
 }
 
-var skkipFolders: [String]?
+private var _skipFolders: [String]?
 
 public func diskLayoutMatchesProject(_ project: Project, logEntry: String, skipFolders: [String]?) -> Report {
-  skkipFolders = skipFolders
+  _skipFolders = skipFolders
   guard let proj = project.projectNodes.first,
     let children = project.groups[proj.mainGroup]?.children else {
     return .invalidInput
