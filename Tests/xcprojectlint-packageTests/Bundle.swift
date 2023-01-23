@@ -23,7 +23,7 @@ extension Bundle {
   }
 
   static var test: Bundle {
-    return Bundle(for: BundleLocator.self)
+    Bundle.module
   }
 
   var testDataRoot: URL {

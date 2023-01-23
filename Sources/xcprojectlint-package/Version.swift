@@ -14,4 +14,4 @@
 
 import TSCUtility
 
-public let currentVersion = Version(0, 0, 7)
+public let currentVersion = Version(0, 0, 8)

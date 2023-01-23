@@ -14,7 +14,7 @@
 
 import Foundation
 
-public struct Usage {
+public enum Usage {
   public static let version = "The version of the tool"
   public static let project = "Path to the project.xcproject file"
 

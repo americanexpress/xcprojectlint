@@ -16,7 +16,8 @@ import Foundation
 
 private func validateThisGroup(_ id: String, title: String, project: Project, logEntry: String) -> String? {
   guard let parent = project.groups[id],
-    parent.children.isEmpty else {
+        parent.children.isEmpty
+  else {
     return nil
   }
   let pathToParent = project.pathToReference(id)
@@ -36,7 +37,8 @@ private func recurseLookingForEmpties(_ groups: [String], project: Project, logE
 
 public func noEmptyGroups(_ project: Project, logEntry: String) -> Report {
   guard let proj = project.projectNodes.first,
-    let children = project.groups[proj.mainGroup]?.children else {
+        let children = project.groups[proj.mainGroup]?.children
+  else {
     return .invalidInput
   }
   let errors = recurseLookingForEmpties(children, project: project, logEntry: logEntry)

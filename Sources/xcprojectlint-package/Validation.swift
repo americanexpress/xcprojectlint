@@ -12,10 +12,11 @@
  * the License.
  */
 
+import ArgumentParser
 import Foundation
 import TSCUtility
 
-public enum Validation: String, StringEnumArgument {
+public enum Validation: String, EnumerableFlag, ExpressibleByArgument {
   case buildSettingsExternalized = "build-settings-externalized"
   case diskLayoutMatchesProject = "disk-layout-matches-project"
   case filesExistOnDisk = "files-exist-on-disk"
@@ -25,16 +26,6 @@ public enum Validation: String, StringEnumArgument {
   case noWhiteSpaceSpecifications = "no-white-space-specifications"
 
   case all
-
-  public init(_ argument: String) throws {
-    guard let validation = Validation(rawValue: argument) else {
-      throw ArgumentConversionError.typeMismatch(value: argument, expectedType: Validation.self)
-    }
-
-    self = validation
-  }
-
-  public static let completion: ShellCompletion = .values([(value: "Test", description: "Test2")])
 
   public static let usage =
     """

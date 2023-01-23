@@ -26,7 +26,8 @@ private func recurseForMissingFiles(_ groups: [String], hierarchy: [String], pro
       errors = recurseForMissingFiles(group.children, hierarchy: next, project: project, errors: errors, logEntry: logEntry)
     } else if let file = project.fileReferences[child] {
       if let type = file.lastKnownFileType,
-        type.hasPrefix("sourcecode.") {
+         type.hasPrefix("sourcecode.")
+      {
         let uiPath = hierarchy.joined(separator: "/")
         var url = base
         if file.sourceTree == "<group>", uiPath.count > 0 {
@@ -48,7 +49,8 @@ private func recurseForMissingFiles(_ groups: [String], hierarchy: [String], pro
 
 public func filesExistOnDisk(_ project: Project, logEntry: String) -> Report {
   guard let proj = project.projectNodes.first,
-    let children = project.groups[proj.mainGroup]?.children else {
+        let children = project.groups[proj.mainGroup]?.children
+  else {
     return .invalidInput
   }
 
