@@ -27,7 +27,7 @@ public enum Usage {
 
   public static let sortByName =
     """
-    Sort order for `items-in-alpha-order` is the same as Xcode's
-                         `Sort by Name` Project Navigator command
+    Sort order for `items-in-alpha-order` is the same as
+    Xcode's `Sort by Name` Project Navigator command
     """
 }

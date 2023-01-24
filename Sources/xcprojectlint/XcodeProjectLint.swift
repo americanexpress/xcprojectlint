@@ -16,57 +16,68 @@ import ArgumentParser
 import Foundation
 import xcprojectlint_package
 
-var command = XCProjectLint()
-try? command.run()
+@main
+struct xcprojectlint: ParsableCommand {
+  static var configuration = CommandConfiguration(
+    abstract: "A linter for Xcode project files.",
+    version: "\(currentVersion)"
+  )
 
-struct XCProjectLint: ParsableCommand {
-  @Flag(help: ArgumentHelp(stringLiteral: Usage.version))
-  var version = false
+  struct Options: ParsableArguments {
+    @Option(
+      name: .long,
+      help: ArgumentHelp(stringLiteral: ReportKind.usage)
+    )
+    var report: ReportKind
 
-  @Option(name: .shortAndLong, help: ArgumentHelp(stringLiteral: ReportKind.usage))
-  var report: ReportKind
+    @Option(
+      name: .long,
+      help: ArgumentHelp(stringLiteral: Usage.project)
+    )
+    var project: String
 
-  @Option(name: .shortAndLong, parsing: .upToNextOption, help: ArgumentHelp(stringLiteral: Validation.usage))
-  var validations: [Validation] = []
+    @Option(
+      name: .long,
+      parsing: .upToNextOption,
+      help: ArgumentHelp(stringLiteral: Validation.usage)
+    )
+    var validations: [Validation] = []
 
-  @Option(name: .shortAndLong, help: ArgumentHelp(stringLiteral: Usage.project))
-  var project: String
+    @Option(
+      name: .long,
+      parsing: .upToNextOption,
+      help: ArgumentHelp(stringLiteral: Usage.skipFolders)
+    )
+    var skipFolders: [String] = []
 
-  @Option(name: .shortAndLong, parsing: .upToNextOption, help: ArgumentHelp(stringLiteral: Usage.skipFolders))
-  var skipFolders: [String] = []
+    @Flag(
+      name: .long,
+      help: ArgumentHelp(stringLiteral: Usage.sortByName)
+    )
+    var sortByName = false
+  }
 
-  @Flag(help: ArgumentHelp(stringLiteral: Usage.sortByName))
-  var sortByName = false
+  @OptionGroup var options: Options
 
   mutating func run() throws {
     do {
-      // If we’re run with no arguments, print out the usage banner
-      if ProcessInfo.processInfo.arguments.dropFirst().isEmpty {
-        throw (CleanExit.helpRequest())
+      if options.validations.isEmpty {
+        options.validations = Validation.allValidations()
       }
 
-      // Fast path out if the version was requested
-      if version {
-        throw (CleanExit.message("xcprojectlint version \(currentVersion)"))
-      }
-
-      if validations.last == .all {
-        validations = Validation.allValidations()
-      }
-
-      let errorReporter = ErrorReporter(pbxprojPath: project, reportKind: report)
-      let project = try Project(project, errorReporter: errorReporter)
+      let errorReporter = ErrorReporter(pbxprojPath: options.project, reportKind: options.report)
+      let project = try Project(options.project, errorReporter: errorReporter)
       let logEntry = errorReporter.reportKind.logEntry
-      let reports: [Report] = validations.compactMap {
+      let reports: [Report] = options.validations.compactMap {
         switch $0 {
         case .buildSettingsExternalized:
           return checkForInternalProjectSettings(project, pbxprojPath: errorReporter.pbxprojPath, logEntry: logEntry)
         case .diskLayoutMatchesProject:
-          return diskLayoutMatchesProject(project, logEntry: logEntry, skipFolders: skipFolders)
+          return diskLayoutMatchesProject(project, logEntry: logEntry, skipFolders: options.skipFolders)
         case .filesExistOnDisk:
           return filesExistOnDisk(project, logEntry: logEntry)
         case .itemsInAlphaOrder:
-          return ensureAlphaOrder(project, logEntry: logEntry, sortByName: sortByName, skipFolders: skipFolders)
+          return ensureAlphaOrder(project, logEntry: logEntry, sortByName: options.sortByName, skipFolders: options.skipFolders)
         case .noDanglingSourceFiles:
           return checkForDanglingSourceFiles(project, logEntry: logEntry)
         case .noEmptyGroups:

@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.4
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 /*
@@ -34,10 +34,10 @@ let package = Package(
     .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
   ],
   targets: [
-    .target(
+    .executableTarget(
       name: "xcprojectlint",
       dependencies: [
-        "xcprojectlint-package",
+        .byName(name: "xcprojectlint-package"),
         .product(name: "ArgumentParser", package: "swift-argument-parser"),
         .product(name: "SwiftToolsSupport", package: "swift-tools-support-core"),
       ]
@@ -52,7 +52,7 @@ let package = Package(
     .testTarget(
       name: "xcprojectlint-packageTests",
       dependencies: [
-        "xcprojectlint-package",
+        .byName(name: "xcprojectlint-package"),
         .product(name: "ArgumentParser", package: "swift-argument-parser"),
         .product(name: "SwiftToolsSupport", package: "swift-tools-support-core"),
       ],
