@@ -14,7 +14,7 @@
 
 import Foundation
 
-public struct Usage {
+public enum Usage {
   public static let version = "The version of the tool"
   public static let project = "Path to the project.xcproject file"
 
@@ -27,7 +27,7 @@ public struct Usage {
 
   public static let sortByName =
     """
-    Sort order for `items-in-alpha-order` is the same as Xcode's
-                         `Sort by Name` Project Navigator command
+    Sort order for `items-in-alpha-order` is the same as
+    Xcode's `Sort by Name` Project Navigator command
     """
 }

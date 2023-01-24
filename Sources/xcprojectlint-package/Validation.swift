@@ -12,10 +12,11 @@
  * the License.
  */
 
+import ArgumentParser
 import Foundation
 import TSCUtility
 
-public enum Validation: String, StringEnumArgument {
+public enum Validation: String, EnumerableFlag, ExpressibleByArgument {
   case buildSettingsExternalized = "build-settings-externalized"
   case diskLayoutMatchesProject = "disk-layout-matches-project"
   case filesExistOnDisk = "files-exist-on-disk"
@@ -26,45 +27,38 @@ public enum Validation: String, StringEnumArgument {
 
   case all
 
-  public init(_ argument: String) throws {
-    guard let validation = Validation(rawValue: argument) else {
-      throw ArgumentConversionError.typeMismatch(value: argument, expectedType: Validation.self)
-    }
-
-    self = validation
-  }
-
-  public static let completion: ShellCompletion = .values([(value: "Test", description: "Test2")])
-
   public static let usage =
     """
     List of validations to perform:
-                         build-settings-externalized:
-                           Looks for project settings defined in the project file
+      build-settings-externalized:
+        Looks for project settings defined in the
+        project file
 
-                         dangling-source-files:
-                           Ensures each source code files is member of a target
+      dangling-source-files:
+        Ensures each source code files is member of
+        a target
 
-                         disk-layout-matches-project:
-                           Validates files on disk are arranged like the project
-                           file
+      disk-layout-matches-project:
+        Validates files on disk are arranged like the
+        project file
 
-                         empty-groups:
-                           Reports groups that have no children
+      empty-groups:
+        Reports groups that have no children
 
-                         files-exist-on-disk:
-                           Look for files referenced by the project that are not
-                           found on disk
+      files-exist-on-disk:
+        Look for files referenced by the project that
+        are not found on disk
 
-                         items-in-alpha-order:
-                           Ensure groups and files are sorted alphabetically
+      items-in-alpha-order:
+        Ensure groups and files are sorted alphabetically
 
-                         no-white-space-specifications:
-                           Ensure user specifications of tabs, tabWidth, and identWidth
-                           are not carried through project file.
+      no-white-space-specifications:
+        Ensure user specifications of tabs, tabWidth,
+        and identWidth are not carried through project
+        file
 
-                         all:
-                           Runs all known validations
+      all:
+        Runs all known validations
     """
 
   public static func allValidations() -> [Validation] {

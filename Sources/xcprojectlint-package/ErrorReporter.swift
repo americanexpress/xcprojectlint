@@ -36,8 +36,8 @@ public struct ErrorReporter {
   }
 }
 
-extension ErrorReporter {
-  public func toStatusCode(from checkReport: Report) -> Int32 {
+public extension ErrorReporter {
+  func toStatusCode(from checkReport: Report) -> Int32 {
     switch checkReport {
     case .invalidInput:
       return EX_DATAERR

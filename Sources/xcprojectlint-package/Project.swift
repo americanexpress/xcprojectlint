@@ -44,7 +44,7 @@ public struct Project {
 
     guard let data = try? Data(contentsOf: url) else { throw ProjectParseError.failedToReadProjectFile }
     guard let projectText = String(data: data, encoding: .utf8) else { throw ProjectParseError.failedToInflateProjectFile }
-    guard let serialization = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [AnyHashable: Any] else { throw ProjectParseError.failedToSerializeProjectData }
+    let serialization = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [AnyHashable: Any]
     guard let plist = serialization else { throw ProjectParseError.failedToSerializeProjectData }
     guard let dict = plist as? [String: Any] else { throw ProjectParseError.failedToContortDictionary }
 

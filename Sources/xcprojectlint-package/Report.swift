@@ -12,8 +12,8 @@
  * the License.
  */
 
+import ArgumentParser
 import Foundation
-import TSCUtility
 
 public enum Report: Equatable {
   case invalidInput
@@ -28,11 +28,11 @@ public enum Report: Equatable {
   }
 }
 
-public enum ReportKind: StringEnumArgument {
+public enum ReportKind: ExpressibleByArgument {
   case warning
   case error
 
-  public init?(rawValue: String) {
+  public init?(argument rawValue: String) {
     switch rawValue {
     case "error":
       self = .error
@@ -43,12 +43,11 @@ public enum ReportKind: StringEnumArgument {
     }
   }
 
-  public static var completion = ShellCompletion.values([("error", ""), ("warning", "")])
   public static var usage = "Either 'error' or 'warning'"
 }
 
-extension ReportKind {
-  public var logEntry: String {
+public extension ReportKind {
+  var logEntry: String {
     switch self {
     case .error:
       return "error:"
@@ -57,7 +56,7 @@ extension ReportKind {
     }
   }
 
-  public var returnType: Int32 {
+  var returnType: Int32 {
     switch self {
     case .error:
       return EX_SOFTWARE

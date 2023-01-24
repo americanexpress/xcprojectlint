@@ -63,34 +63,11 @@ $ swift package update
 $ make build
 ```
 
-## Huh? A Makefile?!?
-
-We’re using `make` to hide several shortcomings of the current state of Swift
-Package Manager. First off, it has no notion of Resources, which we need for our
-unit tests.
+To work with the projects and tests in Xcode, run
 
 ``` bash
-$ make test
+$ xed .
 ```
-
-to build the test target, copy in the test fixtures, then run the tests.
-
-Second up, the static linking option is documented to be broken, and indeed, it is.
-
-``` bash
-$ make release
-```
-
-passes the optional arguments that make static linked binaries actually happen.
-
-For completeness, there are also wrappers for `clean` and `build`.
-
-## Debugging in Xcode
-
-If you want to debug from Xcode, you can run `make xcode` to generate the
-project file, and then add a Copy Files build phase, configured like this:
-
-![Copy Bundle Resources](readme-images/CopyBundle.png)
 
 ## Usage Examples
 
