@@ -25,7 +25,7 @@ private func validateThisGroup(_ id: String, title: String, project: Project, lo
 }
 
 private func recurseLookingForEmpties(_ groups: [String], project: Project, logEntry: String) -> [String] {
-  return groups.flatMap { id -> [String] in
+  groups.flatMap { id -> [String] in
     guard let group = project.groups[id] else {
       return []
     }

@@ -12,33 +12,32 @@
  * the License.
  */
 
-@testable import xcprojectlint_package
+@testable import XCProjectLintFramework
 import XCTest
 
-class NoDanglingSourceFilesTests: XCTestCase {
-  func test_sourceFilesPresentInProject_returnsClean() {
+final class FilesExistOnDiskTests: XCTestCase {
+  func test_filesExistOnDisk_returnsClean() {
     do {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-      let report = checkForDanglingSourceFiles(project, logEntry: errorReporter.reportKind.logEntry)
+      let report = filesExistOnDisk(project, logEntry: errorReporter.reportKind.logEntry)
       XCTAssertEqual(report, .passed)
     } catch {
       print(error.localizedDescription)
-      XCTFail("Failed to initialise test")
+      XCTFail("Failed to initialize test")
     }
   }
 
-  func test_danglingSourceFiles_returnsError() {
+  func test_missingFile_returnsError() {
     do {
       let testData = Bundle.test.testData()
-      let testDataPath = Bundle.test.testDataRoot.path
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
       let expectedErrors = [
-        "\(testDataPath)/BadUnitTests/DanglingFile/BadUnitTests.swift:0: error: BadUnitTests.swift is not added to any target.\n",
+        "\(project.url.path):0: error: Bad/MissingFile references files that are not on disk.\n",
       ]
-      let report = checkForDanglingSourceFiles(project, logEntry: errorReporter.reportKind.logEntry)
+      let report = filesExistOnDisk(project, logEntry: errorReporter.reportKind.logEntry)
       XCTAssertEqual(report.errors, expectedErrors)
     } catch {
       print(error.localizedDescription)

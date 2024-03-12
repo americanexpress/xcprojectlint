@@ -21,11 +21,11 @@ private enum SortOrder {
   func sort(fileNames: [String], groupNames: [String]) -> [String] {
     switch self {
     case .byName:
-      return (groupNames + fileNames).sorted {
+      (groupNames + fileNames).sorted {
         $0.localizedStandardCompare($1) == .orderedAscending
       }
     case .default:
-      return groupNames.sorted { $0.localizedStandardCompare($1) == .orderedAscending }
+      groupNames.sorted { $0.localizedStandardCompare($1) == .orderedAscending }
         + fileNames.sorted { $0.localizedStandardCompare($1) == .orderedAscending }
     }
   }
@@ -59,7 +59,7 @@ private func validateThisGroup(_ id: String, title: String, project: Project, lo
 }
 
 private func recurseLookingForOrder(_ groups: [String], project: Project, logEntry: String, sortOrder: SortOrder) -> [String] {
-  return groups.flatMap { id -> [String] in
+  groups.flatMap { id -> [String] in
     guard let group = project.groups[id] else {
       return []
     }
@@ -77,7 +77,7 @@ public func ensureAlphaOrder(_ project: Project, logEntry: String, sortByName: B
     return .invalidInput
   }
 
-  if let skipFolders = skipFolders, !skipFolders.isEmpty {
+  if let skipFolders, !skipFolders.isEmpty {
     children.removeAll { skipFolders.contains(project.groups[$0]?.name ?? "") }
   }
 

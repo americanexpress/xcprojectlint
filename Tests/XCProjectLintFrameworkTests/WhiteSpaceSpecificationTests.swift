@@ -12,7 +12,7 @@
  * the License.
  */
 
-@testable import xcprojectlint_package
+@testable import XCProjectLintFramework
 import XCTest
 
 final class WhiteSpaceSpecificationTests: XCTestCase {

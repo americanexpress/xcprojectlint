@@ -1,4 +1,4 @@
-// swift-tools-version:5.4
+// swift-tools-version:5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 /*
@@ -18,47 +18,55 @@
 import PackageDescription
 
 let package = Package(
-  name: "xcprojectlint",
-  products: [
-    .library(
-      name: "xcprojectlint-package",
-      targets: ["xcprojectlint-package"]
-    ),
-    .executable(
-      name: "xcprojectlint",
-      targets: ["xcprojectlint"]
-    ),
-  ],
-  dependencies: [
-    .package(url: "https://github.com/apple/swift-tools-support-core.git", from: "0.4.0"),
-    .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
-  ],
-  targets: [
-    .executableTarget(
-      name: "xcprojectlint",
-      dependencies: [
-        .byName(name: "xcprojectlint-package"),
-        .product(name: "ArgumentParser", package: "swift-argument-parser"),
-        .product(name: "SwiftToolsSupport", package: "swift-tools-support-core"),
-      ]
-    ),
-    .target(
-      name: "xcprojectlint-package",
-      dependencies: [
-        .product(name: "ArgumentParser", package: "swift-argument-parser"),
-        .product(name: "SwiftToolsSupport", package: "swift-tools-support-core"),
-      ]
-    ),
-    .testTarget(
-      name: "xcprojectlint-packageTests",
-      dependencies: [
-        .byName(name: "xcprojectlint-package"),
-        .product(name: "ArgumentParser", package: "swift-argument-parser"),
-        .product(name: "SwiftToolsSupport", package: "swift-tools-support-core"),
-      ],
-      resources: [
-        .copy("TestData")
-      ]
-    ),
-  ]
+    name: "xcprojectlint",
+    defaultLocalization: "en",
+
+    // MARK: - Platforms
+
+    platforms: [
+        .macOS(.v10_15),
+    ],
+
+    // MARK: - Products
+
+    products: [
+        .library(name: "XCProjectLintFramework", targets: [ "XCProjectLintFramework" ]),
+        .executable(name: "xcprojectlint", targets: [ "xcprojectlint" ]),
+    ],
+
+    // MARK: - Package Dependencies
+
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-argument-parser", exact: "1.3.0"),
+    ],
+
+    // MARK: - Targets
+
+    targets: [
+        .executableTarget(
+            name: "xcprojectlint",
+            dependencies: [
+                .byName(name: "XCProjectLintFramework"),
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+            ]
+        ),
+
+
+        .target(
+            name: "XCProjectLintFramework",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+            ]
+        ),
+        .testTarget(
+            name: "XCProjectLintFrameworkTests",
+            dependencies: [
+                .byName(name: "XCProjectLintFramework"),
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+            ],
+            resources: [
+                .copy("TestData")
+            ]
+        ),
+    ]
 )

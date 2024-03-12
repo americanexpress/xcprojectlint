@@ -12,6 +12,29 @@
  * the License.
  */
 
-import TSCUtility
+import Foundation
 
-public let currentVersion = Version(0, 0, 8)
+private class BundleLocator: NSObject {}
+
+extension Bundle {
+  enum TypeOfData {
+    case bad
+    case good
+  }
+
+  static var test: Bundle {
+    Bundle.module
+  }
+
+  var testDataRoot: URL {
+    bundleURL
+      .appendingPathComponent("Contents")
+      .appendingPathComponent("Resources")
+      .appendingPathComponent("TestData")
+  }
+
+  func testData(_ testType: TypeOfData = .bad) -> String {
+    let pathSuffix = testType == .bad ? "Bad.xcodeproj" : "Good.xcodeproj"
+    return testDataRoot.appendingPathComponent(pathSuffix).path
+  }
+}

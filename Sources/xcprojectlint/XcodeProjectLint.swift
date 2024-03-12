@@ -14,7 +14,7 @@
 
 import ArgumentParser
 import Foundation
-import xcprojectlint_package
+import XCProjectLintFramework
 
 @main
 struct xcprojectlint: ParsableCommand {
@@ -71,27 +71,27 @@ struct xcprojectlint: ParsableCommand {
       let reports: [Report] = options.validations.compactMap {
         switch $0 {
         case .buildSettingsExternalized:
-          return checkForInternalProjectSettings(project, pbxprojPath: errorReporter.pbxprojPath, logEntry: logEntry)
+          checkForInternalProjectSettings(project, pbxprojPath: errorReporter.pbxprojPath, logEntry: logEntry)
         case .diskLayoutMatchesProject:
-          return diskLayoutMatchesProject(project, logEntry: logEntry, skipFolders: options.skipFolders)
+          diskLayoutMatchesProject(project, logEntry: logEntry, skipFolders: options.skipFolders)
         case .filesExistOnDisk:
-          return filesExistOnDisk(project, logEntry: logEntry)
+          filesExistOnDisk(project, logEntry: logEntry)
         case .itemsInAlphaOrder:
-          return ensureAlphaOrder(project, logEntry: logEntry, sortByName: options.sortByName, skipFolders: options.skipFolders)
+          ensureAlphaOrder(project, logEntry: logEntry, sortByName: options.sortByName, skipFolders: options.skipFolders)
         case .noDanglingSourceFiles:
-          return checkForDanglingSourceFiles(project, logEntry: logEntry)
+          checkForDanglingSourceFiles(project, logEntry: logEntry)
         case .noEmptyGroups:
-          return noEmptyGroups(project, logEntry: logEntry)
+          noEmptyGroups(project, logEntry: logEntry)
         case .noWhiteSpaceSpecifications:
-          return checkForWhiteSpaceSpecifications(project, logEntry: logEntry)
+          checkForWhiteSpaceSpecifications(project, logEntry: logEntry)
         case .all:
           // we should never get here; the parser expanded `all` into the individual cases
-          return nil
+          nil
         }
       }
 
       reports
-        .flatMap { $0.errors }
+        .flatMap(\.errors)
         .forEach(ErrorReporter.report)
 
       let scriptResult = reports

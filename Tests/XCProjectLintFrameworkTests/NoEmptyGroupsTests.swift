@@ -12,42 +12,30 @@
  * the License.
  */
 
-@testable import xcprojectlint_package
+@testable import XCProjectLintFramework
 import XCTest
 
-final class DiskLayoutMatchesProjectTests: XCTestCase {
-  func test_diskLayoutIsGood_returnsClean() {
+final class NoEmptyGroupsTests: XCTestCase {
+  func test_allGroupsPopulated_returnsClean() {
     do {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-
-      let report = diskLayoutMatchesProject(
-        project,
-        logEntry: errorReporter.reportKind.logEntry,
-        skipFolders: ["Products"]
-      )
+      let report = noEmptyGroups(project, logEntry: errorReporter.reportKind.logEntry)
       XCTAssertEqual(report, .passed)
     } catch {
       print(error.localizedDescription)
-      XCTFail("Failed to initialize test")
+      XCTFail("Failed to initialise test")
     }
   }
 
-  func test_diskLayoutMatchesProject_returnsError() {
+  func test_emptyGroup_returnsError() {
     do {
       let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-      let expectedErrors = [
-        "error: File “ThisFileIsMisplaced.swift” (D2CAE89C2032142D00F76063) is misplaced on disk, or wrong kind of reference.\n",
-        "error: Folder “BadUnitTests” (78BBAB5022FDA2E400FE1D61) is misplaced on disk, or wrong kind of reference.\n",
-      ]
-      let report = diskLayoutMatchesProject(
-        project,
-        logEntry: errorReporter.reportKind.logEntry,
-        skipFolders: ["Products"]
-      )
+      let expectedErrors = ["error: Xcode folder “Bad/ThisGroupIsEmpty” has no children."]
+      let report = noEmptyGroups(project, logEntry: errorReporter.reportKind.logEntry)
       XCTAssertEqual(report.errors, expectedErrors)
     } catch {
       print(error.localizedDescription)

@@ -14,7 +14,6 @@
 
 import ArgumentParser
 import Foundation
-import TSCUtility
 
 public enum Validation: String, EnumerableFlag, ExpressibleByArgument {
   case buildSettingsExternalized = "build-settings-externalized"
@@ -62,7 +61,7 @@ public enum Validation: String, EnumerableFlag, ExpressibleByArgument {
     """
 
   public static func allValidations() -> [Validation] {
-    return [
+    [
       Validation.buildSettingsExternalized,
       Validation.diskLayoutMatchesProject,
       Validation.filesExistOnDisk,
