@@ -50,18 +50,18 @@ public extension ReportKind {
   var logEntry: String {
     switch self {
     case .error:
-      return "error:"
+      "error:"
     case .warning:
-      return "warning:"
+      "warning:"
     }
   }
 
   var returnType: Int32 {
     switch self {
     case .error:
-      return EX_SOFTWARE
+      EX_SOFTWARE
     case .warning:
-      return EX_OK
+      EX_OK
     }
   }
 }

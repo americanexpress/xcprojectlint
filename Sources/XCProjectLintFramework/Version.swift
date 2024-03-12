@@ -12,29 +12,4 @@
  * the License.
  */
 
-import Foundation
-
-private class BundleLocator: NSObject {}
-
-extension Bundle {
-  enum TypeOfData {
-    case bad
-    case good
-  }
-
-  static var test: Bundle {
-    Bundle.module
-  }
-
-  var testDataRoot: URL {
-    return bundleURL
-      .appendingPathComponent("Contents")
-      .appendingPathComponent("Resources")
-      .appendingPathComponent("TestData")
-  }
-
-  func testData(_ testType: TypeOfData = .bad) -> String {
-    let pathSuffix = testType == .bad ? "Bad.xcodeproj" : "Good.xcodeproj"
-    return testDataRoot.appendingPathComponent(pathSuffix).path
-  }
-}
+public let currentVersion = "0.0.9"

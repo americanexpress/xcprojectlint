@@ -576,7 +576,7 @@ func extractFileTitles(_ projectText: String) -> [String: String] {
 ///   - titles: A dictionary of the titles in this scope
 /// - returns: The display name for that `id`, or the `id` if it cannot be found
 func title(_ key: String, titles: [String: String]) -> String {
-  return titles[key] ?? key
+  titles[key] ?? key
 }
 
 /// Since we built this parser through observation, catch cases where

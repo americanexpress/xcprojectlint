@@ -12,20 +12,16 @@
  * the License.
  */
 
-@testable import xcprojectlint_package
+@testable import XCProjectLintFramework
 import XCTest
 
-final class InternalProjectSettingsTests: XCTestCase {
-  func test_containsNoInternalProjectSettings_returnsClean() {
+class NoDanglingSourceFilesTests: XCTestCase {
+  func test_sourceFilesPresentInProject_returnsClean() {
     do {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-      let report = checkForInternalProjectSettings(
-        project,
-        pbxprojPath: errorReporter.pbxprojPath,
-        logEntry: errorReporter.reportKind.logEntry
-      )
+      let report = checkForDanglingSourceFiles(project, logEntry: errorReporter.reportKind.logEntry)
       XCTAssertEqual(report, .passed)
     } catch {
       print(error.localizedDescription)
@@ -33,25 +29,16 @@ final class InternalProjectSettingsTests: XCTestCase {
     }
   }
 
-  func test_containsInternalProjectSettings_returnsError() {
+  func test_danglingSourceFiles_returnsError() {
     do {
       let testData = Bundle.test.testData()
+      let testDataPath = Bundle.test.testDataRoot.path
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-      let projectPath = project.url.path
       let expectedErrors = [
-        "\(projectPath):251: error: Debug has settings defined at the project level.\n",
-        "\(projectPath):271: error: Release has settings defined at the project level.\n",
-        "\(projectPath):290: error: Debug has settings defined at the project level.\n",
-        "\(projectPath):347: error: Release has settings defined at the project level.\n",
-        "\(projectPath):396: error: Debug has settings defined at the project level.\n",
-        "\(projectPath):406: error: Release has settings defined at the project level.\n",
+        "\(testDataPath)/BadUnitTests/DanglingFile/BadUnitTests.swift:0: error: BadUnitTests.swift is not added to any target.\n",
       ]
-      let report = checkForInternalProjectSettings(
-        project,
-        pbxprojPath: errorReporter.pbxprojPath,
-        logEntry: errorReporter.reportKind.logEntry
-      )
+      let report = checkForDanglingSourceFiles(project, logEntry: errorReporter.reportKind.logEntry)
       XCTAssertEqual(report.errors, expectedErrors)
     } catch {
       print(error.localizedDescription)

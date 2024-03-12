@@ -1,6 +1,10 @@
-*.swp
 .DS_Store
 /.build
 /Packages
-xcprojectlint.xcodeproj
-xcuserdata/
+/*.xcodeproj
+.swiftpm
+.vscode
+.*.sw?
+*.docc-build
+*.vs
+Package.resolved

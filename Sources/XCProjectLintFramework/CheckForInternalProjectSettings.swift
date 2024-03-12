@@ -48,7 +48,7 @@ public func checkForInternalProjectSettings(_ project: Project, pbxprojPath: Str
       }
 
       // NOTE: The spaces around the error: portion of the string are required with Xcode 8.3. Without them, no output gets reported in the Issue Navigator.
-      if let matchingTarget = matchingTarget {
+      if let matchingTarget {
         return "\(project.url.path):\(currentLine): \(logEntry) \(matchingTarget) (\(buildConfiguration.name)) has settings defined in the project file.\n"
       } else {
         return "\(project.url.path):\(currentLine): \(logEntry) \(title) has settings defined at the project level.\n"

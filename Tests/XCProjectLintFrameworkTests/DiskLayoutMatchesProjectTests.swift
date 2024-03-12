@@ -12,16 +12,21 @@
  * the License.
  */
 
-@testable import xcprojectlint_package
+@testable import XCProjectLintFramework
 import XCTest
 
-final class FilesExistOnDiskTests: XCTestCase {
-  func test_filesExistOnDisk_returnsClean() {
+final class DiskLayoutMatchesProjectTests: XCTestCase {
+  func test_diskLayoutIsGood_returnsClean() {
     do {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-      let report = filesExistOnDisk(project, logEntry: errorReporter.reportKind.logEntry)
+
+      let report = diskLayoutMatchesProject(
+        project,
+        logEntry: errorReporter.reportKind.logEntry,
+        skipFolders: ["Products"]
+      )
       XCTAssertEqual(report, .passed)
     } catch {
       print(error.localizedDescription)
@@ -29,15 +34,20 @@ final class FilesExistOnDiskTests: XCTestCase {
     }
   }
 
-  func test_missingFile_returnsError() {
+  func test_diskLayoutMatchesProject_returnsError() {
     do {
       let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
       let expectedErrors = [
-        "\(project.url.path):0: error: Bad/MissingFile references files that are not on disk.\n",
+        "error: File “ThisFileIsMisplaced.swift” (D2CAE89C2032142D00F76063) is misplaced on disk, or wrong kind of reference.\n",
+        "error: Folder “BadUnitTests” (78BBAB5022FDA2E400FE1D61) is misplaced on disk, or wrong kind of reference.\n",
       ]
-      let report = filesExistOnDisk(project, logEntry: errorReporter.reportKind.logEntry)
+      let report = diskLayoutMatchesProject(
+        project,
+        logEntry: errorReporter.reportKind.logEntry,
+        skipFolders: ["Products"]
+      )
       XCTAssertEqual(report.errors, expectedErrors)
     } catch {
       print(error.localizedDescription)

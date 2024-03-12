@@ -12,16 +12,20 @@
  * the License.
  */
 
-@testable import xcprojectlint_package
+@testable import XCProjectLintFramework
 import XCTest
 
-final class NoEmptyGroupsTests: XCTestCase {
-  func test_allGroupsPopulated_returnsClean() {
+final class InternalProjectSettingsTests: XCTestCase {
+  func test_containsNoInternalProjectSettings_returnsClean() {
     do {
       let testData = Bundle.test.testData(.good)
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-      let report = noEmptyGroups(project, logEntry: errorReporter.reportKind.logEntry)
+      let report = checkForInternalProjectSettings(
+        project,
+        pbxprojPath: errorReporter.pbxprojPath,
+        logEntry: errorReporter.reportKind.logEntry
+      )
       XCTAssertEqual(report, .passed)
     } catch {
       print(error.localizedDescription)
@@ -29,13 +33,25 @@ final class NoEmptyGroupsTests: XCTestCase {
     }
   }
 
-  func test_emptyGroup_returnsError() {
+  func test_containsInternalProjectSettings_returnsError() {
     do {
       let testData = Bundle.test.testData()
       let errorReporter = ErrorReporter(pbxprojPath: testData, reportKind: .error)
       let project = try Project(testData, errorReporter: errorReporter)
-      let expectedErrors = ["error: Xcode folder “Bad/ThisGroupIsEmpty” has no children."]
-      let report = noEmptyGroups(project, logEntry: errorReporter.reportKind.logEntry)
+      let projectPath = project.url.path
+      let expectedErrors = [
+        "\(projectPath):251: error: Debug has settings defined at the project level.\n",
+        "\(projectPath):271: error: Release has settings defined at the project level.\n",
+        "\(projectPath):290: error: Debug has settings defined at the project level.\n",
+        "\(projectPath):347: error: Release has settings defined at the project level.\n",
+        "\(projectPath):396: error: Debug has settings defined at the project level.\n",
+        "\(projectPath):406: error: Release has settings defined at the project level.\n",
+      ]
+      let report = checkForInternalProjectSettings(
+        project,
+        pbxprojPath: errorReporter.pbxprojPath,
+        logEntry: errorReporter.reportKind.logEntry
+      )
       XCTAssertEqual(report.errors, expectedErrors)
     } catch {
       print(error.localizedDescription)

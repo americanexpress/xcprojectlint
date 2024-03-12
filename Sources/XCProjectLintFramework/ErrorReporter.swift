@@ -25,7 +25,7 @@ public struct ErrorReporter {
 
   public func report(_ error: Error) -> String {
     // NOTE: The spaces around the error: portion of the screen are required with Xcode 8.3. Without them, no output gets reported in the Issue Navigator.
-    return "\(pbxprojPath):0: \(reportKind.logEntry) \(error.localizedDescription)\n"
+    "\(pbxprojPath):0: \(reportKind.logEntry) \(error.localizedDescription)\n"
   }
 
   public static func report(_ errorString: String) {
@@ -40,11 +40,11 @@ public extension ErrorReporter {
   func toStatusCode(from checkReport: Report) -> Int32 {
     switch checkReport {
     case .invalidInput:
-      return EX_DATAERR
+      EX_DATAERR
     case .failed:
-      return reportKind.returnType
+      reportKind.returnType
     case .passed:
-      return EX_OK
+      EX_OK
     }
   }
 }
